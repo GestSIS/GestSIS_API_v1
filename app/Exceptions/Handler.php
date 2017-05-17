@@ -32,7 +32,19 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
-        parent::report($exception);
+        if($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException){
+            \Log::error($exception->getStatusCode().' : '.url()->current());
+        }
+        elseif($exception instanceof ApiException){
+            \Log::error($exception->getMessage());
+        }
+        elseif($exception instanceof InvalidUserInputException){
+            \Log::error($exception->getMessage().' (URL: '.url()->current().')');
+        }
+        else{
+            parent::report($exception);
+        }
+
     }
 
     /**
@@ -44,6 +56,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if($exception instanceof InvalidUserInputException ||
+           $exception instanceof ApiException){
+            return response()->json(['error' => $exception->getMessage()], 400);
+        }
+        elseif($request->segment(1) == 'api'){
+            return response()->json(['error' => 'Erreur :('], 400);
+        }
+
         return parent::render($request, $exception);
     }
 

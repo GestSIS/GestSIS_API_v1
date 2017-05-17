@@ -25,3 +25,25 @@
 7. Installer Composer, disponible ici : https://getcomposer.org/download/
 8. Ouvrir une ligne de commande, se positionner à l'intérieur du projet, et lancer la commande ``composer update``. Cela installera les dépendances.
 9. Tester l'accès en ouvrant le lien http://api.gestsis.run
+
+## Utilisation
+Principe : L'utilisateur se connecte avec ses identifiants de connexion et il reçoit en retour un jeton de type JWT. Ce jeton sera utilisé dans toutes les futures requêtes comme moyen d'authentification.
+
+### Connexion de l'utilisateur
+POST /v1/user/login  
+Paramètres : sis_id, username, password  
+Exemple de valeur de retour :
+```
+{
+  "success": true,
+  "token": "--- Jeton ---",
+  "token_exp": 1497636448,
+  "user": {
+    "id": 1,
+    "gender_id": null,
+    "gender_label": null,
+    "firstname": null,
+    "lastname": null
+ }
+}
+```

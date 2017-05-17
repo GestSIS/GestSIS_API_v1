@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'v1', 'middleware' => ['jwt']], function(){
+    Route::group(['prefix' => 'user'], function(){
+        Route::post('login', 'UserApiController@login')->name('api.v1.user.connect');
+        Route::get('check-token', 'UserApiController@checkToken');
+    });
 });
