@@ -12,5 +12,8 @@
 */
 
 Route::get('/', function () {
+
     return view('welcome');
 });
+
+Route::get('user/activate', 'UserController@activate')->name('user.activate');

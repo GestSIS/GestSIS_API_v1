@@ -47,3 +47,14 @@ Exemple de valeur de retour :
  }
 }
 ```
+
+### Inscription de l'utilisateur
+POST /v1/user/signup  
+Paramètres : sis_id, email, password, password_confirmation  
+Exemple de valeur de retour :
+```
+{
+  "success": true,
+  "message": "Votre compte a bien été créé. Vous allez prochainement recevoir un e-mail contenant un lien pour activer définitivement votre compte."
+}
+```

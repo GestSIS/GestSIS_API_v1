@@ -14,8 +14,13 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['prefix' => 'v1', 'middleware' => ['jwt']], function(){
+    // Login & signup
     Route::group(['prefix' => 'user'], function(){
-        Route::post('login', 'UserApiController@login')->name('api.v1.user.connect');
-        Route::get('check-token', 'UserApiController@checkToken');
+        Route::post('login', 'UserApiController@login')->name('api.v1.user.login');
+        Route::post('signup', 'UserApiController@signup')->name('api.v1.user.signup');
     });
+
+    // Sapeurs
+    Route::get('sapeurs', 'SapeurController@list')->name('api.v1.sapeur.list');
+    Route::get('sapeurs/{id}', 'SapeurController@get')->name('api.v1.sapeur.list');
 });

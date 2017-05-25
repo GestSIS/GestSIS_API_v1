@@ -38,14 +38,27 @@ class UserApiController extends ApiController {
 		}
     }
 
-    public function checkToken(Request $request){
-        if($request->attributes->get('guest')){
-            return ['error' => 'not connected'];
-        }
+    public function signup(Request $request){
+        $user = new User();
 
-        $user = new User($request->attributes->get('uid'));
-        return ['user' => $this->formatUserDetails($user->getDetails()),
-                'sis_id' => $request->attributes->get('sis_id')];
+        $sisID = $request->input('sis_id');
+        $email = $request->input('email', '');
+        $password = $request->input('password', '');
+        $passwordConfirm = $request->input('password_confirmation', '');
+
+        User::setManagedDBConnection($sisID);
+
+        if($user->signup($sisID, $email, $password, $passwordConfirm)){
+            return response()->json([
+                    'success' => true,
+                    'message' => trans('account.creation_success')
+            ]);
+		}
+		else{
+			return response()->json([
+                    'error' => trans('account.creation_error')
+            ], 401);
+		}
     }
 
     private function formatUserDetails($details){

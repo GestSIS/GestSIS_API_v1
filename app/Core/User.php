@@ -3,7 +3,9 @@ namespace App\Core;
 
 use App\Exceptions\InvalidUserInputException;
 use DB;
+use Mail;
 use Firebase\JWT\JWT;
+use App\Mail\AccountActivation;
 
 class User {
     private $id,
@@ -56,6 +58,124 @@ class User {
     }
 
     /**
+     * Inscription de l'utilisateur
+     * @param  int    $sisID                ID du SIS
+     * @param  string $email                Adresse e-mail du sapeur
+     * @param  string $password             Mot de passe
+     * @param  string $passwordConfirmation Confirmation du mot de passe
+     * @return bool
+     */
+    public function signup(int $sisID, string $email, string $password, string $passwordConfirmation): bool{
+        if(ActivityLog::limitIsReached('create-account-fail')){
+            throw new InvalidUserInputException(trans('global.quota_exceeded'));
+        }
+        else if(!$this->isValidEmail($email)){
+            throw new InvalidUserInputException(trans('account.invalid_email'));
+        }
+        else if($password !== $passwordConfirmation){
+            throw new InvalidUserInputException(trans('account.invalid_password'));
+        }
+
+        $sapeur = DB::connection('mysql_managed')->select('
+                        SELECT SAP_ID, SAP_Prenom, SAP_Nom, SAP_Email
+                          FROM Sapeur
+                         WHERE SAP_Email = ?
+                           AND SAP_Actif = 1
+                           AND (SELECT COUNT(USER_ID)
+                                  FROM Users
+                                 WHERE Users.SAP_ID = Sapeur.SAP_ID) = 0',
+                        [$email]);
+
+        // Vérifie qu'un sapeur a cette adresse e-mail + que le sapeur n'a pas encore de compte
+        if(!isset($sapeur[0])){
+            ActivityLog::add('create-account-fail', 'SIS ID : '.$sisID.', E-mail : '.$email);
+            throw new InvalidUserInputException(trans('account.creation_error_email'));
+        }
+
+        $activationKey = md5(str_random(256));
+        DB::connection('mysql_managed')->update('
+            INSERT INTO Users (
+                SAP_ID,
+                USER_Pass,
+                USER_CpteStat,
+                USER_GestTache,
+                USER_VisuDocument,
+                USER_VisuEffectif,
+                USER_VisuTouteTache,
+                USER_VisuInfoSap,
+                USER_GestUser,
+                USER_KeyAct,
+                USER_Special,
+                USER_AjoutTache,
+                USER_VisuMateriel,
+                USER_VisuIntervention,
+                USER_VisuAgenda,
+                USER_VisuExercice,
+                USER_VisuCMedicaux,
+                USER_PrioritaireTache,
+                USER_VisuEntreprise,
+                USER_VisuDecompte,
+                USER_GestDecompte
+            )
+            VALUES (
+                ?,
+                ?,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0,
+                0,
+                ?,
+                0,0,0,0,0,0,0,0,0,0,0
+            )',
+            [$sapeur[0]->SAP_ID, md5($password), $activationKey]);
+
+        Mail::to($sapeur[0]->SAP_Email)->send(new AccountActivation($sisID, $sapeur[0]->SAP_Email, $activationKey));
+        ActivityLog::add('create-account-success', 'SIS ID : '.$sisID.', E-mail : '.$sapeur[0]->SAP_Email);
+
+        return true;
+    }
+
+    /**
+     * Activation du compte
+     * @param  int    $sisID ID du SIS
+     * @param  string $email Adresse e-mail du sapeur
+     * @param  string $key   Clé d'activation
+     * @return bool
+     */
+    public function activate(int $sisID, string $email, string $key): bool{
+        if(ActivityLog::limitIsReached('activate-account-fail')){
+            throw new InvalidUserInputException(trans('global.quota_exceeded'));
+        }
+
+        $user = DB::connection('mysql_managed')->select('
+                    SELECT Users.USER_ID
+                      FROM Users
+                     INNER JOIN Sapeur ON Users.SAP_ID = Sapeur.SAP_ID
+                     WHERE USER_KeyAct = ?
+                       AND SAP_Email = ?
+                       AND SAP_Actif = 1',
+                    [$key, $email]);
+
+        if(!isset($user[0])){
+            ActivityLog::add('activate-account-fail', 'SIS ID : '.$sisID.', E-mail : '.$email);
+            return false;
+        }
+
+        DB::connection('mysql_managed')->update('
+            UPDATE Users
+               SET USER_CpteStat = 1
+             WHERE USER_ID = ?',
+            [$user[0]->USER_ID]);
+
+        ActivityLog::add('activate-account-success', 'SIS ID : '.$sisID.', E-mail : '.$email);
+
+        return true;
+    }
+
+    /**
      * @return mixed Détails du user connecté
      */
     public function getDetails(){
@@ -85,6 +205,14 @@ class User {
 		];
 
 		return JWT::encode($token, base64_decode(substr(config('app.key'), 7)));
+	}
+
+    /**
+	 * @param string $email
+	 * @return bool si l'adresse e-mail passée en paramètre est valide
+	 */
+	private function isValidEmail(string $email): bool{
+		return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 	}
 
     /**
