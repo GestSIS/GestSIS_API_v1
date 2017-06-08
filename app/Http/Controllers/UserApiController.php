@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use App\Exceptions\InvalidUserInputException;
 
 use App\Core\User;
+use App\Core\Sis;
 
 /**
- * Controlleur pour la gestion du compte
+ * API pour la gestion du compte
  */
 class UserApiController extends ApiController {
 
@@ -19,7 +20,7 @@ class UserApiController extends ApiController {
         $username = $request->input('username');
         $password = $request->input('password');
 
-        User::setManagedDBConnection($sisID);
+        Sis::retrieveSettings($sisID);
         if($user->login($sisID, $username, $password)){
             $tokenExp = time() + 60*60*24*30; // 30 jours
             $details = $user->getDetails();
@@ -46,7 +47,7 @@ class UserApiController extends ApiController {
         $password = $request->input('password', '');
         $passwordConfirm = $request->input('password_confirmation', '');
 
-        User::setManagedDBConnection($sisID);
+        Sis::retrieveSettings($sisID);
 
         if($user->signup($sisID, $email, $password, $passwordConfirm)){
             return response()->json([

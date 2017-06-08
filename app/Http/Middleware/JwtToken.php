@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
 use App\Exceptions\ApiException;
 use App\Core\User;
+use App\Core\Sis;
 
 class JwtToken {
 
@@ -26,7 +27,7 @@ class JwtToken {
 
             if(!empty($jwt)){
                 $payload = User::decodeAccessToken($jwt);
-                User::setManagedDBConnection($payload->sis_id);
+                Sis::retrieveSettings($payload->sis_id);
 
                 if(User::isValid($payload->uid, $payload->iat)){
                     $request->attributes->add(['uid' => $payload->uid]);

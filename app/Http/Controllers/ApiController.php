@@ -60,7 +60,7 @@ abstract class ApiController extends Controller {
 	/**
 	 * Valide les paramètres start et limit
 	 */
-	protected function checkForValidLimiters($start, $limit, $max = 25){
+	protected function checkForValidLimiters($start, $limit, $max = 30){
 		$validator = Validator::make(
 						['start' => $start, 'limit' => $limit],
 						['start' => 'required|integer|min:0',

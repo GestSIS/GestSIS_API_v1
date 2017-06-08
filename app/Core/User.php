@@ -230,7 +230,7 @@ class User {
      * @param  int    $iat
      * @return bool
      */
-    public static function isValid(int $id, int $iat): bool{
+    public static function isValid(int $id, int $iat): bool {
         // Vérification si le user existe et qu'il est actif
         $result =  DB::connection('mysql_managed')->select('
                     SELECT COUNT(*) AS UTI_EXIST
@@ -243,33 +243,62 @@ class User {
     }
 
     /**
-     * Paramètre la connexion à la base de données du SIS rattaché
-     * @param int $sisID
+     * Détermine si l'utilisateur a le rôle passé en paramètre
+     * @param  int    $id
+     * @param  string $role
+     * @return bool
      */
-    public static function setManagedDBConnection(int $sisID){
-        $db = DB::select('
-                SELECT BDO_HOST, BDO_PORT, BDO_USER, BDO_PWD, BDO_NOM,
-                       BDO_CHARSET, BDO_COLLATION
-                  FROM SIS
-                 INNER JOIN BASE_DONNEES ON SIS_BDO_FK = BDO_PK
-                 WHERE SIS_PK = ?
-             ', [$sisID]);
+    public static function hasRole(int $id, string $role): bool {
+        // Conversion du rôle
+        $roleColumn = [
+            'tache_all' => 'USER_GestTache',
+            'document_read' => 'USER_VisuDocument',
+            'effectif_read' => 'USER_VisuEffectif',
+            // USER_VisuTouteTache => Compris dans tache_all
+            'effectif_all' => 'USER_VisuInfoSap',
+            'user_all' => 'USER_GestUser',
+            'tache_add' => 'USER_AjoutTache',
+            'materiel_read' => 'USER_VisuMateriel',
+            'intervention_read' => 'USER_VisuIntervention',
+            'agenda_read' => 'USER_VisuAgenda',
+            'exercice_read' => 'USER_VisuExercice',
+            'ctrl_med_read' => 'USER_VisuCMedicaux',
+            'tache_prioritaire_all' => 'USER_PrioritaireTache',
+            'entreprise_read' => 'USER_VisuEntreprise',
+            'decompte_read' => 'USER_VisuDecompte',
+            'decompte_all' => 'USER_GestDecompte'
+        ];
 
-        if(count($db) == 1){
-            config([
-                'database.connections.mysql_managed.host' => $db[0]->BDO_HOST,
-                'database.connections.mysql_managed.port' => $db[0]->BDO_PORT,
-                'database.connections.mysql_managed.database' => $db[0]->BDO_NOM,
-                'database.connections.mysql_managed.username' => decrypt($db[0]->BDO_USER),
-                'database.connections.mysql_managed.password' => decrypt($db[0]->BDO_PWD),
-                'database.connections.mysql_managed.charset' => $db[0]->BDO_CHARSET,
-                'database.connections.mysql_managed.collation' => $db[0]->BDO_COLLATION
-            ]);
-            DB::connection('mysql_managed')->reconnect();
+        if(!isset($roleColumn[$role])){
+            throw new \Exception('invalid role');
         }
-        else{
-            throw new InvalidUserInputException('invalid sis id');
-        }
+
+        $result =  DB::connection('mysql_managed')->select('
+                    SELECT COUNT(*) AS ROLE_ACCESS
+                    FROM Users
+                    WHERE USER_ID = ?
+                      AND '.$roleColumn[$role].' = 1',
+                    [$id]);
+
+        return $result[0]->ROLE_ACCESS == 1;
     }
 
+    /**
+     * Détermine si le sapeur a les accès pour visualiser le détail du sapeur
+     * @param  int  $id
+     * @return bool
+     */
+    public function canViewSapeur(int $id): bool {
+        $res = DB::connection('mysql_managed')->select('
+                SELECT SAP_ID, USER_VisuInfoSap
+                  FROM Users
+                 WHERE USER_ID = ?',
+                [$this->id]);
+
+        if(!isset($res[0])){
+            throw new InvalidUserInputException('invalid user id');
+        }
+
+        return $res[0]->SAP_ID == $id || $res[0]->USER_VisuInfoSap == 1;
+    }
 }

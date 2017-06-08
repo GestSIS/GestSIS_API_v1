@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Exceptions\InvalidUserInputException;
 
 use App\Core\User;
+use App\Core\Sis;
 
 /**
  * Controlleur pour la gestion du compte
@@ -19,7 +20,7 @@ class UserController extends Controller {
         $email = base64_decode($request->input('email', ''));
         $key = base64_decode($request->input('key', ''));
 
-        User::setManagedDBConnection($sisID);
+        Sis::retrieveSettings($sisID);
 
         if($user->activate($sisID, $email, $key)){
             $message = 'account.activation_success';
