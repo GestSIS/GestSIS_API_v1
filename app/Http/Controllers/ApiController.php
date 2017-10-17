@@ -21,7 +21,9 @@ abstract class ApiController extends Controller {
 	 * Constructeur général. Définit la clé du cache
 	 */
 	public function __construct(){
-		$this->key = Route::getCurrentRoute()->getName();
+		if(Route::getCurrentRoute()){
+			$this->key = Route::getCurrentRoute()->getName();
+		}		
 	}
 
 	/**
