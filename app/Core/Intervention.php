@@ -25,15 +25,18 @@ class Intervention {
      * @param  array  $filters
      * @return array
      */
-    public function getList(int $start, int $limit, string $orderCode,
+    public function getList(int $start = null, int $limit = null, string $orderCode,
                             bool $reverseSort, array $filters): array{
 
         $filters = array_where($filters, function($value, $key){
             return !is_null($value);
         });
         $params = $filters;
-        $params['start'] = $start;
-        $params['limit'] = $limit;
+
+        if(!is_null($start) && !is_null($limit)){
+            $params['start'] = $start;
+            $params['limit'] = $limit;
+        }
 
         $orderType = ($reverseSort ? 'DESC' : 'ASC');
         $orders = [
@@ -88,7 +91,7 @@ class Intervention {
                              '.(isset($filters['stat_fed_id']) ? ' AND Intervention.STF_ID = :stat_fed_id' : '').'
                              '.(isset($filters['sap_id']) ? ' AND IntSap.SAP_ID = :sap_id' : '').'
                              ORDER BY '.$orderBy.'
-                             LIMIT :start, :limit',
+                             '.(!is_null($start) && !is_null($limit) ? 'LIMIT :start, :limit' : ''),
                              $params);
         $count = $this->count();
 
@@ -115,7 +118,7 @@ class Intervention {
         }, $interventions);
 
         // Paging
-        if(($start + $limit) >= $count){
+        if(($start + $limit) >= $count || is_null($start) || is_null($limit)){
             $res['paging'] = ['next' => null];
         }
         else {

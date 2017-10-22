@@ -8,11 +8,14 @@ use Firebase\JWT\JWT;
 use App\Mail\AccountActivation;
 
 class User {
+    const TOKEN_DURATION = 60*60*24*30; // 30 jours
+
     private $id,
             $sisID;
 
-	public function __construct(int $id = null){
+	public function __construct(int $id = null, int $sisID = null){
 		$this->id = $id;
+        $this->sisID = $sisID;
 	}
 
     /**

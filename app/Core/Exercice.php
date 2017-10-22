@@ -25,15 +25,18 @@ class Exercice {
      * @param  array  $filters
      * @return array
      */
-    public function getList(int $start, int $limit, string $orderCode,
+    public function getList(int $start = null, int $limit = null, string $orderCode,
                             bool $reverseSort, array $filters): array{
 
         $filters = array_where($filters, function($value, $key){
             return !is_null($value);
         });
         $params = $filters;
-        $params['start'] = $start;
-        $params['limit'] = $limit;
+
+        if(!is_null($start) && !is_null($limit)){
+            $params['start'] = $start;
+            $params['limit'] = $limit;
+        }
 
         $orderType = ($reverseSort ? 'DESC' : 'ASC');
         $orders = [
@@ -83,7 +86,7 @@ class Exercice {
                          '.(isset($filters['loc_id']) ? ' AND Localite.LOC_ID = :loc_id' : '').'
                          '.(isset($filters['cex_id']) ? ' AND Exercice.CEX_ID = :cex_id' : '').'
                          ORDER BY '.$orderBy.'
-                         LIMIT :start, :limit',
+                         '.(!is_null($start) && !is_null($limit) ? 'LIMIT :start, :limit' : ''),
                          $params);
         $count = $this->count();
 
@@ -107,7 +110,7 @@ class Exercice {
         }, $exercices);
 
         // Paging
-        if(($start + $limit) >= $count){
+        if(($start + $limit) >= $count || is_null($start) || is_null($limit)){
             $res['paging'] = ['next' => null];
         }
         else {

@@ -22,7 +22,7 @@ class UserApiController extends ApiController {
 
         Sis::retrieveSettings($sisID);
         if($user->login($sisID, $username, $password)){
-            $tokenExp = time() + 60*60*24*30; // 30 jours
+            $tokenExp = time() + User::TOKEN_DURATION;
             $details = $user->getDetails();
 
             return response()->json([
@@ -60,6 +60,17 @@ class UserApiController extends ApiController {
                     'error' => trans('account.creation_error')
             ], 401);
 		}
+    }
+
+    public function refreshToken(Request $request){
+        $account = new User($request->attributes->get('uid'), $request->attributes->get('sis_id'));
+        $tokenExp = time() + User::TOKEN_DURATION;
+
+        return response()->json([
+                'success' => true,
+                'token' => $account->getAccessToken($tokenExp),
+                'token_exp' => $tokenExp,
+        ]);
     }
 
     private function formatUserDetails($details){

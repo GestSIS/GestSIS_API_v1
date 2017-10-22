@@ -20,8 +20,6 @@ class ExerciceApiController extends ApiController {
             'annee', 'loc_id', 'cex_id', 'sap_id'
         ];
 
-        $this->checkForValidLimiters($start, $limit);
-
         $exercice = new Exercice();
 
         $exercices = $exercice->getList($start, $limit, $order, $reverseSort, $request->only($availableFilters));

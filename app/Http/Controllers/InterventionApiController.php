@@ -20,8 +20,6 @@ class InterventionApiController extends ApiController {
             'loc_id', 'annee', 'type_int_id', 'traitement_id', 'stat_fed_id', 'sap_id'
         ];
 
-        $this->checkForValidLimiters($start, $limit);
-
         $intervention = new Intervention();
 
         $interventions = $intervention->getList($start, $limit, $order, $reverseSort, $request->only($availableFilters));

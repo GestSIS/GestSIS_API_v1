@@ -56,12 +56,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if($exception instanceof InvalidUserInputException ||
-           $exception instanceof ApiException){
+        if($request->segment(1) === 'v1'){
             return response()->json(['error' => $exception->getMessage()], 400);
-        }
-        elseif($request->segment(1) == 'api'){
-            return response()->json(['error' => 'Erreur :('], 400);
         }
 
         return parent::render($request, $exception);

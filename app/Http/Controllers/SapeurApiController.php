@@ -24,8 +24,6 @@ class SapeurApiController extends ApiController {
             'actif', 'politique', 'effectif_en'
         ];
 
-        $this->checkForValidLimiters($start, $limit);
-
         $sapeur = new Sapeur();
 
 		$sapeurs = $sapeur->getList($start, $limit, $order, $reverseSort, $request->only($availableFilters));

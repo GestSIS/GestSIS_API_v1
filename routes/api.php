@@ -30,6 +30,10 @@ Route::group(['prefix' => 'v1', 'middleware' => ['jwt']], function(){
     Route::group(['prefix' => 'user'], function(){
         Route::post('login', 'UserApiController@login')->name('api.v1.user.login');
         Route::post('signup', 'UserApiController@signup')->name('api.v1.user.signup');
+
+        Route::group(['middleware' => 'jwt.auth'], function(){
+            Route::post('refresh-token', 'UserApiController@refreshToken')->name('api.v1.account.refresh_token');
+        });
     });
 
     Route::group(['middleware' => 'jwt.auth'], function(){
