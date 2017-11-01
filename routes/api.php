@@ -48,5 +48,12 @@ Route::group(['prefix' => 'v1', 'middleware' => ['jwt']], function(){
         // Interventions
         Route::get('interventions', 'InterventionApiController@index')->name('api.v1.intervention.index')->middleware('role:intervention_read');
         Route::get('interventions/{id}', 'InterventionApiController@show')->name('api.v1.intervention.show')->middleware('role:intervention_read');
+
+        // Vehicules
+        Route::get('vehicule', 'VehiculeApiController@index')->name('api.v1.vehicule.index');
+
+        // Materiel
+        Route::get('materiel', 'MaterielApiController@index')->name('api.v1.materiel.index');
+
     });
 });

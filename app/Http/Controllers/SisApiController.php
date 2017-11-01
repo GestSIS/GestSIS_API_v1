@@ -17,17 +17,7 @@ class SisApiController extends ApiController {
         $sis = new Sis();
 
         return response()->json([
-                'data' => $this->formatSisIndex($sis->getList())
+                'data' => $sis->getList()
         ]);
-    }
-
-    private function formatSisIndex($sisList){
-        return array_map(function($sis) {
-            return [
-                'id' => $sis->SIS_PK,
-                'nom' => $sis->SIS_NOM,
-                'url' => $sis->SIS_URL
-            ];
-        }, $sisList);
     }
 }

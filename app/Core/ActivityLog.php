@@ -16,8 +16,8 @@ class ActivityLog {
     public static function limitIsReached(string $code){
         // Récupération d'informations sur le quota
 		$result =  DB::select('
-					SELECT LCA_PK, LCA_LIMITE
-					  FROM LOG_CATEGORIE
+					SELECT LCA_ID, LCA_LIMITE
+					  FROM lOG_CAT
 				     WHERE LCA_CODE = ?',
                     [$code]);
 
@@ -25,7 +25,7 @@ class ActivityLog {
 		if(!isset($result[0])){
 			throw new \Exception('invalid log_categorie code');
 		}
-        $id = $result[0]->LCA_PK;
+        $id = $result[0]->LCA_ID;
         $limit = $result[0]->LCA_LIMITE;
 
         // Pas de limite
@@ -35,10 +35,10 @@ class ActivityLog {
 
         // Récupération du nombre d'action
 		$result = DB::select('
-					SELECT COUNT(LOG_PK) AS COUNT_USER_ACTIONS
-					  FROM LOG
+					SELECT COUNT(LOG_ID) AS COUNT_USER_ACTIONS
+					  FROM log
 				     WHERE LOG_IP = ? AND
-						   LOG_LCA_FK = ? AND
+						   LCA_ID = ? AND
 						   TIMESTAMPDIFF(DAY, NOW(), LOG_TIMESTAMP) = 0',
 					array(Request::ip(), $id));
 
@@ -50,13 +50,13 @@ class ActivityLog {
             INSERT INTO LOG (
                 LOG_IP,
                 LOG_TIMESTAMP,
-                LOG_LCA_FK,
+                LCA_ID,
                 LOG_DETAILS
             )
             VALUES (
                 ?,
                 NOW(),
-                (SELECT LCA_PK FROM LOG_CATEGORIE WHERE LCA_CODE = ?),
+                (SELECT LCA_ID FROM LOG_CAT WHERE LCA_CODE = ?),
                 ?
                 )',
             [Request::ip(), $code, $details]);
