@@ -10,12 +10,12 @@ class BaseData {
    * @return liste des localités par communes
    */
   static public function getDistrictLocality(){
-    $commune = DB::connection('mysql_dba')->select('
+    $communes = DB::connection('mysql_dba')->select('
                 SELECT COM_ID,
                        COM_Designation
                   FROM
-                       commune
-                  ORDER BY commune.COM_Designation ASC');
+                       Commune
+                  ORDER BY Commune.COM_Designation ASC');
 
     return array_map(function($commune) {
         return [
@@ -23,7 +23,7 @@ class BaseData {
             'nom' => $commune->COM_Designation,
             'localite' => BaseData::getLocalityPerDistrict($commune->COM_ID)
         ];
-    }, $commune);
+    }, $communes);
   }
 
   /**
@@ -31,19 +31,19 @@ class BaseData {
    * @return liste des localités
    */
   static public function getLocalities(){
-    $locality = DB::connection('mysql_dba')->select('
+    $localities = DB::connection('mysql_dba')->select('
                     SELECT LOC_ID,
                            LOC_NPA,
                            LOC_Designation
-                      FROM localite
-                      ORDER BY localite.LOC_Designation ASC');
+                      FROM Localite
+                      ORDER BY Localite.LOC_Designation ASC');
     return array_map(function($locality) {
         return [
             'id' => $locality->LOC_ID,
             'npa' => $locality->LOC_NPA,
             'nom' => $locality->LOC_Designation
         ];
-    }, $locality);
+    }, $localities);
   }
 
   /**
@@ -52,13 +52,13 @@ class BaseData {
    * @return liste des localités pour une commune
    */
   static public function getLocalityPerDistrict(int $id){
-    $locality = DB::connection('mysql_dba')->select('
+    $localities = DB::connection('mysql_dba')->select('
                 SELECT LOC_ID,
                        LOC_NPA,
                        LOC_Designation
-                  FROM localite
-                  WHERE localite.COM_ID = ?
-                  ORDER BY localite.LOC_Designation ASC',
+                  FROM Localite
+                  WHERE Localite.COM_ID = ?
+                  ORDER BY Localite.LOC_Designation ASC',
                 [$id]);
     return array_map(function($locality) {
         return [
@@ -66,7 +66,7 @@ class BaseData {
             'npa' => $locality->LOC_NPA,
             'nom' => $locality->LOC_Designation
         ];
-    }, $locality);
+    }, $localities);
   }
 
   /**
@@ -74,13 +74,13 @@ class BaseData {
    * @return liste des statistiques fédérales
    */
   static public function getFederalStat(){
-    $federalStat = DB::connection('mysql_dba')->select('
-                SELECT statfederal.STF_ID,
-                       statfederal.STF_Statut,
-                       statfederal.STF_Designation,
-                       statfederal.STF_Tri
-                  FROM statfederal
-                  ORDER BY statfederal.STF_ID ASC');
+    $federalStats = DB::connection('mysql_dba')->select('
+                SELECT STF_ID,
+                       STF_Statut,
+                       STF_Designation,
+                       STF_Tri
+                  FROM StatFederal
+                  ORDER BY STF_ID ASC');
     return array_map(function($federalStat) {
         return [
             'id' => $federalStat->STF_ID,
@@ -88,7 +88,7 @@ class BaseData {
             'nom' => $federalStat->STF_Designation,
             'tri' => $federalStat->STF_Tri
         ];
-    }, $federalStat);
+    }, $federalStats);
   }
 
   /**
@@ -96,13 +96,13 @@ class BaseData {
    * @return liste des types d'interventions
    */
   static public function getInterventiontype(){
-    $interventionType = DB::connection('mysql_dba')->select('
-                SELECT typeintervention.TINT_ID,
-                       typeintervention.STINT_ID,
-                       typeintervention.TINT_Tri,
-                       typeintervention.TINT_Designation
-                  FROM typeintervention
-                  ORDER BY typeintervention.TINT_Tri ASC');
+    $interventionTypes = DB::connection('mysql_dba')->select('
+                SELECT TINT_ID,
+                       STINT_ID,
+                       TINT_Tri,
+                       TINT_Designation
+                  FROM TypeIntervention
+                  ORDER BY TINT_Tri ASC');
     return array_map(function($interventionType) {
         return [
             'id' => $interventionType->TINT_ID,
@@ -110,7 +110,7 @@ class BaseData {
             'nom' => $interventionType->TINT_Designation,
             'tri' => $interventionType->TINT_Tri
         ];
-    }, $interventionType);
+    }, $interventionTypes);
   }
 
   /**
@@ -118,14 +118,14 @@ class BaseData {
    * @return liste des grades
    */
   static public function getGrade(){
-    $grade = DB::connection('mysql_dba')->select('
-                SELECT grade.GRA_ID,
-                       grade.GRA_Designation,
-                       grade.GRA_Abr,
-                       grade.GRA_Grp,
-                       grade.GRA_Tri
-                  FROM grade
-                  ORDER BY grade.GRA_Tri ASC');
+    $grades = DB::connection('mysql_dba')->select('
+                SELECT GRA_ID,
+                       GRA_Designation,
+                       GRA_Abr,
+                       GRA_Grp,
+                       GRA_Tri
+                  FROM Grade
+                  ORDER BY GRA_Tri ASC');
     return array_map(function($grade) {
         return [
             'id' => $grade->GRA_ID,
@@ -134,7 +134,7 @@ class BaseData {
             'grp' => $grade->GRA_Grp,
             'tri' => $grade->GRA_Tri
         ];
-    }, $grade);
+    }, $grades);
   }
 
   /**
@@ -142,18 +142,18 @@ class BaseData {
    * @return liste des cours
    */
    static public function getCours(){
-     $cours = DB::connection('mysql_dba')->select('
-                   SELECT cours.COU_ID,
-                          cours.COU_Prec,
-                          cours.GRA_ID,
-                          cours.GRA_ID2004,
-                          cours.FON_ID,
-                          cours.COU_Fon_Cumul,
-                          cours.COU_Abr,
-                          cours.COU_Designation,
-                          cours.COU_Tri
-                     FROM cours
-                     ORDER BY cours.COU_Tri ASC');
+     $coursList = DB::connection('mysql_dba')->select('
+                   SELECT COU_ID,
+                          COU_Prec,
+                          GRA_ID,
+                          GRA_ID2004,
+                          FON_ID,
+                          COU_Fon_Cumul,
+                          COU_Abr,
+                          COU_Designation,
+                          COU_Tri
+                     FROM Cours
+                     ORDER BY COU_Tri ASC');
      return array_map(function($cours) {
          return [
              'id' => $cours->COU_ID,
@@ -166,7 +166,7 @@ class BaseData {
              'nom' => $cours->COU_Designation,
              'tri' => $cours->COU_Tri
          ];
-     }, $cours);
+     }, $coursList);
    }
 
    /**
@@ -174,18 +174,18 @@ class BaseData {
     * @return liste des type de controle médical
     */
     static public function getControlesMedicauxTypes(){
-      $cmt = DB::connection('mysql_dba')->select('
-                    SELECT cmed_type.CMT_ID,
-                           cmed_type.CMT_Type,
-                           cmed_type.CMT_Tri
-                      FROM cmed_type
-                      ORDER BY cmed_type.CMT_Tri ASC');
+      $cmts = DB::connection('mysql_dba')->select('
+                    SELECT CMT_ID,
+                           CMT_Type,
+                           CMT_Tri
+                      FROM CMED_Type
+                      ORDER BY CMT_Tri ASC');
       return array_map(function($cmt) {
           return [
               'id' => $cmt->CMT_ID,
               'type' => $cmt->CMT_Type,
               'tri' => $cmt->CMT_Tri
           ];
-      }, $cmt);
+      }, $cmts);
     }
 }
