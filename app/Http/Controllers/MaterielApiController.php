@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 
-use App\Core\Intervention;
+use App\Core\MaterielIntervention;
 
 /**
  * API pour la gestion des exercices

@@ -6,17 +6,17 @@ use DB;
 
 class Vehicule {
   /**
-   * Récupération de materiel
-   * @return liste du matériel
+   * Récupération des véhicules
+   * @return liste des véhicules
    */
-   static public function getListe(){
-     $vehicule = DB::connection('mysql_managed')->select('
+   static public function getList(){
+     $vehicules = DB::connection('mysql_managed')->select('
                    SELECT VHCI_ID,
                         VHCI_Designation,
                         VHCI_Tri
                    FROM
                         VhcIntervention
-                   ORDER BY MatIntervention.MAT_Tri ASC');
+                   ORDER BY VhcIntervention.VHCI_Tri ASC');
 
      return array_map(function($vehicule) {
          return [
@@ -24,7 +24,7 @@ class Vehicule {
              'nom' => $vehicule->VHCI_Designation,
              'tri' => $vehicule->VHCI_Tri
          ];
-     }, $vehicule);
+     }, $vehicules);
    }
 
 }

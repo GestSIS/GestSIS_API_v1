@@ -38,22 +38,22 @@ class Sis {
      */
     public static function retrieveSettings(int $sisID){
         $res = DB::select('
-                SELECT BDO_HOST, BDO_PORT, BDO_USER, BDO_PWD, BDO_NOM,
-                       BDO_CHARSET, BDO_COLLATION, SIS_NOM, SIS_Abr, SIS_Actif, SIS_URL
+                SELECT BDO_Host, BDO_Port, BDO_User, BDO_PWD, BDO_Nom,
+                       BDO_Charset, BDO_Collation, SIS_NOM, SIS_Abr, SIS_Actif, SIS_URL
                   FROM SIS
-                 INNER JOIN BASE_DONNEES ON SIS.BDO_ID = BASE_DONNEES.BDO_ID
+                 INNER JOIN Base_Donnees ON SIS.BDO_ID = Base_Donnees.BDO_ID
                  WHERE SIS_ID = ?
              ', [$sisID]);
 
         if(count($res) == 1){
             config([
-                'database.connections.mysql_managed.host' => $res[0]->BDO_HOST,
-                'database.connections.mysql_managed.port' => $res[0]->BDO_PORT,
-                'database.connections.mysql_managed.database' => $res[0]->BDO_NOM,
-                'database.connections.mysql_managed.username' => decrypt($res[0]->BDO_USER),
+                'database.connections.mysql_managed.host' => $res[0]->BDO_Host,
+                'database.connections.mysql_managed.port' => $res[0]->BDO_Port,
+                'database.connections.mysql_managed.database' => $res[0]->BDO_Nom,
+                'database.connections.mysql_managed.username' => decrypt($res[0]->BDO_User),
                 'database.connections.mysql_managed.password' => decrypt($res[0]->BDO_PWD),
-                'database.connections.mysql_managed.charset' => $res[0]->BDO_CHARSET,
-                'database.connections.mysql_managed.collation' => $res[0]->BDO_COLLATION,
+                'database.connections.mysql_managed.charset' => $res[0]->BDO_Charset,
+                'database.connections.mysql_managed.collation' => $res[0]->BDO_Collation,
                 'sis.name' => $res[0]->SIS_NOM,
                 'sis.abr' => $res[0]->SIS_Abr,
                 'sis.actif' => $res[0]->SIS_Actif,
