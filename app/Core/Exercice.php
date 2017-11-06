@@ -85,6 +85,7 @@ class Exercice {
                          '.(isset($filters['annee']) ? ' AND Exercice.EXE_AnneeFiltre = :annee' : '').'
                          '.(isset($filters['loc_id']) ? ' AND Localite.LOC_ID = :loc_id' : '').'
                          '.(isset($filters['cex_id']) ? ' AND Exercice.CEX_ID = :cex_id' : '').'
+                         '.(isset($filters['date_debut']) ? ' AND Exercice.EXE_Date >= :date_debut' : '').'
                          ORDER BY '.$orderBy.'
                          '.(!is_null($start) && !is_null($limit) ? 'LIMIT :start, :limit' : ''),
                          $params);
@@ -105,7 +106,8 @@ class Exercice {
                 'present' => $exercice->EXESAP_Present,
                 'amende' => $exercice->EXESAP_Amende,
                 'type_excuse' => $exercice->EXCTYPE_Designation,
-                'id_type_excuse' => $exercice->EXCTYPE_ID
+                'id_type_excuse' => $exercice->EXCTYPE_ID,
+                'sapeurs' => $this->getSapeursList($exercice->EXE_ID)
             ];
         }, $exercices);
 
@@ -179,7 +181,7 @@ class Exercice {
      * Liste des sapeurs qui ont effectués l'exercice
      * @return array
      */
-    public function getSapeursList(): array{
+    public function getSapeursList(int $id = null): array{
         $sapeurs = DB::connection('mysql_managed')->select('
                 SELECT Sapeur.SAP_ID,
                        Sapeur.SAP_Nom,
@@ -193,7 +195,7 @@ class Exercice {
                   LEFT OUTER JOIN ExcuseType ON ExeSap.EXCTYPE_ID = ExcuseType.EXCTYPE_ID
        	         WHERE ExeSap.EXE_ID = ?
                  ORDER BY Sapeur.SAP_Nom ASC, Sapeur.SAP_Prenom ASC',
-                [$this->id]);
+                [$id ?? $this->id]);
 
         return array_map(function($sapeur) {
             return [

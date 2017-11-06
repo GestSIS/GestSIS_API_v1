@@ -17,7 +17,7 @@ class ExerciceApiController extends ApiController {
         $order = $request->input('order', '');
         $reverseSort = $request->input('reverse', false) == '1';
         $availableFilters = [
-            'annee', 'loc_id', 'cex_id', 'sap_id'
+            'annee', 'loc_id', 'cex_id', 'sap_id', 'date_debut'
         ];
 
         $exercice = new Exercice();

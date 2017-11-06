@@ -17,15 +17,6 @@ Route::group(['prefix' => 'v1', 'middleware' => ['jwt']], function(){
 
     Route::get('sis', 'SisApiController@index')->name('api.v1.sis.index');
 
-    // Données de bases
-    Route::get('statfederal', 'BaseDataApiController@statfederal')->name('api.v1.basedata.statfederal');
-    Route::get('typeintervention', 'BaseDataApiController@typeintervention')->name('api.v1.basedata.typeintervention');
-    Route::get('grade', 'BaseDataApiController@grade')->name('api.v1.basedata.grade');
-    Route::get('cours', 'BaseDataApiController@cours')->name('api.v1.basedata.cours');
-    Route::get('districtlocality', 'BaseDataApiController@districtlocality')->name('api.v1.basedata.districtlocality');
-    Route::get('localities', 'BaseDataApiController@localities')->name('api.v1.basedata.localities');
-    Route::get('cmedtype', 'BaseDataApiController@cmedtype')->name('api.v1.basedata.cmedtype');
-
     // Login & signup
     Route::group(['prefix' => 'user'], function(){
         Route::post('login', 'UserApiController@login')->name('api.v1.user.login');
@@ -55,5 +46,13 @@ Route::group(['prefix' => 'v1', 'middleware' => ['jwt']], function(){
         // Materiel
         Route::get('materiel', 'MaterielApiController@index')->name('api.v1.materiel.index');
 
+        // Données de bases
+        Route::get('statfederal', 'BaseDataApiController@statfederal')->name('api.v1.basedata.statfederal');
+        Route::get('typeintervention', 'BaseDataApiController@typeintervention')->name('api.v1.basedata.typeintervention');
+        Route::get('grade', 'BaseDataApiController@grade')->name('api.v1.basedata.grade');
+        Route::get('cours', 'BaseDataApiController@cours')->name('api.v1.basedata.cours');
+        Route::get('districtlocality', 'BaseDataApiController@districtlocality')->name('api.v1.basedata.districtlocality');
+        Route::get('cmedtype', 'BaseDataApiController@cmedtype')->name('api.v1.basedata.cmedtype');
+        Route::get('localities', 'BaseDataApiController@localities')->name('api.v1.basedata.localities');
     });
 });
