@@ -26,7 +26,7 @@ class SapeurApiController extends ApiController {
 
         $sapeur = new Sapeur();
 
-		$sapeurs = $sapeur->getList($start, $limit, $order, $reverseSort, $request->only($availableFilters));
+		    $sapeurs = $sapeur->getList($start, $limit, $order, $reverseSort, $request->only($availableFilters));
 
         return response()->json($sapeurs);
     }

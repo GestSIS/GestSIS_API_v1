@@ -65,4 +65,21 @@ class Sis {
             throw new InvalidUserInputException('invalid sis id');
         }
     }
+
+    public static function getLocalities(int $sisID){
+      $localities = DB::connection('mysql_dba')->select('
+                        SELECT localite.LOC_ID, LOC_NPA, LOC_Designation
+                        FROM Localite
+                        INNER JOIN localite_sis ON localite_sis.loc_id = localite.loc_id
+                        WHERE SIS_No= ?
+                        ORDER BY LOS_PAR_ID;', [$sisID]);
+
+      return array_map(function($locality) {
+          return [
+              'id' => $locality->LOC_ID,
+              'npa' => $locality->LOC_NPA,
+              'nom' => $locality->LOC_Designation
+          ];
+      }, $localities);
+    }
 }

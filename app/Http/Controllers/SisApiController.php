@@ -14,10 +14,14 @@ use App\Core\Sis;
 class SisApiController extends ApiController {
 
     public function index(Request $request){
-        $sis = new Sis();
-
         return response()->json([
-                'data' => $sis->getList()
+                'data' => Sis::getList()
+        ]);
+    }
+
+    public function localities(Request $resquest,int $id){
+        return response()->json([
+                'data' => Sis::getLocalities($id)
         ]);
     }
 }

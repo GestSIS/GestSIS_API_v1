@@ -1,3 +1,10 @@
+-- --------------------------------------------------------------------------------
+-- Ajout des tables log/logCat/BaseDonnees/
+-- Ainsi que mdofication de la table SIS, ajout de la colonne SIS_Actif, BDO_Id et SIS_Url
+-- Note: boolean sera transforme en tinyint(1)
+-- 2017-11-01 / Bastien Wermeille
+-- --------------------------------------------------------------------------------
+
 -- ---------------------------------------
 -- A MODIFIER POUR UTILISER LA BONNE BD --
 -- ---------------------------------------
@@ -10,7 +17,7 @@ DROP TABLE IF EXISTS `log_cat`;
 DROP TABLE IF EXISTS `basedonnees`;
 
 
-alter table SIS add column SIS_Actif tinyint(1);
+alter table SIS add column SIS_Actif boolean;
 alter table SIS add column BDO_ID int(10);
 alter table SIS add column SIS_URL text;
 
@@ -24,7 +31,7 @@ create table Base_Donnees (
     BDO_Charset varchar(255),
     BDO_Collation varchar(255)
 )CHARACTER SET utf8mb4 collate utf8mb4_general_ci;
-	
+
 --
 -- AUTO_INCREMENT pour la table `Base_Donnees`
 --
@@ -35,13 +42,13 @@ ALTER TABLE `Base_Donnees`
 create table Log_Cat(
 	LCA_ID int(10) PRIMARY KEY,
 	LCA_Code varchar(50) NOT NULL,
-	LCA_Limite int(10)
+	LCA_Limit int(10)
 )CHARACTER SET utf8mb4 collate utf8mb4_general_ci;
 
 ALTER TABLE `Log_Cat`
   MODIFY `LCA_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
-  
+
 -- Logging table
 create table `Log` (
 	LOG_ID int(10) UNSIGNED NOT NULL PRIMARY KEY,
@@ -53,7 +60,7 @@ create table `Log` (
 
 
 ALTER TABLE `Log`
-ADD FOREIGN KEY (LCA_ID) REFERENCES Log_Cat(LCA_ID); 
+ADD FOREIGN KEY (LCA_ID) REFERENCES Log_Cat(LCA_ID);
 
 ALTER TABLE `Log`
   MODIFY `LOG_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
