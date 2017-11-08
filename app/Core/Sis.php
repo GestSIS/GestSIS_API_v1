@@ -8,7 +8,6 @@ use DB;
  * Classe représentant un SIS
  */
 class Sis {
-
     /**
      * @return mixed Liste des SIS
      */
@@ -57,7 +56,8 @@ class Sis {
                 'sis.name' => $res[0]->SIS_NOM,
                 'sis.abr' => $res[0]->SIS_Abr,
                 'sis.actif' => $res[0]->SIS_Actif,
-                'sis.url' => $res[0]->SIS_URL
+                'sis.url' => $res[0]->SIS_URL,
+                'sis.id' => $sisID
             ]);
             DB::connection('mysql_managed')->reconnect();
         }
@@ -66,13 +66,13 @@ class Sis {
         }
     }
 
-    public static function getLocalities(int $sisID){
+    public static function getLocalities(int $sis){
       $localities = DB::connection('mysql_dba')->select('
                         SELECT localite.LOC_ID, LOC_NPA, LOC_Designation
                         FROM Localite
                         INNER JOIN localite_sis ON localite_sis.loc_id = localite.loc_id
                         WHERE SIS_No= ?
-                        ORDER BY LOS_PAR_ID;', [$sisID]);
+                        ORDER BY LOS_PAR_ID;', [config('sis.id')]);
 
       return array_map(function($locality) {
           return [
