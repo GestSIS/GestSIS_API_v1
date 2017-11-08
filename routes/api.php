@@ -49,6 +49,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['jwt']], function(){
         // Sis
         Route::get('localities/{id}', 'SisApiController@localities')->name('api.v1.sis.localities');
 
+        // Téléphones
+        Route::get('telephones', 'TelephoneApiController@index')->name('api.v1.telephone.index');
+
         // Données de bases
         Route::get('statfederal', 'BaseDataApiController@statfederal')->name('api.v1.basedata.statfederal');
         Route::get('typeintervention', 'BaseDataApiController@typeintervention')->name('api.v1.basedata.typeintervention');
