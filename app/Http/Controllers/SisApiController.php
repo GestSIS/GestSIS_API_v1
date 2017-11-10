@@ -14,14 +14,20 @@ use App\Core\Sis;
 class SisApiController extends ApiController {
 
     public function index(Request $request){
+        $availableFilters = [
+          'actif', 'mobile'
+        ];
+
+        $sis = new Sis();
+
         return response()->json([
-                'data' => Sis::getList()
+                'data' => $sis->getList($request->only($availableFilters))
         ]);
     }
 
-    public function localities(Request $resquest,int $id){
+    public function localities(Request $resquest){
         return response()->json([
-                'data' => Sis::getLocalities($id)
+                'data' => Sis::getLocalities()
         ]);
     }
 }

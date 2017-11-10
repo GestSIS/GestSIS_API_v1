@@ -11,21 +11,33 @@ class Sis {
     /**
      * @return mixed Liste des SIS
      */
-    public function getList(){
+    public function getList(array $filters): array {
+        $filters = array_where($filters, function($value, $key){
+            return !is_null($value);
+        });
+        $params = $filters;
+
         $sis = DB::connection('mysql_dba')->select('
                 SELECT SIS_ID,
                        SIS_NOM,
                        SIS_Abr,
                        SIS_Actif,
-                       SIS_URL
+                       SIS_URL,
+                       SIS_Mobile
                   FROM SIS
-                  ORDER BY SIS_NOM ASC');
+                 WHERE 1 = 1
+                 '.(isset($filters['actif']) ? ' AND SIS_Actif = :actif' : '').'
+                 '.(isset($filters['mobile']) ? ' AND SIS_Mobile = :mobile' : '').'
+                 ORDER BY SIS_NOM ASC',
+                $params);
+
        return array_map(function($sis) {
            return [
                'id' => $sis->SIS_ID,
                'nom' => $sis->SIS_NOM,
                'abr' => $sis->SIS_Abr,
                'actif' => $sis->SIS_Actif,
+               'mobile' => $sis->SIS_Mobile,
                'url' => $sis->SIS_URL
            ];
        }, $sis);
@@ -66,11 +78,11 @@ class Sis {
         }
     }
 
-    public static function getLocalities(int $sis){
+    public static function getLocalities(){
       $localities = DB::connection('mysql_dba')->select('
-                        SELECT localite.LOC_ID, LOC_NPA, LOC_Designation
+                        SELECT Localite.LOC_ID, LOC_NPA, LOC_Designation
                         FROM Localite
-                        INNER JOIN localite_sis ON localite_sis.loc_id = localite.loc_id
+                        INNER JOIN Localite_SIS ON Localite_SIS.loc_id = Localite.loc_id
                         WHERE SIS_No= ?
                         ORDER BY LOS_PAR_ID;', [config('sis.id')]);
 
