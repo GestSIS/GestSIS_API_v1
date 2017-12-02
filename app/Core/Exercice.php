@@ -189,7 +189,8 @@ class Exercice {
                        ExeSap.EXESAP_Convoque,
                        ExeSap.EXESAP_Present,
                        ExeSap.EXESAP_Amende,
-                       ExcuseType.EXCTYPE_Designation
+                       ExcuseType.EXCTYPE_Designation,
+                       NULL AS SAP_Absent
                   FROM ExeSap
                  INNER JOIN Sapeur ON ExeSap.SAP_ID = Sapeur.SAP_ID
                   LEFT OUTER JOIN ExcuseType ON ExeSap.EXCTYPE_ID = ExcuseType.EXCTYPE_ID
@@ -204,6 +205,7 @@ class Exercice {
                 'prenom' => $sapeur->SAP_Prenom,
                 'convoque' => $sapeur->EXESAP_Convoque,
                 'present' => $sapeur->EXESAP_Present,
+                'absent' => $sapeur->SAP_Absent,
                 'amende' => $sapeur->EXESAP_Amende,
                 'type_excuse' => $sapeur->EXCTYPE_Designation
             ];
