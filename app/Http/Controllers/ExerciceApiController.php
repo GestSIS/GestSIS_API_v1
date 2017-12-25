@@ -27,6 +27,12 @@ class ExerciceApiController extends ApiController {
         return response()->json($exercices);
     }
 
+    public function excusesTypes(Request $request){
+        $exercice = new Exercice();
+
+        return $exercice->getExcuseType();
+    }
+
     public function show(Request $request, $id){
         $exercice = new Exercice($id);
 

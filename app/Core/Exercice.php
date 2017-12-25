@@ -16,6 +16,23 @@ class Exercice {
         }
     }
 
+    public static function getExcuseType():array{
+      $excusesTypes = DB::connection('mysql_managed')->select('
+                      SELECT ExcuseType.EXCTYPE_ID,
+                             ExcuseType.EXCTYPE_Designation
+                       FROM ExcuseType
+                       ORDER BY EXCTYPE_ID;');
+
+      $res['data'] = array_map(function($excusesTypes) {
+          return [
+              'id' => $excusesTypes->EXCTYPE_ID,
+              'designation' => $excusesTypes->EXCTYPE_Designation
+          ];
+      }, $excusesTypes);
+
+      return $res;
+    }
+
     /**
      * Retourne une liste d'exercices selon les filtres passés en paramètre
      * @param  int    $start
@@ -219,6 +236,4 @@ class Exercice {
         $result = DB::connection('mysql_managed')->select('SELECT FOUND_ROWS() AS FOUND_ROWS');
         return $result[0]->FOUND_ROWS;
     }
-
-
 }

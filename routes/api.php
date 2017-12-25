@@ -33,6 +33,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['jwt']], function(){
         Route::get('sapeurs/{id}', 'SapeurApiController@show')->name('api.v1.sapeur.show')->middleware('role:effectif_read');
 
         // Exercices
+        Route::get('excusestypes', 'ExerciceApiController@excusesTypes')->name('api.v1.exercice.excusesTypes')->middleware('role:exercice_read');
         Route::get('exercices', 'ExerciceApiController@index')->name('api.v1.exercice.index')->middleware('role:exercice_read');
         Route::get('exercices/{id}', 'ExerciceApiController@show')->name('api.v1.exercice.show')->middleware('role:exercice_read');
 
