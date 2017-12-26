@@ -458,3 +458,108 @@ GET /v1/interventions/5000005
   ]
 }
 ```
+
+### Liste des transferts
+GET /v1/transfert
+
+#### Paramètres
+- Filtres : categorie (string : rapport-intervention ou presences-exercice), transmis (bool)
+
+#### Exemple de résultat
+GET /v1/transfert?categorie=rapport-intervention&transmis=0
+```javascript
+{
+    "data": [
+        {
+          "id": 3,
+          "categorie": "rapport-intervention",
+          "nom": "02.12.2017 10:46 - Feu Usine",
+          "contenu": {
+              "en_creation": false,
+              "proprietaire": {
+                "nom": "Prop. nom",
+                "prenom": "Prop. prénom",
+                "adresse": "Adresse",
+                "loc_id": 87,
+                "telephone": "012 345 67 89",
+                "email": "test@test.com"
+              },
+              "sapeurs": [
+                  // ... TODO : Liste des sapeurs avec leur présence
+              ],
+              "missions": [
+                {
+                  "sapeur": {
+                    "id": 4000000,
+                    "nom": "Wermeille",
+                    "prenom": "Bastien"
+                  },
+                  "date_debut": "2017-12-02T13:40:02+01:00",
+                  "titre": "Sauvetage",
+                  "date_fin": "2017-12-02T13:50:00Z",
+                  "resume": "Résumé mission"
+                }
+                // ...
+              ],
+              "appels": [
+                {
+                  "date": "2017-12-26T14:40:43+01:00",
+                  "numero": "123456",
+                  "nom": "Test",
+                  "commentaire": "Commentaire..."
+                }
+                // ...
+              ],
+              "vehicules": [
+                3,
+                7
+                // ...
+              ],
+              "materiel": [
+                {
+                  "id": 6000007,
+                  "nom": "Absorbant Ecosorb",
+                  "quantite": 1
+                },
+                {
+                  "id": 3,
+                  "nom": "Aspirateurs",
+                  "quantite": 2
+                }
+                // ...
+              ],
+              "date_debut": "2017-12-02T10:46:20+01:00",
+              "objet": "Feu Usine",
+              "lieu": "Usine 123",
+              "date_fin": "2017-12-02T14:41:00Z",
+              "type_int_id": 3,
+              "stat_fed_id": 1,
+              "chef_inter_sap_id": 224,
+              "nb_personnes_sauvees": "3",
+              "loc_id": 5,
+              "nb_animaux_sauves": "1",
+              "rapport_police": 1,
+              "agent": "Prénom agent 1",
+              "responsables": "Commentaire responsables... Multi-lignes",
+              "description": "Description intervention Multi-lignes"
+              },
+          "date_creation": "2017-12-26 14:44:02",
+          "date_reception": null
+        }
+    ]
+}
+```
+
+### Confirmation de réception d'un transfert
+PUT /v1/transfert/{id}/recu
+
+Cette fonction sert à indiquer que le système distant a bien reçu le transfert. Cela enregistrera dans la DB la date de réception.
+
+#### Exemple de résultat
+PUT /v1/transfert/3/recu
+
+```javascript
+{
+    "success": true
+}
+```

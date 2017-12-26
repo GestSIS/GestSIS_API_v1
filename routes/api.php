@@ -53,6 +53,11 @@ Route::group(['prefix' => 'v1', 'middleware' => ['jwt']], function(){
         // Téléphones
         Route::get('telephones', 'TelephoneApiController@index')->name('api.v1.telephone.index');
 
+        // Transfert
+        Route::get('transfert', 'TransfertApiController@index')->name('api.v1.transfert.index');
+        Route::post('transfert/{slug}', 'TransfertApiController@create')->name('api.v1.transfert.create');
+        Route::put('transfert/{id}/recu', 'TransfertApiController@received')->name('api.v1.transfert.received');
+
         // Données de bases
         Route::get('statfederal', 'BaseDataApiController@statfederal')->name('api.v1.basedata.statfederal');
         Route::get('typeintervention', 'BaseDataApiController@typeintervention')->name('api.v1.basedata.typeintervention');
