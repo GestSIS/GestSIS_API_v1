@@ -463,10 +463,11 @@ GET /v1/interventions/5000005
 GET /v1/transfert
 
 #### Paramètres
-- Filtres : categorie (string : rapport-intervention ou presences-exercice), transmis (bool)
+- Filtres : categorie (string : rapport-intervention ou presences-exercice), transmis (bool), complet (bool)
+- Note : Tant que le tranfert n'est pas "complet", son contenu est susceptible de changer
 
 #### Exemple de résultat
-GET /v1/transfert?categorie=rapport-intervention&transmis=0
+GET /v1/transfert?categorie=rapport-intervention&transmis=0&complet=1
 ```javascript
 {
     "data": [
@@ -496,7 +497,7 @@ GET /v1/transfert?categorie=rapport-intervention&transmis=0
                   },
                   "date_debut": "2017-12-02T13:40:02+01:00",
                   "titre": "Sauvetage",
-                  "date_fin": "2017-12-02T13:50:00Z",
+                  "date_fin": "2017-12-02T13:50:00+01:00",
                   "resume": "Résumé mission"
                 }
                 // ...
@@ -531,7 +532,7 @@ GET /v1/transfert?categorie=rapport-intervention&transmis=0
               "date_debut": "2017-12-02T10:46:20+01:00",
               "objet": "Feu Usine",
               "lieu": "Usine 123",
-              "date_fin": "2017-12-02T14:41:00Z",
+              "date_fin": "2017-12-02T14:41:00+01:00",
               "type_int_id": 3,
               "stat_fed_id": 1,
               "chef_inter_sap_id": 224,
@@ -545,7 +546,96 @@ GET /v1/transfert?categorie=rapport-intervention&transmis=0
               },
           "date_creation": "2017-12-26 14:44:02",
           "date_reception": null
-        }
+        },
+        // ...
+    ]
+}
+```
+
+GET /v1/transfert?categorie=presences-exercice&transmis=0&complet=1
+```javascript
+{
+    "data": [
+        {
+            "id": 9,
+            "categorie": "presences-exercice",
+            "nom": "04.12.2017 - EM (si nécessaire)",
+            "contenu": {
+                "id": 4000130,
+                "date": "2017-12-04",
+                "heure": "20:00:00",
+                "lieu": "Salle EM",
+                "communication": "EM (si nécessaire)",
+                "duree": 120,
+                "statut": 1,
+                "categorie": "Etat-major",
+                "localite": "Bassecourt",
+                "convoque": null,
+                "present": null,
+                "amende": null,
+                "type_excuse": null,
+                "id_type_excuse": null,
+                "sapeurs": [
+                    {
+                        "id": 139,
+                        "nom": "Allimann",
+                        "prenom": "Dominique",
+                        "convoque": 1,
+                        "present": true,
+                        "absent": false,
+                        "amende": 0,
+                        "type_excuse": null,
+                        "type_excuse_id": null,
+                        "exe_remplace": false
+                    },
+                    {
+                        "id": 4,
+                        "nom": "Bellè",
+                        "prenom": "Mirco",
+                        "convoque": 1,
+                        "present": false,
+                        "absent": true,
+                        "amende": 0,
+                        "type_excuse": null,
+                        "type_excuse_id": null,
+                        "exe_remplace": false
+                    },
+                    {
+                        "id": 208,
+                        "nom": "Beucler",
+                        "prenom": "Karine",
+                        "convoque": 1,
+                        "present": false,
+                        "absent": false,
+                        "amende": 0,
+                        "type_excuse": "Excuse valable",
+                        "type_excuse_id": 1,
+                        "exe_remplace": false
+                    },                
+                    {
+                        "id": 30,
+                        "nom": "Cattin",
+                        "prenom": "Gilles",
+                        "convoque": 1,
+                        "present": false,
+                        "absent": false,
+                        "amende": 0,
+                        "type_excuse": "Exercice remplacé",
+                        "type_excuse_id": 6,
+                        "exe_remplace": true
+                    }
+                    // ...
+                ],
+                "local": true,
+                "complet": true,
+                "en_creation": false,
+                "id_exe_lie": 4000131
+            },
+            "date_creation": "2017-12-30 14:20:00",
+            "date_reception": null,
+            "complet": true
+        },
+        // ...
     ]
 }
 ```

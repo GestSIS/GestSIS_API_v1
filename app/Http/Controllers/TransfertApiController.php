@@ -12,7 +12,7 @@ use App\Core\Transfert;
 class TransfertApiController extends ApiController {
 
     public function index(Request $request){
-        $availableFilters = ['categorie', 'transmis'];
+        $availableFilters = ['categorie', 'transmis', 'complet'];
 
         return response()->json([
             'data' => (new Transfert())->getList($request->only($availableFilters))
@@ -28,7 +28,8 @@ class TransfertApiController extends ApiController {
         }
 
         return response()->json([
-            'success' => true
+            'success' => true,
+            'archived' => $transfert->getArchived($slugCat)
         ]);
     }
 
