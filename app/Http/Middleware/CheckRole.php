@@ -3,7 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Core\User;
+use App\Core\Auth;
+use Log;
 
 class CheckRole
 {
@@ -17,9 +18,9 @@ class CheckRole
      */
     public function handle($request, Closure $next, $role)
     {
-        if (!User::hasRole($request->attributes->get('uid'), $role)) {
+        if (!Auth::hasRole($role)) {
             return response()->json([
-                'error' => 'not authorized'
+                'error' => 'Not authorized'
             ], 401);
         }
 

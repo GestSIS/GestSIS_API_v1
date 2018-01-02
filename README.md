@@ -29,23 +29,18 @@
 ## Utilisation
 Principe : L'utilisateur se connecte avec ses identifiants de connexion et il reçoit en retour un jeton de type JWT. Ce jeton sera utilisé dans toutes les futures requêtes comme moyen d'authentification.
 
-### Connexion de l'utilisateur
-POST /v1/user/login  
-Paramètres : sis_id, username, password
-Durée de validité du jeton (token_exp) : 30 jours par défaut
+### Authentification
+POST /v1/auth/token  
+Paramètres pour l'authentification d'un utilisateur : sis_id, username, password, grant_type = password  
+Paramètres pour l'authentification avec une clé API : client_id, client_secret, grant_type = client_credentials  
+Durée de validité du jeton (expires_in) : 30 jours par défaut
 Exemple de valeur de retour :
 ```javascript
 {
   "success": true,
-  "token": "eyJ0eXAiOiJKV1QiLCJ...",
-  "token_exp": 1497636448,
-  "user": {
-    "id": 12,
-    "gender_id": 1,
-    "gender_label": "Monsieur",
-    "firstname": "Henri",
-    "lastname": "Dupont"
- }
+  "access_token": "eyJ0eXAiOiJKV1QiLCJ...",
+  "expires_in": 2592000,
+  "token_type": "Bearer"
 }
 ```
 

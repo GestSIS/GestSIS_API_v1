@@ -59,4 +59,5 @@ return [
 	'validity' => 'Validité',
 	'entreprise' => 'Entreprise',
 	'company_name' => 'Société',
+	'invalid_credentials' => 'Données de connexion invalides'
 ];

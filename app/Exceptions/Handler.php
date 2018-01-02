@@ -56,7 +56,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if($request->segment(1) === 'v1'){
+        if($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException){
+            return response('', $exception->getStatusCode());
+        }
+        elseif($request->segment(1) === 'v1'){
             return response()->json(['error' => $exception->getMessage()], 400);
         }
 

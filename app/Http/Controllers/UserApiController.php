@@ -9,35 +9,9 @@ use App\Core\User;
 use App\Core\Sis;
 
 /**
- * API pour la gestion du compte
+ * API pour la gestion des utilisateurs
  */
 class UserApiController extends ApiController {
-
-    public function login(Request $request){
-        $user = new User();
-
-        $sisID = $request->input('sis_id');
-        $username = $request->input('username');
-        $password = $request->input('password');
-
-        Sis::retrieveSettings($sisID);
-        if($user->login($sisID, $username, $password)){
-            $tokenExp = time() + User::TOKEN_DURATION;
-            $details = $user->getDetails();
-
-            return response()->json([
-                    'success' => true,
-                    'token' => $user->getAccessToken($tokenExp),
-                    'token_exp' => $tokenExp,
-                    'user' => $this->formatUserDetails($details)
-            ]);
-		}
-		else{
-			return response()->json([
-                    'error' => trans('account.connection_error')
-            ], 401);
-		}
-    }
 
     public function signup(Request $request){
         $user = new User();
@@ -62,17 +36,6 @@ class UserApiController extends ApiController {
 		}
     }
 
-    public function refreshToken(Request $request){
-        $account = new User($request->attributes->get('uid'), $request->attributes->get('sis_id'));
-        $tokenExp = time() + User::TOKEN_DURATION;
-
-        return response()->json([
-                'success' => true,
-                'token' => $account->getAccessToken($tokenExp),
-                'token_exp' => $tokenExp,
-        ]);
-    }
-
     private function formatUserDetails($details){
         return [
             'id' => $details->USER_ID,
@@ -82,4 +45,5 @@ class UserApiController extends ApiController {
             'lastname' => $details->SAP_Nom
         ];
     }
+
 }

@@ -13,20 +13,19 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['prefix' => 'v1', 'middleware' => ['jwt']], function(){
+Route::group(['prefix' => 'v1'], function(){
 
     Route::get('sis', 'SisApiController@index')->name('api.v1.sis.index');
 
-    // Login & signup
-    Route::group(['prefix' => 'user'], function(){
-        Route::post('login', 'UserApiController@login')->name('api.v1.user.login');
-        Route::post('signup', 'UserApiController@signup')->name('api.v1.user.signup');
-
-        Route::group(['middleware' => 'jwt.auth'], function(){
-            Route::post('refresh-token', 'UserApiController@refreshToken')->name('api.v1.account.refresh_token');
-        });
+    // Authentication
+    Route::group(['prefix' => 'auth'], function(){
+        Route::post('token', 'AuthApiController@getToken')->name('api.v1.auth.login');
+        Route::post('token/refresh', 'AuthApiController@refreshToken')->name('api.v1.auth.refresh_token')->middleware('jwt.auth');
     });
 
+    Route::post('user/signup', 'UserApiController@signup')->name('api.v1.user.signup');
+
+    // Authorization required
     Route::group(['middleware' => 'jwt.auth'], function(){
         // Sapeurs
         Route::get('sapeurs', 'SapeurApiController@index')->name('api.v1.sapeur.index')->middleware('role:effectif_read');
@@ -54,9 +53,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['jwt']], function(){
         Route::get('telephones', 'TelephoneApiController@index')->name('api.v1.telephone.index');
 
         // Transfert
-        Route::get('transfert', 'TransfertApiController@index')->name('api.v1.transfert.index');
-        Route::post('transfert/{slug}', 'TransfertApiController@create')->name('api.v1.transfert.create');
-        Route::put('transfert/{id}/recu', 'TransfertApiController@received')->name('api.v1.transfert.received');
+        Route::get('transfert', 'TransfertApiController@index')->name('api.v1.transfert.index')->middleware('role:transfert_all');
+        Route::post('transfert/{slug}', 'TransfertApiController@create')->name('api.v1.transfert.create')->middleware('role:transfert_all');
+        Route::put('transfert/{id}/recu', 'TransfertApiController@received')->name('api.v1.transfert.received')->middleware('role:transfert_all');
 
         // Données de bases
         Route::get('statfederal', 'BaseDataApiController@statfederal')->name('api.v1.basedata.statfederal');

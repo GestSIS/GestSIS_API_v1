@@ -23,7 +23,7 @@ abstract class ApiController extends Controller {
 	public function __construct(){
 		if(Route::getCurrentRoute()){
 			$this->key = Route::getCurrentRoute()->getName();
-		}		
+		}
 	}
 
 	/**

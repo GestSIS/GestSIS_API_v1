@@ -5,8 +5,8 @@ use Closure;
 use Illuminate\Routing\Redirector;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
-use App\Exceptions\ApiException;
-use App\Core\Account;
+use App\Core\Auth;
+use Log;
 
 class JwtAuth {
 
@@ -19,9 +19,22 @@ class JwtAuth {
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!$request->attributes->has('uid')){
+        $guest = true;
+
+        try {
+            $jwt = $request->bearerToken();
+
+            if(Auth::authenticate($jwt)){
+                $guest = false;
+            }
+        }
+        catch(\Exception $e){
+            Log::error('Error during JWT authentication : '.$e->getMessage());
+        }
+
+        if($guest){
             return response()->json([
-                'error' => 'invalid token'
+                'error' => 'Invalid token'
             ], 401);
         }
 
