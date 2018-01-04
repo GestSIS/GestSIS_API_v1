@@ -52,8 +52,8 @@ class Transfert {
                 'categorie' => $transfert->TAC_Code,
                 'nom' => $transfert->TRA_Designation,
                 'contenu' => json_decode($transfert->TRA_Contenu),
-                'date_creation' => $transfert->TRA_Date_Creation,
-                'date_reception' => $transfert->TRA_Date_Reception,
+                'date_creation' => DateHelper::toIso8601($transfert->TRA_Date_Creation),
+                'date_reception' => DateHelper::toIso8601($transfert->TRA_Date_Reception),
                 'complet' => boolval($transfert->TRA_Complet)
             ];
         }, $transferts);

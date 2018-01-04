@@ -5,7 +5,7 @@ use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use App\Exceptions\InvalidUserInputException;
 
-use App\Core\User;
+use App\Core\Auth;
 use App\Core\Sapeur;
 
 /**
@@ -26,16 +26,15 @@ class SapeurApiController extends ApiController {
 
         $sapeur = new Sapeur();
 
-		    $sapeurs = $sapeur->getList($start, $limit, $order, $reverseSort, $request->only($availableFilters));
+		$sapeurs = $sapeur->getList($start, $limit, $order, $reverseSort, $request->only($availableFilters));
 
         return response()->json($sapeurs);
     }
 
     public function show(Request $request, $id){
         $sapeur = new Sapeur($id);
-        $user = new User($request->attributes->get('uid'));
 
-        if(!$user->canViewSapeur($id)){
+        if(!Auth::getCurrentUser()->canViewSapeur($id)){
             throw new InvalidUserInputException('not authorized');
         }
 

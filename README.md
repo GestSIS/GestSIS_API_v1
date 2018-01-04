@@ -287,7 +287,7 @@ GET /v1/exercices?start=0&limit=5&annee=2017&order=date&reverse=1
   "data": [
     {
       "id": 4000132,
-      "date": "2017-12-18",
+      "date": "2017-12-18T19:00:00+01:00",
       "heure": "19:00:00",
       "lieu": "Rue des Longennes 256",
       "communication": "Bureau chez le cdt",
@@ -319,7 +319,7 @@ GET /v1/exercices/4000132
 {
   "exercice": {
     "id": 4000132,
-    "date": "2017-12-18",
+    "date": "2017-12-18T19:00:00+01:00",
     "heure": "19:00:00",
     "lieu": "Rue des Longennes 256",
     "communication": "Bureau chez le cdt",
@@ -360,11 +360,11 @@ GET /v1/interventions?start=0&limit=5&annee=2017&order=date&reverse=1
   "data": [
     {
       "id": 5000005,
-      "date": "2017-04-19",
+      "date": "2017-04-19T18:54:00+01:00",
       "heure": "18:54:00",
       "lieu": "Rue ...",
       "objet": "Usine ...",
-      "date_fin": "2017-04-19",
+      "date_fin": "2017-04-19T20:15:00+01:00",
       "heure_fin": "20:15:00",
       "quittance": null,
       "present": null,
@@ -395,11 +395,11 @@ GET /v1/interventions/5000005
 {
   "intervention": {
     "id": 5000005,
-    "date": "2017-04-19",
+    "date": "2017-04-19T18:54:00+01:00",
     "heure": "18:54:00",
     "lieu": "Rue du ....",
     "objet": "Usine ...",
-    "date_fin": "2017-04-19",
+    "date_fin": "2017-04-19T20:15:00+01:00",
     "heure_fin": "20:15:00",
     "rapport_police": 0,
     "stat_fed_nb": 1,
@@ -539,7 +539,7 @@ GET /v1/transfert?categorie=rapport-intervention&transmis=0&complet=1
               "responsables": "Commentaire responsables... Multi-lignes",
               "description": "Description intervention Multi-lignes"
               },
-          "date_creation": "2017-12-26 14:44:02",
+          "date_creation": "2017-12-26T14:44:02+01:00",
           "date_reception": null
         },
         // ...
@@ -557,7 +557,7 @@ GET /v1/transfert?categorie=presences-exercice&transmis=0&complet=1
             "nom": "04.12.2017 - EM (si nécessaire)",
             "contenu": {
                 "id": 4000130,
-                "date": "2017-12-04",
+                "date": "2017-12-04T20:00:00+01:00",
                 "heure": "20:00:00",
                 "lieu": "Salle EM",
                 "communication": "EM (si nécessaire)",
@@ -626,7 +626,7 @@ GET /v1/transfert?categorie=presences-exercice&transmis=0&complet=1
                 "en_creation": false,
                 "id_exe_lie": 4000131
             },
-            "date_creation": "2017-12-30 14:20:00",
+            "date_creation": "2017-12-30T14:20:00+01:00",
             "date_reception": null,
             "complet": true
         },

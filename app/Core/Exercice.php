@@ -111,7 +111,7 @@ class Exercice {
         $res['data'] = array_map(function($exercice) {
             return [
                 'id' => $exercice->EXE_ID,
-                'date' => $exercice->EXE_Date,
+                'date' => DateHelper::toIso8601($exercice->EXE_Date.' '.$exercice->EXE_Heure),
                 'heure' => $exercice->EXE_Heure,
                 'lieu' => $exercice->EXE_Lieu,
                 'communication' => $exercice->EXE_Communication,
@@ -178,7 +178,7 @@ class Exercice {
         if(isset($res[0])){
             return [
                 'id' => $res[0]->EXE_ID,
-                'date' => $res[0]->EXE_Date,
+                'date' => DateHelper::toIso8601($res[0]->EXE_Date.' '.$res[0]->EXE_Heure),
                 'heure' => $res[0]->EXE_Heure,
                 'lieu' => $res[0]->EXE_Lieu,
                 'communication' => $res[0]->EXE_Communication,

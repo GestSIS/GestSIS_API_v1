@@ -197,4 +197,12 @@ class Auth {
 
         return $hasRole;
     }
+
+    public static function getCurrentUser(){
+        return self::$user;
+    }
+
+    public static function getCurrentApiKey(){
+        return self::$apiKey;
+    }
 }

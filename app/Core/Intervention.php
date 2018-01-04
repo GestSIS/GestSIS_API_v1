@@ -98,11 +98,11 @@ class Intervention {
         $res['data'] = array_map(function($intervention) {
             return [
                 'id' => $intervention->INT_ID,
-                'date' => $intervention->INT_Date,
+                'date' => DateHelper::toIso8601($intervention->INT_Date.' '.$intervention->INT_Heure),
                 'heure' => $intervention->INT_Heure,
                 'lieu' => $intervention->INT_Lieu,
                 'objet' => $intervention->INT_Objet,
-                'date_fin' => $intervention->INT_DateFin,
+                'date_fin' => DateHelper::toIso8601($intervention->INT_DateFin.' '.$intervention->INT_HeureFin),
                 'heure_fin' => $intervention->INT_HeureFin,
                 'quittance' => $intervention->INTSAP_Quittance,
                 'present' => $intervention->INTSAP_Present,
@@ -182,11 +182,11 @@ class Intervention {
         if(isset($res[0])){
             return [
                 'id' => $res[0]->INT_ID,
-                'date' => $res[0]->INT_Date,
+                'date' => DateHelper::toIso8601($res[0]->INT_Date.' '.$res[0]->INT_Heure),
                 'heure' => $res[0]->INT_Heure,
                 'lieu' => $res[0]->INT_Lieu,
                 'objet' => $res[0]->INT_Objet,
-                'date_fin' => $res[0]->INT_DateFin,
+                'date_fin' => DateHelper::toIso8601($res[0]->INT_DateFin.' '.$res[0]->INT_HeureFin),
                 'heure_fin' => $res[0]->INT_HeureFin,
                 'rapport_police' => $res[0]->INT_RapportPolice,
                 'stat_fed_nb' => $res[0]->INT_STAT_Nb,

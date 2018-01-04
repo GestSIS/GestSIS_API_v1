@@ -142,12 +142,12 @@ class Sapeur {
                  'tel_prof_rta' => $sapeur->SAP_TelProf_RTA,
                  'tel_mobile' => $sapeur->SAP_TelNat,
                  'tel_mobile_rta' => $sapeur->SAP_TelNat_RTA,
-                 'date_naissance' => $sapeur->SAP_DNaissance,
+                 'date_naissance' => DateHelper::toIso8601($sapeur->SAP_DNaissance),
                  'email' => $sapeur->SAP_EMail,
                  'no_rue' => $sapeur->SAP_NoRue,
                  'rue' => $sapeur->SAP_Rue,
-                 'date_inco' => $sapeur->SAP_DInco,
-                 'date_sortie' => $sapeur->SAP_DSortie,
+                 'date_inco' => DateHelper::toIso8601($sapeur->SAP_DInco),
+                 'date_sortie' => DateHelper::toIso8601($sapeur->SAP_DSortie),
                  'npa' => $sapeur->LOC_Npa,
                  'localite' => $sapeur->LOC_Designation,
                  'civilite' => $sapeur->CIV_Designation,
@@ -248,17 +248,17 @@ class Sapeur {
                 'tel_prof_rta' => $res[0]->SAP_TelProf_RTA,
                 'tel_mobile' => $res[0]->SAP_TelNat,
                 'tel_mobile_rta' => $res[0]->SAP_TelNat_RTA,
-                'date_naissance' => $res[0]->SAP_DNaissance,
+                'date_naissance' => DateHelper::toIso8601($res[0]->SAP_DNaissance),
                 'email' => $res[0]->SAP_EMail,
                 'no_rue' => $res[0]->SAP_NoRue,
                 'rue' => $res[0]->SAP_Rue,
-                'date_inco' => $res[0]->SAP_DInco,
-                'date_sortie' => $res[0]->SAP_DSortie,
+                'date_inco' => DateHelper::toIso8601($res[0]->SAP_DInco),
+                'date_sortie' => DateHelper::toIso8601($res[0]->SAP_DSortie),
                 'profession' => $res[0]->SAP_Profession,
                 'employeur' => $res[0]->SAP_Employeur,
                 'no_avs' => $res[0]->SAP_NoAVS,
                 'permis_b' => $res[0]->SAP_Permis_B,
-                'permis_b_date' => $res[0]->SAP_Permis_B_Date,
+                'permis_b_date' => DateHelper::toIso8601($res[0]->SAP_Permis_B_Date),
                 'lieu_travail' => $res[0]->SAP_LieuDeTravail,
                 'actif' => $res[0]->SAP_Actif,
                 'cpt_bancaire' => $res[0]->SAP_CPTBan,
@@ -301,8 +301,8 @@ class Sapeur {
         return array_map(function($mutation) {
             return [
                 'id' => $mutation->SMU_ID,
-                'date_inco' => $mutation->SMU_Dinco,
-                'date_sortie' => $mutation->SMU_DSortie,
+                'date_inco' => DateHelper::toIso8601($mutation->SMU_Dinco),
+                'date_sortie' => DateHelper::toIso8601($mutation->SMU_DSortie),
                 'motif' => $mutation->SMU_Motif,
                 'localite' => $mutation->LOC_Designation
             ];
@@ -388,7 +388,7 @@ class Sapeur {
                 'id' => $cours->COU_ID,
                 'nom' => $cours->COU_designation,
                 'nom_abr' => $cours->COU_Abr,
-                'date' => $cours->COU_Date,
+                'date' => DateHelper::toIso8601($cours->COU_Date),
                 'lieu' => $cours->COU_Lieu
             ];
         }, $coursList);
@@ -417,7 +417,7 @@ class Sapeur {
                 'id' => $promotion->GRA_ID,
                 'grade' => $promotion->GRA_Designation,
                 'grade_abr' => $promotion->GRA_Abr,
-                'date' => $promotion->GRA_Date,
+                'date' => DateHelper::toIso8601($promotion->GRA_Date),
                 'remarque' => $promotion->GRASAP_Rem
             ];
         }, $promotions);
@@ -446,8 +446,8 @@ class Sapeur {
         return array_map(function($controle) {
             return [
                 'id' => $controle->CMED_ID,
-                'date_consultation' => $controle->CMED_DConsultation,
-                'date_validite' => $controle->CMED_DValidite,
+                'date_consultation' => DateHelper::toIso8601($controle->CMED_DConsultation),
+                'date_validite' => DateHelper::toIso8601($controle->CMED_DValidite),
                 'accepte' => $controle->CMED_Accepter,
                 'encours' => $controle->CMED_EnCours,
                 'type' => $controle->CMT_Type,
