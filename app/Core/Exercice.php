@@ -108,7 +108,21 @@ class Exercice {
                          $params);
         $count = $this->count();
 
-        $res['data'] = array_map(function($exercice) {
+        // Récupération des exercices dont les présences ont déjà été complétées
+        $exeComplets = DB::connection('mysql_dba')->select('
+                        SELECT TRA_Reference
+                          FROM Transfert_App
+                         INNER JOIN Transfert_App_Cat ON Transfert_App.TAC_ID = Transfert_App_Cat.TAC_ID
+                         WHERE TAC_Code = "presences-exercice"
+                           AND TRA_Reference IS NOT NULL
+                           AND TRA_Complet = 1
+        ');
+
+        $idExeComplets = array_map(function($exe) {
+            return $exe->TRA_Reference;
+        }, $exeComplets);
+
+        $res['data'] = array_map(function($exercice) use ($idExeComplets) {
             return [
                 'id' => $exercice->EXE_ID,
                 'date' => DateHelper::toIso8601($exercice->EXE_Date.' '.$exercice->EXE_Heure),
@@ -124,6 +138,7 @@ class Exercice {
                 'amende' => $exercice->EXESAP_Amende,
                 'type_excuse' => $exercice->EXCTYPE_Designation,
                 'id_type_excuse' => $exercice->EXCTYPE_ID,
+                'presences_completees' => in_array($exercice->EXE_ID, $idExeComplets),
                 'sapeurs' => $this->getSapeursList($exercice->EXE_ID)
             ];
         }, $exercices);
