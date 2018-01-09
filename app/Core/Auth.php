@@ -60,7 +60,7 @@ class Auth {
                             SELECT APC_ID, SIS_ID, APC_Client_ID, APC_Client_Secret
                               FROM API_Cle
                              WHERE APC_Client_ID = ?
-                               AND APC_Date_Revocation IS NULL',
+                               AND APC_Date_Revocation >= NOW()',
                            [$credentials['client_id']]);
 
                 if(isset($apiKey[0]) && $credentials['client_secret'] === decrypt($apiKey[0]->APC_Client_Secret)){
