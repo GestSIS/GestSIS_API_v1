@@ -205,4 +205,13 @@ class Auth {
     public static function getCurrentApiKey(){
         return self::$apiKey;
     }
+
+    public static function actingAs($authenticatable){
+        if($authenticatable instanceof User){
+            self::$user = $authenticatable;
+        }
+        elseif($authenticatable instanceof ApiKey){
+            self::$apiKey = $authenticatable;
+        }
+    }
 }
