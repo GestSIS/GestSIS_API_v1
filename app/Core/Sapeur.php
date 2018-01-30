@@ -135,7 +135,7 @@ class Sapeur {
                  'porteur' => $sapeur->SAP_Porteur,
                  'permis_c1' => $sapeur->SAP_Permis_C1,
                  'permis_c1_date' => $sapeur->SAP_Permis_C1_Date,
-                 'groupes' => $sapeur->TGRP_No,
+                 'groupes' => array_column($this->getGroupes($sapeur->SAP_ID), 'id'),
                  'tel_prive' => $sapeur->SAP_TelPriv,
                  'tel_prive_rta' => $sapeur->SAP_TelPriv_RTA,
                  'tel_prof' => $sapeur->SAP_TelProf,
@@ -345,7 +345,7 @@ class Sapeur {
      * Groupes du sapeur
      * @return array
      */
-    public function getGroupes(): array {
+    public function getGroupes($id = null): array {
         $groupes = DB::connection('mysql_managed')->select('
                     SELECT Groupe.GRP_ID,
                            Groupe.GRP_NO,
@@ -354,7 +354,7 @@ class Sapeur {
                      INNER JOIN Groupe ON GrpSap.GRP_ID = Groupe.GRP_ID
                      WHERE GrpSap.SAP_ID = ?
                      ORDER BY Groupe.GRP_Tri ASC',
-                    [$this->id]);
+                    [$id ?? $this->id]);
 
         return array_map(function($groupe) {
             return [

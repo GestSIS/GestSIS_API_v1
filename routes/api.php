@@ -52,6 +52,9 @@ Route::group(['prefix' => 'v1'], function(){
         // Téléphones
         Route::get('telephones', 'TelephoneApiController@index')->name('api.v1.telephone.index');
 
+        // Groupes
+        Route::get('groupes', 'GroupeApiController@index')->name('api.v1.groupe.index');
+
         // Transfert
         Route::get('transfert', 'TransfertApiController@index')->name('api.v1.transfert.index')->middleware('role:transfert_all');
         Route::post('transfert/{slug}', 'TransfertApiController@create')->name('api.v1.transfert.create')->middleware('role:transfert_all');
