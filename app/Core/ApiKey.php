@@ -21,7 +21,7 @@ class ApiKey {
                     SELECT COUNT(*) AS KEY_EXIST
                       FROM API_Cle
                      WHERE APC_ID = ?
-                       AND APC_Date_Revocation IS NULL',
+                       AND APC_Date_Revocation >= NOW()',
                     [$this->id]);
 
         return $result[0]->KEY_EXIST == 1;
