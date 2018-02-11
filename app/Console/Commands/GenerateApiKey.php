@@ -11,7 +11,8 @@ class GenerateApiKey extends Command
      *
      * @var string
      */
-    protected $signature = 'apikey:generate';
+    protected $signature = 'apikey:generate
+                            {sis : ID du SIS}';
 
     /**
      * The console command description.
@@ -37,11 +38,14 @@ class GenerateApiKey extends Command
      */
     public function handle()
     {
+        $sisID =  $this->argument('sis');
         $secret = str_random(40);
+        $clientID = sha1(str_random(255));
 
         $this->info('Informations de la cle API :');
-        $this->line('Client ID : '.sha1(str_random(255)));
+        $this->line('Client ID : '.$clientID);
         $this->line('Client secret : '.$secret);
-        $this->line('Encrypted client secret : '.encrypt($secret));
+        $this->line('SQL : INSERT INTO API_Cle (SIS_ID, APC_Client_ID, APC_Client_Secret, APC_Date_Creation)
+                           VALUES ('.$sisID.', "'.$clientID.'", "'.encrypt($secret).'", NOW());');
     }
 }
