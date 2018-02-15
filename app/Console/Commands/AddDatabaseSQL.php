@@ -49,7 +49,8 @@ class AddDatabaseSQL extends Command
         else
             $password = '';
 
-        $this->line('SQL : INSERT INTO Base_Donnees (BDO_Host, BDO_Port, BDO_User, BDO_PWD, BDO_Nom, BDO_Charset, BDO_Collation)
-                           VALUES ("'.$host.'", '.$port.', "'.encrypt($user).'", "'.encrypt($password).'", "'.$database.'", "utf8mb4", "utf8mb4_unicode_ci");');
+        $this->line('SQL : INSERT INTO Base_Donnees (BDO_Host, BDO_Port, BDO_User, BDO_PWD, BDO_Nom, BDO_Charset, BDO_Collation) '."\n".
+                    '      VALUES ("'.$host.'", '.$port.', "'.encrypt($user).'", "'.encrypt($password).'", "'.$database.'", "utf8mb4", "utf8mb4_unicode_ci"); '."\n".
+                    '      UPDATE SIS SET BDO_ID = LAST_INSERT_ID() WHERE SIS_ID = '.$sisID.' AND BDO_ID IS NULL;');
     }
 }
