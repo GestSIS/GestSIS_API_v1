@@ -15,8 +15,8 @@ class SisTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJsonFragment([
-                'actif' => 1,
-                'mobile' => 1
+                'actif' => true,
+                'mobile' => true
             ])
             ->assertJsonStructure([
                 'data' => [[

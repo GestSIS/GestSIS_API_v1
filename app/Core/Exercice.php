@@ -235,8 +235,8 @@ class Exercice {
                 'id' => $sapeur->SAP_ID,
                 'nom' => $sapeur->SAP_Nom,
                 'prenom' => $sapeur->SAP_Prenom,
-                'convoque' => $sapeur->EXESAP_Convoque,
-                'present' => $sapeur->EXESAP_Present,
+                'convoque' => boolval($sapeur->EXESAP_Convoque),
+                'present' => boolval($sapeur->EXESAP_Present),
                 'absent' => $sapeur->SAP_Absent,
                 'amende' => $sapeur->EXESAP_Amende,
                 'type_excuse' => $sapeur->EXCTYPE_Designation

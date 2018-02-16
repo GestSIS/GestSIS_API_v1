@@ -36,8 +36,8 @@ class Sis {
                'id' => $sis->SIS_ID,
                'nom' => $sis->SIS_NOM,
                'abr' => $sis->SIS_Abr,
-               'actif' => $sis->SIS_Actif,
-               'mobile' => $sis->SIS_Mobile,
+               'actif' => boolval($sis->SIS_Actif),
+               'mobile' => boolval($sis->SIS_Mobile),
                'url' => $sis->SIS_URL
            ];
        }, $sis);
