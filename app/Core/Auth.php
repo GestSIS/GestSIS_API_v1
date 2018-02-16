@@ -109,14 +109,15 @@ class Auth {
 			'iss' => config('app.url'),
 			'iat' => time(),
 			'exp' => time() + self::TOKEN_DURATION, // 30 jours
-			'scopes' => ['all'],
 			'sis_id' => config('sis.id')
 		];
 
         if(isset(self::$user)){
+            $token['scopes'] = self::$user->getRoles();
             $token['uid'] = self::$user->getId();
         }
         elseif(isset(self::$apiKey)){
+            $token['scopes'] = self::$apiKey->getRoles();
             $token['ak_id'] = self::$apiKey->getId();
         }
 
@@ -132,51 +133,10 @@ class Auth {
         $hasRole = false;
 
         if(isset(self::$user)){
-            // Conversion du rôle
-            $roleColumn = [
-                'tache_all' => 'USER_GestTache',
-                'document_read' => 'USER_VisuDocument',
-                'effectif_read' => 'USER_VisuEffectif',
-                // USER_VisuTouteTache => Compris dans tache_all
-                'effectif_all' => 'USER_VisuInfoSap',
-                'user_all' => 'USER_GestUser',
-                'tache_add' => 'USER_AjoutTache',
-                'materiel_read' => 'USER_VisuMateriel',
-                'intervention_read' => 'USER_VisuIntervention',
-                'agenda_read' => 'USER_VisuAgenda',
-                'exercice_read' => 'USER_VisuExercice',
-                'ctrl_med_read' => 'USER_VisuCMedicaux',
-                'tache_prioritaire_all' => 'USER_PrioritaireTache',
-                'entreprise_read' => 'USER_VisuEntreprise',
-                'decompte_read' => 'USER_VisuDecompte',
-                'decompte_all' => 'USER_GestDecompte',
-                'transfert_all' => 'USER_GestTranfertApp'
-            ];
-
-            if(!isset($roleColumn[$role])){
-                Log::error('Invalid role code : '.$role);
-                return false;
-            }
-
-            $result =  DB::connection('mysql_managed')->select('
-                        SELECT COUNT(*) AS ACCES
-                        FROM Users
-                        WHERE USER_ID = ?
-                          AND '.$roleColumn[$role].' = 1',
-                        [self::$user->getId()]);
-
-            $hasRole = $result[0]->ACCES == 1;
+            $hasRole = self::$user->hasRole($role);
         }
         elseif(isset(self::$apiKey)) {
-            $result = DB::connection('mysql_dba')->select('
-                        SELECT COUNT(*) AS ACCES
-                          FROM API_Cle_Role
-                         INNER JOIN API_Role ON API_Cle_Role.APR_ID = API_Role.APR_ID
-                         WHERE APR_Code = ?
-                           AND APC_ID = ?',
-                       [$role, self::$apiKey->getId()]);
-
-            $hasRole = $result[0]->ACCES == 1;
+            $hasRole = self::$apiKey->hasRole($role);
         }
         else {
             Log::error('Not authenticated');

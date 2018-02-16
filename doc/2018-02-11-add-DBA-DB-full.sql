@@ -234,7 +234,9 @@ ALTER TABLE `Transfert_App`
   (13, 'tache_prioritaire_all', 'Gestion des tâches prioritaires'),
   (14, 'entreprise_read', 'Visualisation des entreprises'),
   (15, 'decompte_read', 'Visualisation des décomptes'),
-  (16, 'decompte_all', 'Gestion des décomptes');
+  (16, 'decompte_all', 'Gestion des décomptes'),
+  (17, 'presence_exe_all', 'Gestion des présences aux exercices'),
+  (18, 'rapport_inter_all', 'Gestion des rapports d\'intervention');
 
   --
   -- Index pour les tables exportées
@@ -279,7 +281,7 @@ ALTER TABLE `Transfert_App`
   -- AUTO_INCREMENT pour la table `API_Role`
   --
   ALTER TABLE `API_Role`
-    MODIFY `APR_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+    MODIFY `APR_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
   --
   -- Contraintes pour les tables exportées
   --

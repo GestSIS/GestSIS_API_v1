@@ -4,10 +4,34 @@ namespace App\Core;
 use App\Exceptions\InvalidUserInputException;
 use DB;
 use Mail;
+use Log;
 use App\Mail\AccountActivation;
 
 class User {
     private $id;
+
+    // Role code => Role db column name
+    private $rolesTranslations = [
+        'tache_all' => 'USER_GestTache',
+        'document_read' => 'USER_VisuDocument',
+        'effectif_read' => 'USER_VisuEffectif',
+        // USER_VisuTouteTache => Compris dans tache_all
+        'effectif_all' => 'USER_VisuInfoSap',
+        'user_all' => 'USER_GestUser',
+        'tache_add' => 'USER_AjoutTache',
+        'materiel_read' => 'USER_VisuMateriel',
+        'intervention_read' => 'USER_VisuIntervention',
+        'agenda_read' => 'USER_VisuAgenda',
+        'exercice_read' => 'USER_VisuExercice',
+        'ctrl_med_read' => 'USER_VisuCMedicaux',
+        'tache_prioritaire_all' => 'USER_PrioritaireTache',
+        'entreprise_read' => 'USER_VisuEntreprise',
+        'decompte_read' => 'USER_VisuDecompte',
+        'decompte_all' => 'USER_GestDecompte',
+        'transfert_all' => 'USER_GestTranfertApp',
+        'presence_exe_all' => 'USER_GestPresenceExeApp',
+        'rapport_inter_all' => 'USER_GestRapportInterApp'
+    ];
 
 	public function __construct(int $id = null){
 		$this->id = $id;
@@ -186,6 +210,48 @@ class User {
         }
 
         return $res[0]->SAP_ID == $id || $res[0]->USER_VisuInfoSap == 1;
+    }
+
+    /**
+     * @param string $role
+     * @return bool Vrai si l'utilisateur a le rôle passé en paramètre
+     */
+    public function hasRole(string $role): bool {
+        if(!isset($this->rolesTranslations[$role])){
+            Log::error('Invalid role code : '.$role);
+            return false;
+        }
+
+        $result =  DB::connection('mysql_managed')->select('
+                    SELECT COUNT(*) AS ACCES
+                    FROM Users
+                    WHERE USER_ID = ?
+                      AND '.$this->rolesTranslations[$role].' = 1',
+                    [$this->id]);
+
+        return $result[0]->ACCES == 1;
+    }
+
+    /**
+     * @return array Liste des rôles de l'utilisateur
+     */
+    public function getRoles(): array {
+        $res = DB::connection('mysql_managed')->select('
+                SELECT '.implode(', ', array_values($this->rolesTranslations)).'
+                  FROM Users
+                 WHERE USER_ID = ?',
+                [$this->id]);
+
+        $roles = (array) $res[0];
+        $grantedRoles = [];
+        $flippedRolesTranslations = array_flip($this->rolesTranslations);
+        foreach($roles as $role => $granted) {
+            if($granted){
+                $grantedRoles[] = $flippedRolesTranslations[$role];
+            }
+        }
+
+        return $grantedRoles;
     }
 
     public function getId(){
