@@ -115,6 +115,7 @@ class Auth {
         if(isset(self::$user)){
             $token['scopes'] = self::$user->getRoles();
             $token['uid'] = self::$user->getId();
+            $token['user'] = self::$user->getDetails();
         }
         elseif(isset(self::$apiKey)){
             $token['scopes'] = self::$apiKey->getRoles();

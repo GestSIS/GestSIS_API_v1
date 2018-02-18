@@ -160,13 +160,20 @@ class User {
      */
     public function getDetails(){
         $user = DB::connection('mysql_managed')->select('
-                    SELECT Users.USER_ID, SAP_Nom, SAP_Prenom, SAP_Email, Sapeur.CIV_ID, CIV_Designation
+                    SELECT Users.USER_ID, Users.USER_Login, SAP_Nom, SAP_Prenom, SAP_Email, Sapeur.SAP_ID
                       FROM Users
                       LEFT OUTER JOIN Sapeur ON Users.SAP_ID = Sapeur.SAP_ID
                       LEFT OUTER JOIN Civilite ON Sapeur.CIV_ID = Civilite.CIV_ID
                      WHERE Users.USER_ID = ?',
                     [$this->id]);
-        return $user[0];
+        return [
+            'id' => $user[0]->USER_ID,
+            'nom_utilisateur' => $user[0]->USER_Login,
+            'nom' => $user[0]->SAP_Nom,
+            'prenom' => $user[0]->SAP_Prenom,
+            'email' => $user[0]->SAP_Email,
+            'photo' => !is_null($user[0]->SAP_ID) ? 'http://'.config('sis.url').'/photos/sap_id_'.$user[0]->SAP_ID.'.jpg' : null
+        ];
     }
 
     /**
