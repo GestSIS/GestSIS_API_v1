@@ -13,6 +13,20 @@ use App\Core\Sis;
  */
 class UserController extends Controller {
 
+    public function showConnectionForm(Request $request){
+        return view('connection', [
+            'title' => 'Connexion',
+            'full_page' => true, // Sans menu, ni sidebar
+            'body_class' => 'login-page'
+        ]);
+    }
+
+    public function showDashboard(Request $request){
+        return view('dashboard', [
+            'title' => 'Tableau de bord'
+        ]);
+    }
+
     public function activate(Request $request){
         $user = new User();
 

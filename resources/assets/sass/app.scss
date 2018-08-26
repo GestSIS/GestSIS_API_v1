@@ -1,9 +1,11 @@
 
 // Fonts
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700);
 
 // Variables
 @import "variables";
 
-// Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+// AdminLTE
+@import "~admin-lte/dist/css/adminlte.css";
+
+@import '~admin-lte/plugins/font-awesome/css/font-awesome.css';
