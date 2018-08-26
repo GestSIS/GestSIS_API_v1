@@ -10,15 +10,25 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Veuillez vous connecter</p>
 
-      <form action="../../index2.html" method="post">
+      <form action="{{ route('user.login') }}" method="post" id="connection-form">
+        @include('user-notification')
+
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email">
+          <select class="form-control" name="sis_id">
+            <option value="-1">SIS</option>
+            @foreach($sis_list as $sis)
+              <option value="{{ $sis['id'] }}">{{ $sis['nom'] }}</option>
+            @endforeach
+          </select>          
+        </div>
+        <div class="input-group mb-3">
+          <input type="text" name="username" class="form-control" placeholder="Nom d'utilisateur">
           <div class="input-group-append">
               <span class="fa fa-envelope input-group-text"></span>
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="password" name="password" class="form-control" placeholder="Mot de passe">
           <div class="input-group-append">
               <span class="fa fa-lock input-group-text"></span>
           </div>

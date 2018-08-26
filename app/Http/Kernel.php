@@ -60,5 +60,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'jwt.auth' => \App\Http\Middleware\JwtAuth::class,
         'role' => \App\Http\Middleware\CheckRole::class,
+        'session.auth' => \App\Http\Middleware\SessionAuth::class,
     ];
 }

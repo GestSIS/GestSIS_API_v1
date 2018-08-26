@@ -15,10 +15,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('connexion', 'UserController@showConnectionForm')->name('user.login');
-Route::get('tableau-de-bord', 'UserController@showDashboard')->name('user.dashboard');
+// Authentication
+Route::get('connexion', 'UserController@showConnectionForm')->name('user.connection');
+Route::post('connexion', 'UserController@login')->name('user.login');
 
-// Sapeurs
-Route::get('sapeurs', 'SapeurController@showIndex')->name('sapeur.index');
+// Authorization required
+Route::group(['middleware' => 'session.auth'], function(){
+    Route::get('tableau-de-bord', 'UserController@showDashboard')->name('user.dashboard');
+
+    // Sapeurs
+    Route::get('sapeurs', 'SapeurController@showIndex')->name('sapeur.index');
+});
 
 Route::get('user/activate', 'UserController@activate')->name('user.activate');

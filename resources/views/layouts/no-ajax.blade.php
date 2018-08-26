@@ -36,8 +36,10 @@
       </div>
       <!-- ./wrapper -->
     @else
-      @include('common')
-      @yield('content')
+      <div id="main-content">
+        @include('common')
+        @yield('content')
+      </div>
     @endif
 
     <script src="{{ mix('js/app.js') }}"></script>

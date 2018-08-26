@@ -28,6 +28,12 @@ var App = (function() {
 
         window.history.replaceState({url: $(".js-url", "#main-content").val()}, document.title, $(".js-url", "#main-content").val());
 
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         managePageContent();
     }
 
@@ -51,7 +57,9 @@ var App = (function() {
 
         switch(segments[0]){
             case 'user':
-                
+                if(segments[1] === 'connection'){
+                    App.initStandardForm($("#connection-form"));
+                }
                 break;
         }
 
@@ -274,7 +282,7 @@ var App = (function() {
             })
             .fail(function(jqXHR, textStatus, errorThrown) {
                 g_ajaxStatus = true;
-                App.notifyUser("Une erreur est survenue lors de votre requête. Veuillez réessayer.", "danger", $form);
+                App.notifyUser(jqXHR.responseJSON ? jqXHR.responseJSON.error : "Une erreur est survenue lors de votre requête. Veuillez réessayer.", "danger", $form);
             })
             .always(function() {
                 $form.find("button[type=submit]").prop("disabled", false);

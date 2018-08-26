@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Exceptions\InvalidUserInputException;
 
 use App\Core\User;
+use App\Core\Auth;
 use App\Core\Sis;
 
 /**
@@ -17,8 +18,26 @@ class UserController extends Controller {
         return view('connection', [
             'title' => 'Connexion',
             'full_page' => true, // Sans menu, ni sidebar
-            'body_class' => 'login-page'
+            'body_class' => 'login-page',
+            'sis_list' => (new Sis())->getList(['actif' => true])
         ]);
+    }
+
+    public function login(Request $request){
+        if(Auth::login('password', $request->only('username', 'password', 'sis_id'))){
+            $request->session()->put('sis_id', config('sis.id'));
+            $request->session()->put('uid', Auth::getCurrentUser()->getId());
+            $request->session()->put('login_date', time());
+            return response()->json([
+                    'success' => true,
+                    'redirect' => route('user.dashboard')
+            ]);
+        }
+        else{
+			return response()->json([
+                    'error' => 'Données d\'identification invalides'
+            ], 401);
+		}
     }
 
     public function showDashboard(Request $request){

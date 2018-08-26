@@ -97,7 +97,12 @@ class Auth {
         else{
             return false;
         }
+    }
 
+    public static function authenticateSession($sisId, $userId): bool {
+        Sis::retrieveSettings($sisId);
+        self::$user = new User($userId);
+        return self::$user->isValid();
     }
 
     /**
