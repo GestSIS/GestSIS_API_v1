@@ -63,6 +63,11 @@ var App = (function() {
                 break;
         }
 
+        $('#nav-tab a').on('click', function (e) {
+          e.preventDefault()
+          $(this).tab('show')
+        });
+
         onInternalLinkClick();
     }
 
@@ -291,7 +296,7 @@ var App = (function() {
         }
     }
 
-    
+
     /**
      * Gestion des erreurs
      * @param string url
