@@ -23,37 +23,40 @@
     <div class="row">
       <!--<div class="col-md-3 col-lg-3 col-sm-6 col-6">
       </div>-->
-      <div class="col-md-12 col-lg-12 col-sm-12 col-12">
-        <a class="btn btn-app">
-          <i class="fas fa-info"></i> Info
-        </a>
-        <a class="btn btn-app">
-          <i class="fas fa-medal"></i> Fonctions
-        </a>
-        <a class="btn btn-app">
-          <i class="fas fa-book-open"></i> Cours
-        </a>
-        <a class="btn btn-app">
-          <i class="fas fa-award"></i> Promotion
-        </a>
-        <a class="btn btn-app">
-          <i class="fas fa-sitemap"></i> Organisation
-        </a>
-        <a class="btn btn-app">
-          <i class="fas fa-toolbox"></i> Matériel personnel
-        </a>
-        <a class="btn btn-app">
-          <i class="fas fa-car"></i> Permis
-        </a>
-        <a class="btn btn-app">
-          <i class="fas fa-file-medical-alt"></i> Contrôles médicaux
-        </a>
-        <a class="btn btn-app">
-          <i class="fas fa-university"></i> Banque
-        </a>
-        <a class="btn btn-app">
-          <i class="fas fa-calendar-alt"></i> Exercices
-        </a>
+
+      <div class="col-md-12 col-lg-12 col-sm-12 col-12 mb-3">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" href="#"><i class="fas fa-info"></i> Info</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-medal"></i> Fonctions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-book-open"></i> Cours</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-award"></i> Promotion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-sitemap"></i> Organisation</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-toolbox"></i> Matériel personnel</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-car"></i> Permis</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-file-medical-alt"></i> Contrôles médicaux</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-university"></i> Banque</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-calendar-alt"></i> Exercices</a>
+          </li>
+        </ul>
       </div>
       <div class="col-md-3 col-lg-3 col-sm-6 col-6"> <!-- TODO Find a solution for small devices by hidding the sapeur list-->
         <div class="card card-primary card-outline">
