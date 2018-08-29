@@ -7,10 +7,14 @@ window._ = require('lodash');
  * code may be modified to fit the specific needs of your application.
  */
 
+//require('fortawesome/fontawesome-free');
+
 try {
     window.$ = window.jQuery = require('jquery');
 
     require('admin-lte');
+
+        require('@fortawesome/fontawesome-free/js/all.js')
 } catch (e) {}
 
 /**

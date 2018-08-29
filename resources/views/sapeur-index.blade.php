@@ -21,8 +21,42 @@
 <section class="content">
   <div class="container-fluid">
     <div class="row">
+      <!--<div class="col-md-3 col-lg-3 col-sm-6 col-6">
+      </div>-->
+      <div class="col-md-12 col-lg-12 col-sm-12 col-12">
+        <a class="btn btn-app">
+          <i class="fas fa-info"></i> Info
+        </a>
+        <a class="btn btn-app">
+          <i class="fas fa-medal"></i> Fonctions
+        </a>
+        <a class="btn btn-app">
+          <i class="fas fa-book-open"></i> Cours
+        </a>
+        <a class="btn btn-app">
+          <i class="fa fa-edit"></i> Promotion
+        </a>
+        <a class="btn btn-app">
+          <i class="fa fa-edit"></i> Organisation
+        </a>
+        <a class="btn btn-app">
+          <i class="fa fa-edit"></i> Matériel personnel
+        </a>
+        <a class="btn btn-app">
+          <i class="fa fa-edit"></i> Permis
+        </a>
+        <a class="btn btn-app">
+          <i class="fa fa-edit"></i> Contrôles médicaux
+        </a>
+        <a class="btn btn-app">
+          <i class="fa fa-edit"></i> Banque
+        </a>
+        <a class="btn btn-app">
+          <i class="fa fa-edit"></i> Exercices
+        </a>
+      </div>
       <div class="col-md-3 col-lg-3 col-sm-6 col-6"> <!-- TODO Find a solution for small devices by hidding the sapeur list-->
-        <div class="card">
+        <div class="card card-primary card-outline">
           <div class="card-header">
             <!--<h3 class="card-title">TODO Ajout des tris sur actif/inactif/tous</h3>-->
             <!--<div class="card-tools">
@@ -120,7 +154,7 @@
       <!-- /.col -->
       <div class="col-md-5 col-lg-5 col-sm-6 col-6">
         <!-- general form elements -->
-        <div class="card card-primary">
+        <div class="card card-primary card-outline">
           <div class="card-header">
             <h3 class="card-title">Données personnelles</h3>
           </div>
@@ -174,7 +208,7 @@
                     <select class="form-control" id="localiteInput">
                       <option>Saulcy</option>
                       <option>Bassecourt</option>
-                      <!-- TODO auto-complete -->
+                      <!-- TODO auto-complete + auto sélection with NPA -->
                     </select>
                   </div>
                 </div>
@@ -224,7 +258,7 @@
         <!-- /.card -->
 
         <!-- Form Element sizes -->
-        <div class="card card-success">
+        <div class="card card-primary card-outline">
           <div class="card-header">
             <h3 class="card-title">Contact</h3>
           </div>
@@ -262,225 +296,76 @@
                   <input type="text" class="form-control" id="remarqueInput">
                 </div>
               </div>
+              <!-- TODO N° Transmis pour alarm au CET -->
             </div>
           </div>
           <!-- /.card-body -->
         </div>
         <!-- /.card -->
-
       </div>
       <!-- /.col -->
 
-
       <div class="col-md-4 col-lg-4 col-sm-6 col-6">
         <!-- general form elements -->
-        <div class="card card-primary">
+        <div class="card card-primary card-outline">
           <div class="card-header">
-            <h3 class="card-title">Quick Example</h3>
+            <h3 class="card-title">Références professionnelles</h3>
           </div>
           <!-- /.card-header -->
           <!-- form start -->
           <form role="form">
             <div class="card-body">
               <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input class="form-control" id="exampleInputEmail1" placeholder="Enter email" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" autocomplete="off" type="email">
+                <label for="professionInput">Profession</label>
+                <input class="form-control" id="professionInput" type="text">
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input class="form-control" id="exampleInputPassword1" placeholder="Password" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;" autocomplete="off" type="password">
+                <label for="employeurInput">Employeur</label>
+                <input class="form-control" id="employeurInput" type="text">
               </div>
               <div class="form-group">
-                <label for="exampleInputFile">File input</label>
-                <div class="input-group">
-                  <div class="custom-file">
-                    <input class="custom-file-input" id="exampleInputFile" type="file">
-                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                  </div>
-                  <div class="input-group-append">
-                    <span class="input-group-text" id="">Upload</span>
-                  </div>
-                </div>
+                <label for="lieuTravailInput">Lieu de travail</label>
+                <input class="form-control" id="lieuTravailInput" type="text">
               </div>
-              <div class="form-check">
-                <input class="form-check-input" id="exampleCheck1" type="checkbox">
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-              </div>
-            </div>
-            <!-- /.card-body -->
-
-            <div class="card-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <!-- TODO Add image -->
             </div>
           </form>
         </div>
         <!-- /.card -->
 
-        <!-- Form Element sizes -->
-        <div class="card card-success">
+        <div class="card card-primary card-outline">
           <div class="card-header">
-            <h3 class="card-title">Different Height</h3>
+            <h3 class="card-title">Incorporation / Sortie</h3>
           </div>
-          <div class="card-body">
-            <input class="form-control form-control-lg" placeholder=".input-lg" type="text">
-            <br>
-            <input class="form-control" placeholder="Default input" type="text">
-            <br>
-            <input class="form-control form-control-sm" placeholder=".input-sm" type="text">
-          </div>
-          <!-- /.card-body -->
+          <!-- /.card-header -->
+          <!-- form start -->
+          <form role="form">
+            <div class="card-body">
+              <!-- TODO Migrations content -->
+            </div>
+          </form>
         </div>
         <!-- /.card -->
 
-        <div class="card card-danger">
+        <div class="card card-primary card-outline">
           <div class="card-header">
-            <h3 class="card-title">Different Width</h3>
+            <h3 class="card-title">Informations</h3>
           </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-3">
-                <input class="form-control" placeholder=".col-3" type="text">
+          <!-- /.card-header -->
+          <!-- form start -->
+          <form role="form">
+            <div class="card-body">
+              <div class="form-group">
+                <label for="fonctionInput">Fonction principale</label>
+                <input class="form-control" id="fonctionInput" type="text">
               </div>
-              <div class="col-4">
-                <input class="form-control" placeholder=".col-4" type="text">
+              <div class="form-group">
+                <label for="gradeInput">Grade actuel</label>
+                <input class="form-control" id="gradeInput" type="text">
               </div>
-              <div class="col-5">
-                <input class="form-control" placeholder=".col-5" type="text">
-              </div>
+              <!-- TODO Actif et Porteur checkbox -->
             </div>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-
-        <!-- Input addon -->
-        <div class="card card-info">
-          <div class="card-header">
-            <h3 class="card-title">Input Addon</h3>
-          </div>
-          <div class="card-body">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">@</span>
-              </div>
-              <input class="form-control" placeholder="Username" type="text">
-            </div>
-
-            <div class="input-group mb-3">
-              <input class="form-control" type="text">
-              <div class="input-group-append">
-                <span class="input-group-text">.00</span>
-              </div>
-            </div>
-
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">$</span>
-              </div>
-              <input class="form-control" type="text">
-              <div class="input-group-append">
-                <span class="input-group-text">.00</span>
-              </div>
-            </div>
-
-            <h4>With icons</h4>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-              </div>
-              <input class="form-control" placeholder="Email" type="email">
-            </div>
-
-            <div class="input-group mb-3">
-              <input class="form-control" type="text">
-              <div class="input-group-append">
-                <span class="input-group-text"><i class="fa fa-check"></i></span>
-              </div>
-            </div>
-
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fa fa-dollar"></i>
-                </span>
-              </div>
-              <input class="form-control" type="text">
-              <div class="input-group-append">
-                <div class="input-group-text"><i class="fa fa-ambulance"></i></div>
-              </div>
-            </div>
-
-            <h5 class="mt-4 mb-2">With checkbox and radio inputs</h5>
-
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <input type="checkbox">
-                    </span>
-                  </div>
-                  <input class="form-control" type="text">
-                </div>
-                <!-- /input-group -->
-              </div>
-              <!-- /.col-lg-6 -->
-              <div class="col-lg-6">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><input type="radio"></span>
-                  </div>
-                  <input class="form-control" type="text">
-                </div>
-                <!-- /input-group -->
-              </div>
-              <!-- /.col-lg-6 -->
-            </div>
-            <!-- /.row -->
-
-            <h5 class="mt-4 mb-2">With buttons</h5>
-
-            <p>Large: <code>.input-group.input-group-lg</code></p>
-
-            <div class="input-group input-group-lg mb-3">
-              <div class="input-group-prepend">
-                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-                  Action
-                </button>
-                <ul class="dropdown-menu">
-                  <li class="dropdown-item"><a href="#">Action</a></li>
-                  <li class="dropdown-item"><a href="#">Another action</a></li>
-                  <li class="dropdown-item"><a href="#">Something else here</a></li>
-                  <li class="dropdown-divider"></li>
-                  <li class="dropdown-item"><a href="#">Separated link</a></li>
-                </ul>
-              </div>
-              <!-- /btn-group -->
-              <input class="form-control" type="text">
-            </div>
-            <!-- /input-group -->
-
-            <p>Normal</p>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <button type="button" class="btn btn-danger">Action</button>
-              </div>
-              <!-- /btn-group -->
-              <input class="form-control" type="text">
-            </div>
-            <!-- /input-group -->
-
-            <p>Small <code>.input-group.input-group-sm</code></p>
-            <div class="input-group input-group-sm">
-              <input class="form-control" type="text">
-              <span class="input-group-append">
-                <button type="button" class="btn btn-info btn-flat">Go!</button>
-              </span>
-            </div>
-            <!-- /input-group -->
-          </div>
-          <!-- /.card-body -->
+          </form>
         </div>
         <!-- /.card -->
       </div>
