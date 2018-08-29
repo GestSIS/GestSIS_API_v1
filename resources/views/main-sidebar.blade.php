@@ -19,36 +19,99 @@
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <!-- Add icons to the links using the .nav-icon class
-              with font-awesome or any other icon font library -->
-        <li class="nav-item has-treeview menu-open">
-          <a href="#" class="nav-link active">
-            <i class="nav-icon fa fa-dashboard"></i>
+        <li class="nav-item">
+          <a href="{{ route('sapeur.index') }}" class="nav-link internal-link">
+            <i class="nav-icon fas fa-user"></i>
             <p>
-              Starter Pages
-              <i class="right fa fa-angle-left"></i>
+              Sapeurs
             </p>
           </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="#" class="nav-link active">
-                <i class="fa fa-circle-o nav-icon"></i>
-                <p>Active Page</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="fa fa-circle-o nav-icon"></i>
-                <p>Inactive Page</p>
-              </a>
-            </li>
-          </ul>
         </li>
         <li class="nav-item">
           <a href="{{ route('sapeur.index') }}" class="nav-link internal-link">
-            <i class="nav-icon fa fa-th"></i>
+            <i class="nav-icon fas fa-fire-extinguisher"></i>
             <p>
-              Sapeurs
+              Alarmes
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('sapeur.index') }}" class="nav-link internal-link">
+            <i class="nav-icon fas fa-calendar-alt"></i>
+            <p>
+              Exercices & Séances
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('sapeur.index') }}" class="nav-link internal-link">
+            <i class="nav-icon fas fa-sitemap"></i>
+            <p>
+              Organisation
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('sapeur.index') }}" class="nav-link internal-link">
+            <i class="fas fa-calculator nav-icon"></i>
+            <p>
+              Frais
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('sapeur.index') }}" class="nav-link internal-link">
+            <i class="nav-icon fas fa-hand-holding-usd"></i>
+            <p>
+              Amendes
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('sapeur.index') }}" class="nav-link internal-link">
+            <i class="nav-icon fas fa-envelope"></i>
+            <p>
+              Publipostage
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('sapeur.index') }}" class="nav-link internal-link">
+            <i class="nav-icon fas fa-toolbox"></i>
+            <p>
+              Matériel personel
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('sapeur.index') }}" class="nav-link internal-link">
+            <i class="nav-icon fas fa-file-medical-alt"></i>
+            <p>
+              Certificats médicaux
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('sapeur.index') }}" class="nav-link internal-link">
+            <i class="nav-icon fas fa-sitemap"></i>
+            <p>
+              Impressions
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('sapeur.index') }}" class="nav-link internal-link">
+            <i class="nav-icon fas fa-sliders-h"></i>
+            <p>
+              Configuration
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('sapeur.index') }}" class="nav-link internal-link">
+            <i class="nav-icon fas fa-globe-africa"></i>
+            <p>
+              Exportation -> RTA
             </p>
           </a>
         </li>

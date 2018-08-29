@@ -34,25 +34,25 @@
           <i class="fas fa-book-open"></i> Cours
         </a>
         <a class="btn btn-app">
-          <i class="fa fa-edit"></i> Promotion
+          <i class="fas fa-award"></i> Promotion
         </a>
         <a class="btn btn-app">
-          <i class="fa fa-edit"></i> Organisation
+          <i class="fas fa-sitemap"></i> Organisation
         </a>
         <a class="btn btn-app">
-          <i class="fa fa-edit"></i> Matériel personnel
+          <i class="fas fa-toolbox"></i> Matériel personnel
         </a>
         <a class="btn btn-app">
-          <i class="fa fa-edit"></i> Permis
+          <i class="fas fa-car"></i> Permis
         </a>
         <a class="btn btn-app">
-          <i class="fa fa-edit"></i> Contrôles médicaux
+          <i class="fas fa-file-medical-alt"></i> Contrôles médicaux
         </a>
         <a class="btn btn-app">
-          <i class="fa fa-edit"></i> Banque
+          <i class="fas fa-university"></i> Banque
         </a>
         <a class="btn btn-app">
-          <i class="fa fa-edit"></i> Exercices
+          <i class="fas fa-calendar-alt"></i> Exercices
         </a>
       </div>
       <div class="col-md-3 col-lg-3 col-sm-6 col-6"> <!-- TODO Find a solution for small devices by hidding the sapeur list-->
