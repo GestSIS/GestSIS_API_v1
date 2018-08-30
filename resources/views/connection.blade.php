@@ -14,47 +14,47 @@
         @include('user-notification')
 
         <div class="input-group mb-3">
-          <select class="form-control" name="sis_id">
-            <option value="-1">SIS</option>
+          <label for="sis_id" class="d-none">SIS</label>
+          <select class="form-control required" name="sis_id">
+            <option value="">SIS</option>
             @foreach($sis_list as $sis)
               <option value="{{ $sis['id'] }}">{{ $sis['nom'] }}</option>
             @endforeach
           </select>          
         </div>
         <div class="input-group mb-3">
-          <input type="text" name="username" class="form-control" placeholder="Nom d'utilisateur">
+          <label for="username" class="d-none">Nom d'utilisateur</label>
+          <input type="text" name="username" class="form-control required" placeholder="Nom d'utilisateur">
           <div class="input-group-append">
-              <span class="fa fa-envelope input-group-text"></span>
+            <span class="input-group-text"><i class="fa fa-envelope"></i></span>
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" name="password" class="form-control" placeholder="Mot de passe">
+          <label for="password" class="d-none">Mot de passe</label>
+          <input type="password" name="password" class="form-control required" placeholder="Mot de passe">
           <div class="input-group-append">
-              <span class="fa fa-lock input-group-text"></span>
-          </div>
+              <span class="input-group-text"><i class="fa fa-lock"></i></span>
+            </div>
         </div>
         <div class="row">
           <div class="col-8">
             <div class="checkbox icheck">
               <label>
-                <input type="checkbox"> Remember Me
+                <input type="checkbox" name="stay_connected" value="1"> Rester connecté
               </label>
             </div>
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Connexion</button>
           </div>
           <!-- /.col -->
         </div>
       </form>
      
       <p class="mb-1">
-        <a href="#">I forgot my password</a>
-      </p>
-      <p class="mb-0">
-        <a href="register.html" class="text-center">Register a new membership</a>
-      </p>
+        <a href="{{ route('user.forgot_password') }}" class="internal-link">Mot de passe oublié</a>
+      </p>      
     </div>
     <!-- /.login-card-body -->
   </div>

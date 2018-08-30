@@ -9,6 +9,9 @@ use App\Core\User;
 use App\Core\Auth;
 use App\Core\Sis;
 
+use Cookie;
+use Log;
+
 /**
  * Controlleur pour la gestion du compte
  */
@@ -28,6 +31,14 @@ class UserController extends Controller {
             $request->session()->put('sis_id', config('sis.id'));
             $request->session()->put('uid', Auth::getCurrentUser()->getId());
             $request->session()->put('login_date', time());
+
+            if($request->input('stay_connected', 0) == 1){
+                Cookie::queue('stay_connected', Auth::getAccessToken(), 60*24*10); // 10 jours
+            }
+            else{
+                Cookie::queue(Cookie::forget('stay_connected'));
+            }
+
             return response()->json([
                     'success' => true,
                     'redirect' => route('user.dashboard')
@@ -38,6 +49,28 @@ class UserController extends Controller {
                     'error' => 'Données d\'identification invalides'
             ], 401);
 		}
+    }
+
+    public function logout(Request $request){
+        $request->session()->flush();
+        Cookie::queue(Cookie::forget('stay_connected'));
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    public function showForgotPasswordForm(Request $request){
+        return view('forgot-password', [
+            'title' => 'Mot de passe oublié',
+            'full_page' => true, // Sans menu, ni sidebar
+            'body_class' => 'login-page',
+            'sis_list' => (new Sis())->getList(['actif' => true])
+        ]);
+    }
+
+    public function sendForgotPasswordMail(Request $request){
+        //
     }
 
     public function showDashboard(Request $request){

@@ -6,6 +6,7 @@
 
 require('./bootstrap');
 import SapeurPage from './sapeur-page';
+import UserPage from './user-page';
 
 var App = (function() {
     var g_ajaxStatus = true;
@@ -58,9 +59,7 @@ var App = (function() {
 
         switch(segments[0]){
             case 'user':
-                if(segments[1] === 'connection'){
-                    App.initStandardForm($("#connection-form"));
-                }
+                UserPage.init(segments[1]);
                 break;
             case 'sapeur':
                 SapeurPage.init(segments[1]);
@@ -192,26 +191,26 @@ var App = (function() {
         $form.find(".required:not(:disabled)").each(function() {
             // Champ texte vide
             if ($.trim($(this).val()) === '') {
-                if (errorFields.length === 0 || errorFields[errorFields.length - 1] != $(this).closest(".form-group").children("label").text()) {
+                if (errorFields.length === 0 || errorFields[errorFields.length - 1] != $(this).closest(".form-group, .input-group").children("label").text()) {
                     $(this).addClass("is-invalid");
-                    errorFields.push($(this).closest(".form-group").children("label").text());
+                    errorFields.push($(this).closest(".form-group, .input-group").children("label").text());
                 }
             }
             // Mots de passe pas identique
             else if ($(this).hasClass('password-confirmation') && ($form.find("input.password").val() !== $(this).val() || $(this).val() === "")) {
                 $(this).addClass("is-invalid");
-                errorFields.push($(this).closest(".form-group").children("label").text());
+                errorFields.push($(this).closest(".form-group, .input-group").children("label").text());
             }
             // Adresse e-mail syntaxiquement incorrecte
             else if ($(this).hasClass('email') && !emailReg.test($.trim($(this).val()))) {
                 $(this).addClass("is-invalid");
-                errorFields.push($(this).closest(".form-group").children("label").text());
+                errorFields.push($(this).closest(".form-group, .input-group").children("label").text());
             }
             // Bouton radio, aucun coché
-            else if ($(this).is(":radio") && !$(this).closest(".form-group").find("input[name=" + $(this).attr("name") + "]:checked").val()) {
+            else if ($(this).is(":radio") && !$(this).closest(".form-group, .input-group").find("input[name=" + $(this).attr("name") + "]:checked").val()) {
                 $(this).addClass("is-invalid");
                 if ($(this).parent(".custom-control").index() === 0) {
-                    errorFields.push($(this).closest(".form-group").children("label").text());
+                    errorFields.push($(this).closest(".form-group, .input-group").children("label").text());
                 }
             }
             // Aucune erreur
@@ -253,10 +252,10 @@ var App = (function() {
      * @param  jQuery $form Formulaire à initialiser
      */
     function initStandardForm($form) {
-        /*var $recaptchaFields = $form.find(".recaptcha");
+        var $recaptchaFields = $form.find(".recaptcha");
         if($recaptchaFields.length > 0){
             App.initCaptcha($recaptchaFields.eq(0).attr("id"));
-        }*/
+        }
 
         $form.off("submit").on("submit", function(e) {
             e.preventDefault();
@@ -295,6 +294,39 @@ var App = (function() {
         }
     }
 
+    /**
+     * Chargement du captcha
+     * @param captchaID
+     * @param tabindex
+     */
+    function initCaptcha(captchaID, tabindex) {
+        // tabindex est facultatif
+        tabindex = typeof tabindex == "undefined" ? 20 : tabindex;
+
+        // Si le captcha n'existe pas
+        if ($("#" + captchaID).length === 0) return;
+
+        if(g_recaptchaLoaded){
+            grecaptcha.render(captchaID, {
+                'sitekey' : RECAPTCHA_PUBLIC_KEY,
+                theme: "light",
+                tabindex: tabindex
+            });
+        }
+        else{
+            $(window).on("recaptchaloaded", function(){
+                initCaptcha(captchaID, tabindex);
+            });
+        }
+    }
+
+    /**
+     * Rechargement du captcha (rafraîchissement de l'image)
+     */
+    function reloadCaptcha() {
+        if($(".recaptcha").length)
+            grecaptcha.reset();
+    }
 
     /**
      * Gestion des erreurs
@@ -333,6 +365,8 @@ var App = (function() {
         hideUserNotification: hideUserNotification,
         refreshPage: refreshPage,
         redirect: redirect,
+        initCaptcha: initCaptcha,
+        reloadCaptcha: reloadCaptcha,
         checkFormIntegrity: checkFormIntegrity,
         getPageContent: getPageContent,
         initStandardForm: initStandardForm,

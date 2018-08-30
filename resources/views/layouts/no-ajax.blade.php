@@ -42,6 +42,23 @@
       </div>
     @endif
 
+    <script type="text/javascript">
+      var RECAPTCHA_PUBLIC_KEY = '{{ config('services.recaptcha.public_key') }}';
+      var g_trans = {
+        'form_error' : '@lang('global.field_error')',
+        'form_errors' : '@lang('global.fields_errors')',
+        'request_error' : '@lang('global.request_error')'
+      };
+      var g_recaptchaLoaded = false;
+    </script>   
+
     <script src="{{ mix('js/app.js') }}"></script>
+    <script type="text/javascript">
+      function onRecaptchaLoaded(){
+        g_recaptchaLoaded = true;
+        $(window).trigger("recaptchaloaded");
+      }
+    </script>
+    <script src='https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoaded&render=explicit' async defer></script>
 </body>
 </html>

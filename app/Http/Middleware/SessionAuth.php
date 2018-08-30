@@ -22,7 +22,10 @@ class SessionAuth {
         $guest = true;
 
         try {
-            if(Auth::authenticateSession($request->session()->get('sis_id'), $request->session()->get('uid'))){
+            if($request->session()->has('uid') && Auth::authenticateSession($request->session()->get('sis_id'), $request->session()->get('uid'))){
+                $guest = false;
+            }
+            elseif(!empty($request->cookie('stay_connected')) && Auth::authenticate($request->cookie('stay_connected'))){
                 $guest = false;
             }
         }
@@ -39,6 +42,9 @@ class SessionAuth {
             else{
                 return redirect()->route('user.connection');
             }            
+        }
+        else{
+            view()->share('user_details', Auth::getCurrentUser()->getDetails());
         }
 
         return $next($request);

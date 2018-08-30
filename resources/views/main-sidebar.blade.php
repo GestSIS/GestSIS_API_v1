@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="index3.html" class="brand-link">
+  <a href="{{ route('user.dashboard') }}" class="brand-link">
     <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
   </a>
 
@@ -9,10 +9,18 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        @if($user_details['photo'])
+          <img src="{{ $user_details['photo'] }}" class="img-circle elevation-2">
+        @endif
       </div>
       <div class="info">
-        <a href="#" class="d-block">Alexander Pierce</a>
+        <a href="#" class="d-block">
+          @if(!empty($user_details['nom']))
+            {{ $user_details['prenom'] }} {{ $user_details['nom'] }}
+          @else
+            {{ $user_details['nom_utilisateur'] }}
+          @endif
+        </a>
       </div>
     </div>
 
