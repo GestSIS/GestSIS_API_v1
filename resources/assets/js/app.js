@@ -5,6 +5,7 @@
  */
 
 require('./bootstrap');
+import SapeurPage from './sapeur-page';
 
 var App = (function() {
     var g_ajaxStatus = true;
@@ -61,12 +62,10 @@ var App = (function() {
                     App.initStandardForm($("#connection-form"));
                 }
                 break;
+            case 'sapeur':
+                SapeurPage.init(segments[1]);
+                break;
         }
-
-        $('#nav-tab a').on('click', function (e) {
-          e.preventDefault()
-          $(this).tab('show')
-        });
 
         onInternalLinkClick();
     }

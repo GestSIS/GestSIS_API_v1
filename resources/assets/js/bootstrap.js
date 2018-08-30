@@ -15,6 +15,7 @@ try {
     require('admin-lte');
     require('@fortawesome/fontawesome-free/js/all.js')
 
+    require('bootstrap');
 } catch (e) {}
 
 /**
