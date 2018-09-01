@@ -41,8 +41,8 @@
       </div>
       <div class="col-md-3 col-lg-3 col-sm-6 col-6"> <!-- TODO Find a solution for small devices by hidding the sapeur list-->
         <div class="card card-primary card-outline">
-          <div class="card-header">
-            <!--<h3 class="card-title">TODO Ajout des tris sur actif/inactif/tous</h3>-->
+          <!--<div class="card-header">
+            <h3 class="card-title">TODO Ajout des tris sur actif/inactif/tous</h3>-->
             <!--<div class="card-tools">
               <div class="input-group input-group-sm" style="width: 150px;">
                 <input name="table_search" class="form-control float-right" placeholder="Search" type="text">
@@ -51,8 +51,8 @@
                   <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                 </div>
               </div>
-            </div>-->
-          </div>
+            </div>
+          </div>-->
           <!-- /.card-header -->
           <div class="card-body p-0">
             <table class="table table-hover table-condensed">
@@ -360,22 +360,294 @@
           </div>
         </div>
         <div class="tab-pane fade" id="nav-fonction" role="tabpanel" aria-labelledby="nav-fonction-tab">
-
+          <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-12">
+              <!-- general form elements -->
+              <div class="card card-primary card-outline">
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table data-toggle="table"
+                         data-url="http://bootstrap-table.wenzhixin.net.cn/examples/gh/get/response.json/wenzhixin/bootstrap-table/tree/master/docs/data/data1/"
+                         data-search="true"
+                         data-show-refresh="true"
+                         data-show-toggle="true"
+                         data-show-columns="true">
+                      <thead>
+                      <tr>
+                        <th data-field="date">Date</th>
+                        <th data-field="Abr">Abr</th>
+                        <th data-field="fonction">Fonction</th>
+                        <th data-field="fin">Fin</th>
+                        <th data-field="remarques">Remarques</th>
+                      </tr>
+                      </thead>
+                  </table>
+                  <!-- TODO Fetch data -->
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="tab-pane fade" id="nav-cours" role="tabpanel" aria-labelledby="nav-cours-tab">
-
+          <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-12">
+              <!-- general form elements -->
+              <div class="card card-primary card-outline">
+                <!-- /.card-header -->
+                <div class="card-header">
+                  <button class="btn btn-primary">Ajouter un cours</button>
+                </div>
+                <div class="card-body">
+                  <table data-toggle="table"
+                         data-url="http://bootstrap-table.wenzhixin.net.cn/examples/gh/get/response.json/wenzhixin/bootstrap-table/tree/master/docs/data/data1/"
+                         data-search="true"
+                         data-show-refresh="true"
+                         data-show-toggle="true"
+                         data-show-columns="true">
+                      <thead>
+                      <tr>
+                        <th data-field="date">Date</th>
+                        <th data-field="Abr">Abr</th>
+                        <th data-field="designation">Désignation</th>
+                        <th data-field="lieu">Lieu</th>
+                      </tr>
+                      </thead>
+                  </table>
+                  <!-- TODO Fetch data -->
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="tab-pane fade" id="nav-promotion" role="tabpanel" aria-labelledby="nav-promotion-tab">
-
+          <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-12">
+              <!-- general form elements -->
+              <div class="card card-primary card-outline">
+                <!-- /.card-header -->
+                <div class="card-header">
+                  <button class="btn btn-primary">Ajouter une promotion</button>
+                </div>
+                <div class="card-body">
+                  <table data-toggle="table"
+                         data-url="http://bootstrap-table.wenzhixin.net.cn/examples/gh/get/response.json/wenzhixin/bootstrap-table/tree/master/docs/data/data1/"
+                         data-search="true"
+                         data-show-refresh="true"
+                         data-show-toggle="true"
+                         data-show-columns="true">
+                      <thead>
+                      <tr>
+                        <th data-field="date">Date</th>
+                        <th data-field="Abr">Abr</th>
+                        <th data-field="designation">Désignation</th>
+                        <th data-field="remarques">Remarques</th>
+                      </tr>
+                      </thead>
+                  </table>
+                  <!-- TODO Fetch data -->
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="tab-pane fade" id="nav-organisation" role="tabpanel" aria-labelledby="nav-organisation-tab">
-
+          <div class="row">
+            <div class="col-12">
+              <!-- general form elements -->
+              <div class="card card-primary card-outline">
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table data-toggle="table"
+                         data-url="http://bootstrap-table.wenzhixin.net.cn/examples/gh/get/response.json/wenzhixin/bootstrap-table/tree/master/docs/data/data1/"
+                         data-search="true"
+                         data-show-refresh="true"
+                         data-show-toggle="true"
+                         data-show-columns="true">
+                      <thead>
+                      <tr>
+                        <th data-field="date">Groupe</th>
+                        <th data-field="Abr">Designation</th>
+                      </tr>
+                      </thead>
+                  </table>
+                  <!-- TODO Fetch data -->
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="tab-pane fade" id="nav-materiel" role="tabpanel" aria-labelledby="nav-materiel-tab">
-
+          <!-- TODO more complexe interface -->
         </div>
         <div class="tab-pane fade" id="nav-permis" role="tabpanel" aria-labelledby="nav-permis-tab">
-
+          <div class="row">
+            <div class="col-12">
+              <div class="card card-primary card-outline">
+                <div class="card-body">
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <td class="text-right"><img src="img/a.gif"></td>
+                        <td><p>A</p></td>
+                        <td>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control">
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-right"><img src="img/a1.gif"></td>
+                        <td><p>A1</p></td>
+                        <td>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control">
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-right"><img src="img/b.gif"></td>
+                        <td><p>B</p></td>
+                        <td>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control">
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-right"><img src="img/b1.gif"></td>
+                        <td><p>B1</p></td>
+                        <td>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control">
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-right"><img src="img/c.gif"></td>
+                        <td><p>C</p></td>
+                        <td>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control">
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-right"><i class="fab fa-gripfire text-danger" style="font-size:1.5em"></i><img src="img/c1.gif"></td>
+                        <td><p>C1</p></td>
+                        <td>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control">
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-right"><img src="img/d.gif"></td>
+                        <td><p>D</p></td>
+                        <td>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control">
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-right"><img src="img/d1.gif"></td>
+                        <td><p>D1</p></td>
+                        <td>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control">
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-right"><img src="img/be.gif"></td>
+                        <td><p>BE</p></td>
+                        <td>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control">
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-right"><img src="img/ce.gif"></td>
+                        <td><p>CE</p></td>
+                        <td>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control">
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-right"><img src="img/c1e.gif"></td>
+                        <td><p>C1E</p></td>
+                        <td>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control">
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-right"><img src="img/de.gif"></td>
+                        <td><p>DE</p></td>
+                        <td>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control">
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-right"><img src="img/d1e.gif"></td>
+                        <td><p>D1E</p></td>
+                        <td>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control">
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="tab-pane fade" id="nav-medical" role="tabpanel" aria-labelledby="nav-medical-tab">
 
