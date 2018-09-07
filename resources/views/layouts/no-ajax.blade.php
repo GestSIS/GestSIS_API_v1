@@ -11,8 +11,8 @@
     <link href="{{ mix('css/app.css') }}" rel='stylesheet' type='text/css'>
   </head>
   <body class="hold-transition {{ $body_class }}">
-    @if(!$full_page)
-      <div class="wrapper">
+    <div class="wrapper container-fluid">
+      @if(!$full_page)
         <!-- Navbar -->
         @include('navbar')
         <!-- /.navbar --> 
@@ -35,12 +35,13 @@
         @include('footer')
       </div>
       <!-- ./wrapper -->
-    @else
-      <div id="main-content">
-        @include('common')
-        @yield('content')
-      </div>
-    @endif
+      @else    
+        <div id="main-content">
+          @include('common')
+          @yield('content')
+        </div>
+      @endif
+    </div>
 
     <script type="text/javascript">
       var RECAPTCHA_PUBLIC_KEY = '{{ config('services.recaptcha.public_key') }}';

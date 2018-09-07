@@ -13,7 +13,7 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('admin-lte');
-    require('@fortawesome/fontawesome-free/js/all.js')
+    //require('@fortawesome/fontawesome-free/js/all.js')
 
     require('bootstrap');
 } catch (e) {}

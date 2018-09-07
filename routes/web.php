@@ -22,7 +22,7 @@ Route::post('deconnexion', 'UserController@logout')->name('user.logout');
 
 // Mot de passe oublié
 Route::get('mot-passe-oublie', 'UserController@showForgotPasswordForm')->name('user.forgot_password_form');
-Route::post('mot-passe-oublie', 'UserController@sendForgotPasswordMail')->name('user.forgot_password');
+Route::post('mot-passe-oublie', 'UserController@sendForgotPasswordEmail')->name('user.forgot_password');
 //Route::get('reinitialiser-mp', 'UserController@showResetPasswordForm')->name('user.reset_password_form');
 //Route::post('reinitialiser-mp', 'UserController@resetPassword')->name('user.reset_password');
 
@@ -31,7 +31,8 @@ Route::group(['middleware' => 'session.auth'], function(){
     Route::get('tableau-de-bord', 'UserController@showDashboard')->name('user.dashboard');
 
     // Sapeurs
-    Route::get('sapeurs', 'SapeurController@showIndex')->name('sapeur.index');
+    Route::get('sapeurs', 'SapeurController@showDetails')->name('sapeur.index');
+    Route::get('sapeurs/{id}', 'SapeurController@showDetails')->name('sapeur.details');
 });
 
 Route::get('user/activate', 'UserController@activate')->name('user.activate');

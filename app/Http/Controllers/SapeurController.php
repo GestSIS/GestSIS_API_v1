@@ -19,4 +19,29 @@ class SapeurController extends Controller {
         ]);
     }
     
+    public function showDetails(Request $request, $sapId = null){
+        $sapeur = new Sapeur();
+        $filters = $request->only('actif');
+        $sapeursList = $sapeur->getList(null, null, 'nom_prenom', false, $filters);
+
+        if(!empty($sapId)){
+            $sapeur->setID($sapId);
+            $details = $sapeur->getDetails();            
+        }
+        else if(isset($sapeursList['data'][0])) {
+            $sapeur->setID($sapeursList['data'][0]['id']);
+            $details = $sapeur->getDetails();
+        }
+        else{
+            $details = [];
+        }
+
+        return view('sapeur-index', [
+            'title' => 'Sapeurs',
+            'sapeurs_list' => $sapeursList['data'],
+            'filters' => $filters,
+            'sap_details' => $details,
+            'civilites' => Sapeur::getCivilites()
+        ]);
+    }
 }

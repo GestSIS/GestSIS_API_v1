@@ -10,3 +10,12 @@
 
 // AdminLTE
 @import "~admin-lte/dist/css/adminlte.css";
+
+.select-sapeur {   
+    overflow-y: scroll;
+    max-height: 800px;
+}
+
+.tab-content {
+    width: 100%;
+}

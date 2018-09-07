@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Exceptions\InvalidUserInputException;
+use ReCaptcha\ReCaptcha;
 
 use App\Core\User;
 use App\Core\Auth;
@@ -69,8 +70,31 @@ class UserController extends Controller {
         ]);
     }
 
-    public function sendForgotPasswordMail(Request $request){
-        //
+    public function sendForgotPasswordEmail(Request $request){
+        $user = new User();
+        $email = $request->input('email', '');
+        $sisID = $request->input('sis_id');
+        
+        Sis::retrieveSettings($sisID);
+
+		// Vérification captcha
+		$recaptcha = new ReCaptcha(config('services.recaptcha.secret_key'));
+		$resp = $recaptcha->verify($request->input('g-recaptcha-response'), $request->ip());
+		if (!$resp->isSuccess()) {
+			throw new InvalidUserInputException(trans('account.invalid_captcha'));
+		}
+
+		if($user->sendResetPasswordEmail($email)){
+			$request->session()->flash('connection_message', trans('account.password_reset_ok'));
+
+			return response()->json([
+					'success' => true,
+					'follow' => route('user.connection')
+			]);
+		}
+		else{
+			throw new InvalidUserInputException(trans('account.invalid_email'));
+		}
     }
 
     public function showDashboard(Request $request){

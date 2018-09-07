@@ -77,8 +77,6 @@ class Sapeur {
                            Sapeur.SAP_Nom,
                            Sapeur.SAP_Prenom,
                            Sapeur.SAP_Porteur,
-                           Sapeur.SAP_Permis_C1,
-                           Sapeur.SAP_Permis_C1_Date,
                            Sapeur.TGRP_No,
                            Sapeur.SAP_TelPriv,
                            Sapeur.SAP_TelPriv_RTA,
@@ -96,7 +94,11 @@ class Sapeur {
                            Localite.LOC_Designation,
                            Civilite.CIV_Designation,
                            Fonction_.FON_Nom,
-                           Grade.GRA_Abr
+                           Grade.GRA_Abr,
+                           (SELECT GROUP_CONCAT(Groupe.GRP_ID ORDER BY Groupe.GRP_Tri ASC)
+                              FROM GrpSap
+                             INNER JOIN Groupe ON GrpSap.GRP_ID = Groupe.GRP_ID
+                             WHERE GrpSap.SAP_ID = Sapeur.SAP_ID) AS groupes
                       FROM Sapeur
                       LEFT OUTER JOIN Fonction_ ON Sapeur.FON_ID_Princ = Fonction_.FON_ID
                       LEFT OUTER JOIN Grade ON Sapeur.GRA_ID_Actu = Grade.GRA_ID
@@ -117,8 +119,6 @@ class Sapeur {
                      '.(isset($filters['annee_naiss_de']) ? ' AND YEAR(Sapeur.SAP_DNaissance) >= :annee_naiss_de' : '').'
                      '.(isset($filters['annee_naiss_a']) ? ' AND YEAR(Sapeur.SAP_DNaissance) <= :annee_naiss_a' : '').'
                      '.(isset($filters['porteur']) ? ' AND Sapeur.SAP_Porteur = :porteur' : '').'
-                     '.(isset($filters['permis_c1']) ? ' AND Sapeur.SAP_Permis_C1 = :permis_c1' : '').'
-                     '.(isset($filters['permis_b']) ? ' AND Sapeur.SAP_Permis_B = :permis_b' : '').'
                      '.(isset($filters['actif']) ? ' AND Sapeur.SAP_Actif = :actif' : '').'
                      '.(isset($filters['politique']) && $filters['politique'] == '1' ? ' AND Sapeur.SAP_CAT = 2' : ' AND Sapeur.SAP_CAT = 1').'
                      '.(isset($filters['effectif_en']) ? ' AND :effectif_en BETWEEN SMU_Dinco AND SMU_DSortie' : '').'
@@ -133,9 +133,7 @@ class Sapeur {
                  'nom' => $sapeur->SAP_Nom,
                  'prenom' => $sapeur->SAP_Prenom,
                  'porteur' => boolval($sapeur->SAP_Porteur),
-                 'permis_c1' => boolval($sapeur->SAP_Permis_C1),
-                 'permis_c1_date' => $sapeur->SAP_Permis_C1_Date,
-                 'groupes' => array_column($this->getGroupes($sapeur->SAP_ID), 'id'),
+                 'groupes' => explode(',', $sapeur->groupes),
                  'tel_prive' => $sapeur->SAP_TelPriv,
                  'tel_prive_rta' => boolval($sapeur->SAP_TelPriv_RTA),
                  'tel_prof' => $sapeur->SAP_TelProf,
@@ -192,8 +190,6 @@ class Sapeur {
                        Sapeur.SAP_Nom,
                        Sapeur.SAP_Prenom,
                        Sapeur.SAP_Porteur,
-                       Sapeur.SAP_Permis_C1,
-                       Sapeur.SAP_Permis_C1_Date,
                        Sapeur.TGRP_No,
                        Sapeur.SAP_TelPriv,
                        Sapeur.SAP_TelPriv_RTA,
@@ -210,8 +206,6 @@ class Sapeur {
                        Sapeur.SAP_Profession,
                        Sapeur.SAP_Employeur,
                        Sapeur.SAP_NoAVS,
-                       Sapeur.SAP_Permis_B,
-                       Sapeur.SAP_Permis_B_Date,
                        Sapeur.SAP_LieuDeTravail,
                        Sapeur.SAP_Actif,
                        Sapeur.SAP_CPTBan,
@@ -219,9 +213,12 @@ class Sapeur {
                        Sapeur.SAP_IBAN,
                        Sapeur.SAP_IBAN_Statut,
                        Sapeur.SAP_CAT,
+                       Sapeur.SAP_Suffixe,
+                       Sapeur.SAP_Rem,
                        Localite.LOC_Npa,
                        Localite.LOC_Designation,
                        Civilite.CIV_Designation,
+                       Civilite.CIV_ID,
                        Fonction_.FON_Nom,
                        Grade.GRA_Abr
                   FROM Sapeur
@@ -239,8 +236,6 @@ class Sapeur {
                 'nom' => $res[0]->SAP_Nom,
                 'prenom' => $res[0]->SAP_Prenom,
                 'porteur' => boolval($res[0]->SAP_Porteur),
-                'permis_c1' => boolval($res[0]->SAP_Permis_C1),
-                'permis_c1_date' => $res[0]->SAP_Permis_C1_Date,
                 'groupes' => $res[0]->TGRP_No,
                 'tel_prive' => $res[0]->SAP_TelPriv,
                 'tel_prive_rta' => boolval($res[0]->SAP_TelPriv_RTA),
@@ -249,6 +244,7 @@ class Sapeur {
                 'tel_mobile' => $res[0]->SAP_TelNat,
                 'tel_mobile_rta' => boolval($res[0]->SAP_TelNat_RTA),
                 'date_naissance' => DateHelper::toIso8601($res[0]->SAP_DNaissance),
+                'suffixe' => $res[0]->SAP_Suffixe,
                 'email' => $res[0]->SAP_EMail,
                 'no_rue' => $res[0]->SAP_NoRue,
                 'rue' => $res[0]->SAP_Rue,
@@ -257,8 +253,6 @@ class Sapeur {
                 'profession' => $res[0]->SAP_Profession,
                 'employeur' => $res[0]->SAP_Employeur,
                 'no_avs' => $res[0]->SAP_NoAVS,
-                'permis_b' => boolval($res[0]->SAP_Permis_B),
-                'permis_b_date' => DateHelper::toIso8601($res[0]->SAP_Permis_B_Date),
                 'lieu_travail' => $res[0]->SAP_LieuDeTravail,
                 'actif' => boolval($res[0]->SAP_Actif),
                 'cpt_bancaire' => $res[0]->SAP_CPTBan,
@@ -269,14 +263,30 @@ class Sapeur {
                 'npa' => $res[0]->LOC_Npa,
                 'localite' => $res[0]->LOC_Designation,
                 'civilite' => $res[0]->CIV_Designation,
+                'civilite_id' => $res[0]->CIV_ID,
                 'fonction' => $res[0]->FON_Nom,
                 'grade' => $res[0]->GRA_Abr,
-                'photo' => config('sis.url').'/photos/sap_id_'.$res[0]->SAP_ID.'.jpg'
+                'photo' => config('sis.url').'/photos/sap_id_'.$res[0]->SAP_ID.'.jpg',
+                'remarques' => $res[0]->SAP_Rem,
+                // TODO: Intégrer les permis
             ];
         }
         else{
             throw new InvalidUserInputException('invalid sapeur id');
         }
+    }
+
+    public function create(): bool {
+        
+
+    }
+
+    public function update(): bool {
+
+    }
+
+    public function setID($ID) {
+        $this->id = $ID;
     }
 
     /**
@@ -307,6 +317,21 @@ class Sapeur {
                 'localite' => $mutation->LOC_Designation
             ];
         }, $mutations);
+    }
+
+    public static function getCivilites(): array {
+        $rows = DB::connection('mysql_managed')->select('
+                    SELECT CIV_ID,
+                           CIV_Designation
+                      FROM Civilite
+                     ORDER BY CIV_Designation');
+
+        return array_map(function($row) {
+            return [
+                'id' => $row->CIV_ID,
+                'designation' => $row->CIV_Designation
+            ];
+        }, $rows);
     }
 
     /**

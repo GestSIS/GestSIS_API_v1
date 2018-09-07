@@ -28,7 +28,7 @@
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
-          <a href="{{ route('sapeur.index') }}" class="nav-link internal-link">
+          <a href="{{ route('sapeur.index', ['actif' => '1']) }}" class="nav-link internal-link">
             <i class="nav-icon fas fa-user"></i>
             <p>
               Sapeurs
