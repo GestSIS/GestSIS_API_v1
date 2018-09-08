@@ -78,20 +78,25 @@ class Sis {
         }
     }
 
-    public static function getLocalities(){
-      $localities = DB::connection('mysql_dba')->select('
-                        SELECT Localite.LOC_ID, LOC_NPA, LOC_Designation
-                        FROM Localite
-                        INNER JOIN Localite_SIS ON Localite_SIS.loc_id = Localite.loc_id
-                        WHERE SIS_No= ?
-                        ORDER BY LOS_PAR_ID;', [config('sis.id')]);
+    public static function getLocalities(array $filters){
+        $query = DB::connection('mysql_dba')->table('Localite')
+                    ->select('Localite.LOC_ID', 'LOC_NPA', 'LOC_Designation')
+                    ->join('Localite_SIS', 'Localite_SIS.LOC_ID', '=', 'Localite.LOC_ID')
+                    ->where('SIS_No', config('sis.id'));
+        
+        if(isset($filters['query'])){
+            $query->whereRaw('CONCAT(LOC_NPA, " ", LOC_Designation) LIKE ?', ['%'.$filters['query'].'%']);
+        }
 
-      return array_map(function($locality) {
-          return [
-              'id' => $locality->LOC_ID,
-              'npa' => $locality->LOC_NPA,
-              'nom' => $locality->LOC_Designation
-          ];
-      }, $localities);
+        $query->orderBy('LOS_PAR_ID', 'asc');
+        $rows = $query->get()->toArray();
+
+        return array_map(function($locality) {
+            return [
+                'id' => $locality->LOC_ID,
+                'npa' => $locality->LOC_NPA,
+                'nom' => $locality->LOC_Designation
+            ];
+        }, $rows);
     }
 }

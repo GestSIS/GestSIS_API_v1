@@ -45,6 +45,7 @@ class SessionAuth {
         }
         else{
             view()->share('user_details', Auth::getCurrentUser()->getDetails());
+            view()->share('jwt_token', Auth::getAccessToken());
         }
 
         return $next($request);

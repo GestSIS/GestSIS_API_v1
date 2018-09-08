@@ -16,7 +16,7 @@
   </div>
 </section>
 
-<section class="content">
+<section class="content px-2">
   <div class="row">
     <div class="col-md-3"> <!-- TODO Find a solution for small devices by hidding the sapeur list-->
       <div class="card-header">

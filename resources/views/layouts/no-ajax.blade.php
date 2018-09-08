@@ -11,7 +11,7 @@
     <link href="{{ mix('css/app.css') }}" rel='stylesheet' type='text/css'>
   </head>
   <body class="hold-transition {{ $body_class }}">
-    <div class="wrapper container-fluid">
+    <div class="wrapper">
       @if(!$full_page)
         <!-- Navbar -->
         @include('navbar')
@@ -22,8 +22,10 @@
         
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper" id="main-content">
-          @include('common')
-          @yield('content')        
+          <div class="container-fluid">
+            @include('common')
+            @yield('content')
+          </div>
         </div>
         <!-- /.content-wrapper -->
 
@@ -35,10 +37,12 @@
         @include('footer')
       </div>
       <!-- ./wrapper -->
-      @else    
+      @else
         <div id="main-content">
-          @include('common')
-          @yield('content')
+          <div class="container-fluid">
+            @include('common')
+            @yield('content')
+          </div>
         </div>
       @endif
     </div>
@@ -54,6 +58,7 @@
     </script>   
 
     <script src="{{ mix('js/app.js') }}"></script>
+    
     <script type="text/javascript">
       function onRecaptchaLoaded(){
         g_recaptchaLoaded = true;

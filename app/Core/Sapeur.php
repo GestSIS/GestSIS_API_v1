@@ -215,6 +215,7 @@ class Sapeur {
                        Sapeur.SAP_CAT,
                        Sapeur.SAP_Suffixe,
                        Sapeur.SAP_Rem,
+                       Localite.LOC_ID,
                        Localite.LOC_Npa,
                        Localite.LOC_Designation,
                        Civilite.CIV_Designation,
@@ -262,12 +263,14 @@ class Sapeur {
                 'politique' => $res[0]->SAP_CAT == 2,
                 'npa' => $res[0]->LOC_Npa,
                 'localite' => $res[0]->LOC_Designation,
+                'localite_id' => $res[0]->LOC_ID,
                 'civilite' => $res[0]->CIV_Designation,
                 'civilite_id' => $res[0]->CIV_ID,
                 'fonction' => $res[0]->FON_Nom,
                 'grade' => $res[0]->GRA_Abr,
                 'photo' => config('sis.url').'/photos/sap_id_'.$res[0]->SAP_ID.'.jpg',
                 'remarques' => $res[0]->SAP_Rem,
+                'fonctions' => $this->getFonctions()
                 // TODO: Intégrer les permis
             ];
         }
@@ -359,8 +362,8 @@ class Sapeur {
                 'id' => $fonction->FON_ID,
                 'nom' => $fonction->FON_Nom,
                 'nom_abr' => $fonction->FON_Abr,
-                'date' => $fonction->FON_Date,
-                'fin' => $fonction->FON_Fin,
+                'date' => DateHelper::toIso8601($fonction->FON_Date),
+                'fin' => DateHelper::toIso8601($fonction->FON_Fin),
                 'remarque' => $fonction->FONSAP_Rem
             ];
         }, $fonctions);

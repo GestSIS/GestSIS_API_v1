@@ -25,9 +25,13 @@ class SisApiController extends ApiController {
         ]);
     }
 
-    public function localities(Request $resquest){
+    public function localities(Request $request){
+        $availableFilters = [
+            'query'
+        ];
+
         return response()->json([
-                'data' => Sis::getLocalities()
+                'data' => Sis::getLocalities($request->only($availableFilters))
         ]);
     }
 }

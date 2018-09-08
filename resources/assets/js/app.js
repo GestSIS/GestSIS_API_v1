@@ -36,6 +36,8 @@ var App = (function() {
             }
         });
 
+        $.fn.select2.defaults.set("language", "fr");
+
         managePageContent();
     }
 

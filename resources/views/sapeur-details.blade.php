@@ -21,20 +21,20 @@
     <!-- /.col -->
     <div class="tab-content" id="nav-tabContent">
       <div class="tab-pane fade show active" id="nav-sapeur" role="tabpanel" aria-labelledby="nav-sapeur-tab">
-        <div class="row">
-          <div class="col-sm-6">
-            <!-- general form elements -->
-            <div class="card card-primary card-outline">
-              <div class="card-header">
-                <h3 class="card-title">Données personnelles</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form role="form">
+        <!-- form start -->
+        <form role="form">
+          <div class="row">
+            <div class="col-sm-6">
+              <!-- general form elements -->
+              <div class="card card-primary card-outline">
+                <div class="card-header">
+                  <h3 class="card-title">Données personnelles</h3>
+                </div>
+                <!-- /.card-header -->              
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Civilité</label>
-                    <select class="form-control">
+                    <label for="f-sap-civilite">Civilité</label>
+                    <select class="form-control" id="f-sap-civilite" name="civilite_id">
                       @foreach($civilites as $civilite)
                         <option {{ $sap_details['civilite_id'] == $civilite['id'] ? 'selected' : '' }} value="{{ $civilite['id'] }}">{{ $civilite['designation'] }}</option>
                       @endforeach
@@ -42,204 +42,192 @@
                   </div>
                   <!-- NOM -->
                   <div class="form-group">
-                    <label for="nomInput">Nom</label>
-                    <input type="text" class="form-control" value="{{ $sap_details['nom'] }}">
+                    <label for="f-sap-nom">Nom</label>
+                    <input type="text" class="form-control" id="f-sap-nom" name="nom" value="{{ $sap_details['nom'] }}">
                   </div>
                   <!-- PRENOM -->
                   <div class="form-group">
-                    <label for="prenomInput">Prénom</label>
-                    <input type="text" class="form-control" value="{{ $sap_details['prenom'] }}">
+                    <label for="f-sap-prenom">Prénom</label>
+                    <input type="text" class="form-control" id="f-sap-prenom" name="prenom" value="{{ $sap_details['prenom'] }}">
                   </div>
                   <!-- RUE -->
                   <div class="row">
                     <div class="col-8">
                       <div class="form-group">
-                        <label for="rueInput">Rue</label>
-                        <input type="text" class="form-control" value="{{ $sap_details['rue'] }}">
+                        <label for="f-sap-rue">Rue</label>
+                        <input type="text" class="form-control" id="f-sap-rue" name="rue" value="{{ $sap_details['rue'] }}">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
-                        <label for="nInput">N°</label>
-                        <input type="text" class="form-control" value="{{ $sap_details['no_rue'] }}">
+                        <label for="f-sap-no-rue">N°</label>
+                        <input type="text" class="form-control" id="f-sap-no-rue" name="no_rue" value="{{ $sap_details['no_rue'] }}">
                       </div>
                     </div>
                   </div>
                   <!-- NPA + LOCALITE -->
-                  <div class="row">
-                    <div class="col-4">
-                      <div class="form-group">
-                        <label for="npaInput">NPA</label>
-                        <input type="text" class="form-control" id="npaInput">
-                      </div>
-                    </div>
-                    <div class="col-8">
-                      <div class="form-group">
-                        <label for="localiteInput">Localité</label>
-                        <select class="form-control" id="localiteInput">
-                          <option>Saulcy</option>
-                          <option>Bassecourt</option>
-                          <!-- TODO auto-complete + auto sélection with NPA -->
-                        </select>
-                      </div>
-                    </div>
-                  </div>
+                  <div class="form-group">
+                    <label for="f-sap-localite">NPA Localité</label>
+                    <select class="required" id="f-sap-localite" name="localite_id" style="width: 100%" data-url="{{ route('api.v1.sis.localities') }}">                      
+                      <option value="{{ $sap_details['localite_id'] }}">{{ $sap_details['npa'].' '.$sap_details['localite'] }}</option>                      
+                    </select>
+                  </div>                    
                   <!-- N° AVS -->
                   <div class="form-group">
-                    <label for="avsInput">N° AVS</label>
-                    <input type="text" class="form-control" value="{{ $sap_details['no_avs'] }}">
+                    <label for="f-sap-avs">N° AVS</label>
+                    <input type="text" class="form-control" id="f-sap-avs" name="no_avs" value="{{ $sap_details['no_avs'] }}">
                   </div>
                   <!-- DATE NAISSANCE + SUFFIXE -->
                   <div class="row">
                     <div class="col-6">
                       <div class="form-group">
-                        <label for="naissanceInput">Date de naissance</label>
+                        <label for="f-sap-date-naissance">Date de naissance</label>
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                           </div>
-                          <input class="form-control" type="date" value="{{ date('Y-m-d', strtotime($sap_details['date_naissance'])) }}">
-                          <!-- TODO fix this -->
+                          <input class="form-control" type="date" id="f-sap-date-naissance" name="date_naissance" value="{{ date('Y-m-d', strtotime($sap_details['date_naissance'])) }}">
                         </div>
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="form-group">
-                        <label for="suffixeInput">Suffixe</label>
-                        <input type="text" class="form-control" value="{{ $sap_details['suffixe'] }}">
+                        <label for="f-sap-suffixe">Suffixe</label>
+                        <input type="text" class="form-control" id="f-sap-suffixe" name="suffixe" value="{{ $sap_details['suffixe'] }}">
                       </div>
                     </div>                      
                   </div>
                   <p>Permet de différencier deux personnes ayant le même nom et prénom.</p>
                   <!-- REMARQUE -->
                   <div class="form-group">
-                    <label for="remarqueInput">Remarques</label>
-                    <textarea class="form-control" rows="3">{{ $sap_details['remarques'] }}</textarea>
+                    <label for="f-sap-remarques">Remarques</label>
+                    <textarea class="form-control" rows="3" id="f-sap-remarques" name="remarques">{{ $sap_details['remarques'] }}</textarea>
+                  </div>
+                </div>
+                <!-- /.card-body -->              
+              </div>
+              <!-- /.card -->
+
+              <!-- Form Element sizes -->
+              <div class="card card-primary card-outline">
+                <div class="card-header">
+                  <h3 class="card-title">Contact</h3>
+                </div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="f-sap-email">Email</label>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                      </div>
+                      <input class="form-control" type="email" id="f-sap-email" name="email" value="{{ $sap_details['email'] }}">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-3">
+                      <div class="form-group">
+                        <label for="f-sap-tel-prive">Tel priv</label>
+                      </div>
+                      <div class="form-group">
+                        <label for="f-sap-tel-mobile">Smartphone</label>
+                      </div>
+                      <div class="form-group">
+                        <label for="f-sap-tel-prof">Tel Prof</label>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="f-sap-tel-prive" name="tel_prive" value="{{ $sap_details['tel_prive'] }}">
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="f-sap-tel-mobile" name="tel_mobile" value="{{ $sap_details['tel_mobile'] }}">
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="f-sap-tel-prof" name="tel_prof" value="{{ $sap_details['tel_prof'] }}">
+                      </div>
+                    </div>
+                    <!-- TODO N° Transmis pour alarm au CET -->
                   </div>
                 </div>
                 <!-- /.card-body -->
-
-                <!--<div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </div>-->
-              </form>
-            </div>
-            <!-- /.card -->
-
-            <!-- Form Element sizes -->
-            <div class="card card-primary card-outline">
-              <div class="card-header">
-                <h3 class="card-title">Contact</h3>
               </div>
-              <div class="card-body">
-                <div class="form-group">
-                  <label for="emailInput">Email</label>
-                  <div class="input-group mb-3">
-                    <!--<label for="emailInput">Email</label>-->
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-                    </div>
-                    <input class="form-control" type="email" value="{{ $sap_details['email'] }}">
-                  </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+
+            <div class="col-sm-6">
+              <!-- general form elements -->
+              <div class="card card-primary card-outline">
+                <div class="card-header">
+                  <h3 class="card-title">Références professionnelles</h3>
                 </div>
-                <div class="row">
-                  <div class="col-3">
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form">
+                  <div class="card-body">
                     <div class="form-group">
-                      <label for="remarqueInput">Tel priv</label>
+                      <label for="f-sap-profession">Profession</label>
+                      <input type="text" class="form-control" id="f-sap-profession" name="profession" value="{{ $sap_details['profession'] }}">
                     </div>
                     <div class="form-group">
-                      <label for="remarqueInput">Smartphone</label>
+                      <label for="f-sap-employeur">Employeur</label>
+                      <input type="text" class="form-control" id="f-sap-employeur" name="employeur" value="{{ $sap_details['employeur'] }}">
                     </div>
                     <div class="form-group">
-                      <label for="remarqueInput">Tel Prof</label>
+                      <label for="f-sap-lieu-travail">Lieu de travail</label>
+                      <input type="text" class="form-control" id="f-sap-lieu-travail" name="lieu_travail" value="{{ $sap_details['lieu_travail'] }}">
                     </div>
+                    <!-- TODO Add image -->
                   </div>
-                  <div class="col-4">
-                    <div class="form-group">
-                      <input type="text" class="form-control" value="{{ $sap_details['tel_prive'] }}">
-                    </div>
-                    <div class="form-group">
-                      <input type="text" class="form-control" value="{{ $sap_details['tel_mobile'] }}">
-                    </div>
-                    <div class="form-group">
-                      <input type="text" class="form-control" value="{{ $sap_details['tel_prof'] }}">
-                    </div>
+                </form>
+              </div>
+              <!-- /.card -->
+
+              <div class="card card-primary card-outline">
+                <div class="card-header">
+                  <h3 class="card-title">Incorporation / Sortie</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form">
+                  <div class="card-body">
+                    <!-- TODO Migrations content -->
                   </div>
-                  <!-- TODO N° Transmis pour alarm au CET -->
+                </form>
+              </div>
+              <!-- /.card -->
+
+              <div class="card card-primary card-outline">
+                <div class="card-header">
+                  <h3 class="card-title">Informations</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form">
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label for="fonctionInput">Fonction principale</label>
+                      <input class="form-control" id="fonctionInput" type="text">
+                    </div>
+                    <div class="form-group">
+                      <label for="gradeInput">Grade actuel</label>
+                      <input class="form-control" id="gradeInput" type="text">
+                    </div>
+                    <!-- TODO Actif et Porteur checkbox -->
+                  </div>
+                </form>
+              </div>
+              <!-- /.card -->
+
+              <div class="card card-primary">
+                <div class="card-footer text-right">
+                  <button type="submit" class="btn btn-primary">Enregistrer</button>
                 </div>
               </div>
-              <!-- /.card-body -->
             </div>
-            <!-- /.card -->
+            <!-- /.col -->
           </div>
-          <!-- /.col -->
-
-          <div class="col-sm-6">
-            <!-- general form elements -->
-            <div class="card card-primary card-outline">
-              <div class="card-header">
-                <h3 class="card-title">Références professionnelles</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form role="form">
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="professionInput">Profession</label>
-                    <input type="text" class="form-control" value="{{ $sap_details['profession'] }}">
-                  </div>
-                  <div class="form-group">
-                    <label for="employeurInput">Employeur</label>
-                    <input type="text" class="form-control" value="{{ $sap_details['employeur'] }}">
-                  </div>
-                  <div class="form-group">
-                    <label for="lieuTravailInput">Lieu de travail</label>
-                    <input type="text" class="form-control" value="{{ $sap_details['lieu_travail'] }}">
-                  </div>
-                  <!-- TODO Add image -->
-                </div>
-              </form>
-            </div>
-            <!-- /.card -->
-
-            <div class="card card-primary card-outline">
-              <div class="card-header">
-                <h3 class="card-title">Incorporation / Sortie</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form role="form">
-                <div class="card-body">
-                  <!-- TODO Migrations content -->
-                </div>
-              </form>
-            </div>
-            <!-- /.card -->
-
-            <div class="card card-primary card-outline">
-              <div class="card-header">
-                <h3 class="card-title">Informations</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form role="form">
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="fonctionInput">Fonction principale</label>
-                    <input class="form-control" id="fonctionInput" type="text">
-                  </div>
-                  <div class="form-group">
-                    <label for="gradeInput">Grade actuel</label>
-                    <input class="form-control" id="gradeInput" type="text">
-                  </div>
-                  <!-- TODO Actif et Porteur checkbox -->
-                </div>
-              </form>
-            </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
+        </form>
       </div>
       <div class="tab-pane fade" id="nav-fonction" role="tabpanel" aria-labelledby="nav-fonction-tab">
         <div class="row">
@@ -248,23 +236,28 @@
             <div class="card card-primary card-outline">
               <!-- /.card-header -->
               <div class="card-body">
-                <table data-toggle="table"
-                        data-url="http://bootstrap-table.wenzhixin.net.cn/examples/gh/get/response.json/wenzhixin/bootstrap-table/tree/master/docs/data/data1/"
-                        data-search="true"
-                        data-show-refresh="true"
-                        data-show-toggle="true"
-                        data-show-columns="true">
-                    <thead>
+                <table id="sap-fonctions" class="display" cellspacing="0" width="100%">
+                  <thead>
                     <tr>
-                      <th data-field="date">Date</th>
-                      <th data-field="Abr">Abr</th>
-                      <th data-field="fonction">Fonction</th>
-                      <th data-field="fin">Fin</th>
-                      <th data-field="remarques">Remarques</th>
+                      <th>Date</th>
+                      <th>Abr</th>
+                      <th>Fonction</th>
+                      <th>Fin</th>
+                      <th>Remarques</th>
                     </tr>
-                    </thead>
-                </table>
-                <!-- TODO Fetch data -->
+                  </thead>
+                  <tbody>
+                    @foreach($sap_details['fonctions'] as $fonction)
+                      <tr id="row_{{ $fonction['id'] }}">
+                        <td>{{ date('d.m.Y', strtotime($fonction['date'])) }}</td>
+                        <td>{{ $fonction['nom_abr'] }}</td>
+                        <td>{{ $fonction['nom'] }}</td>
+                        <td>{{ date('d.m.Y', strtotime($fonction['fin'])) }}</td>
+                        <td>{{ $fonction['remarque'] }}</td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>            
               </div>
             </div>
           </div>
