@@ -53,68 +53,7 @@ var SapeurPage = (function() {
                         };
                     }
                 }
-            });
-
-            // Datatable Editor
-            editor = new $.fn.dataTable.Editor( {
-                ajax: {
-                    create: {
-                        type: 'POST',
-                        url:  '../php/rest/create.php'
-                    },
-                    edit: {
-                        type: 'PUT',
-                        url:  '../php/rest/edit.php?id=_id_'
-                    },
-                    remove: {
-                        type: 'DELETE',
-                        url:  '../php/rest/remove.php?id=_id_'
-                    }
-                },
-                table: "#sap-fonctions",
-                fields: [ {
-                        label: "Date:",
-                        name: "date",
-                        type:  'date',
-                        dateFormat: 'DD.MM.YYYY'
-                    }, {
-                        label: "Abbréviation:",
-                        name: "abr"
-                    }, {
-                        label: "Fonction:",
-                        name: "fonction"
-                    }, {
-                        label: "Fub:",
-                        name: "fin",
-                        type:  'date',
-                        dateFormat: 'DD.MM.YYYY'
-                    }, {
-                        label: "Remarque:",
-                        name: "remarque"
-                    }
-                ]
-            } );
-
-            $('#sap-fonctions').on( 'click', 'tbody td:not(:first-child)', function (e) {
-                editor.inline( this );
-            } );
-         
-            $('#sap-fonctions').DataTable( {
-                dom: "Bfrtip",
-                columns: [                    
-                    { data: "date" },
-                    { data: "abr" },
-                    { data: "fonction" },
-                    { data: "fin" },
-                    { data: "remarque" }
-                ],
-                select: true,
-                buttons: [
-                    { extend: "create", editor: editor },
-                    { extend: "edit",   editor: editor },
-                    { extend: "remove", editor: editor }
-                ]
-            });
+            });            
         }
     }
 

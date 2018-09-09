@@ -17,14 +17,6 @@ try {
 
     require('admin-lte/plugins/select2/select2');
     require('admin-lte/plugins/select2/i18n/fr');
-
-    require('imports-loader?define=>false!datatables.net')(window, $);
-    require('imports-loader?define=>false!datatables.net-bs4')(window, $);
-    require('imports-loader?define=>false!datatables.net-editor-bs4')(window, $);
-    require('imports-loader?define=>false!datatables.net-buttons')(window, $);  
-    require('imports-loader?define=>false!datatables.net-buttons-bs4')(window, $);    
-    require('imports-loader?define=>false!datatables.net-select')(window, $);   
-    require('imports-loader?define=>false!datatables.net-select-bs4')(window, $);   
 } catch (e) {}
 
 /**
