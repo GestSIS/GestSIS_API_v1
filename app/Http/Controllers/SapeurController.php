@@ -18,7 +18,7 @@ class SapeurController extends Controller {
             'title' => 'Sapeurs'
         ]);
     }
-    
+
     public function showDetails(Request $request, $sapId = null){
         $sapeur = new Sapeur();
         $filters = $request->only('actif');
@@ -26,7 +26,7 @@ class SapeurController extends Controller {
 
         if(!empty($sapId)){
             $sapeur->setID($sapId);
-            $details = $sapeur->getDetails();            
+            $details = $sapeur->getDetails();
         }
         else if(isset($sapeursList['data'][0])) {
             $sapeur->setID($sapeursList['data'][0]['id']);

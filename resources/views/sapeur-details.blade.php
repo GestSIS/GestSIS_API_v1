@@ -27,7 +27,7 @@
               <div class="card-header">
                 <h3 class="card-title">Données personnelles</h3>
               </div>
-              <!-- /.card-header -->              
+              <!-- /.card-header -->
               <div class="card-body">
                 <div class="form-group">
                   <label for="f-sap-civilite">Civilité</label>
@@ -65,10 +65,10 @@
                 <!-- NPA + LOCALITE -->
                 <div class="form-group">
                   <label for="f-sap-localite">NPA Localité</label>
-                  <select class="required" id="f-sap-localite" name="localite_id" style="width: 100%" data-url="{{ route('api.v1.sis.localities') }}">                      
-                    <option value="{{ $sap_details['localite_id'] }}">{{ $sap_details['npa'].' '.$sap_details['localite'] }}</option>                      
+                  <select class="required" id="f-sap-localite" name="localite_id" style="width: 100%" data-url="{{ route('api.v1.sis.localities') }}">
+                    <option value="{{ $sap_details['localite_id'] }}">{{ $sap_details['npa'].' '.$sap_details['localite'] }}</option>
                   </select>
-                </div>                    
+                </div>
                 <!-- N° AVS -->
                 <div class="form-group">
                   <label for="f-sap-avs">N° AVS</label>
@@ -92,7 +92,7 @@
                       <label for="f-sap-suffixe">Suffixe</label>
                       <input type="text" class="form-control" id="f-sap-suffixe" name="suffixe" value="{{ $sap_details['suffixe'] }}">
                     </div>
-                  </div>                      
+                  </div>
                 </div>
                 <p>Permet de différencier deux personnes ayant le même nom et prénom.</p>
                 <!-- REMARQUE -->
@@ -101,7 +101,7 @@
                   <textarea class="form-control" rows="3" id="f-sap-remarques" name="remarques">{{ $sap_details['remarques'] }}</textarea>
                 </div>
               </div>
-              <!-- /.card-body -->              
+              <!-- /.card-body -->
             </div>
             <!-- /.card -->
 
@@ -269,7 +269,7 @@
                     </tr>
                   @endforeach
                 </tbody>
-              </table>            
+              </table>
             </div>
           </div>
         </div>
@@ -285,20 +285,25 @@
               <button class="btn btn-primary">Ajouter un cours</button>
             </div>
             <div class="card-body">
-              <table data-toggle="table"
-                      data-url="http://bootstrap-table.wenzhixin.net.cn/examples/gh/get/response.json/wenzhixin/bootstrap-table/tree/master/docs/data/data1/"
-                      data-search="true"
-                      data-show-refresh="true"
-                      data-show-toggle="true"
-                      data-show-columns="true">
-                  <thead>
+              <table id="sap-cours" class="display" cellspacing="0" width="100%">
+                <thead>
                   <tr>
                     <th data-field="date">Date</th>
                     <th data-field="Abr">Abr</th>
                     <th data-field="designation">Désignation</th>
                     <th data-field="lieu">Lieu</th>
                   </tr>
-                  </thead>
+                </thead>
+                <tbody>
+                  @foreach($sap_details['cours'] as $cours)
+                    <tr id="row_{{ $cours['id'] }}">
+                      <td>{{ date('d.m.Y', strtotime($cours['date'])) }}</td>
+                      <td>{{ $cours['nom_abr'] }}</td>
+                      <td>{{ $cours['nom'] }}</td>
+                      <td>{{ $cours['lieu'] }}</td>
+                    </tr>
+                  @endforeach
+                </tbody>
               </table>
               <!-- TODO Fetch data -->
             </div>
@@ -316,22 +321,26 @@
               <button class="btn btn-primary">Ajouter une promotion</button>
             </div>
             <div class="card-body">
-              <table data-toggle="table"
-                      data-url="http://bootstrap-table.wenzhixin.net.cn/examples/gh/get/response.json/wenzhixin/bootstrap-table/tree/master/docs/data/data1/"
-                      data-search="true"
-                      data-show-refresh="true"
-                      data-show-toggle="true"
-                      data-show-columns="true">
-                  <thead>
+              <table id="sap-promotions" class="display" cellspacing="0" width="100%">
+                <thead>
                   <tr>
                     <th data-field="date">Date</th>
                     <th data-field="Abr">Abr</th>
                     <th data-field="designation">Désignation</th>
                     <th data-field="remarques">Remarques</th>
                   </tr>
-                  </thead>
+                </thead>
+                <tbody>
+                  @foreach($sap_details['promotions'] as $promotion)
+                    <tr id="row_{{ $promotion['id'] }}">
+                      <td>{{ date('d.m.Y', strtotime($promotion['date'])) }}</td>
+                      <td>{{ $promotion['grade_abr'] }}</td>
+                      <td>{{ $promotion['grade'] }}</td>
+                      <td>{{ $promotion['remarque'] }}</td>
+                    </tr>
+                  @endforeach
+                </tbody>
               </table>
-              <!-- TODO Fetch data -->
             </div>
           </div>
         </div>
@@ -573,13 +582,8 @@
           <!-- general form elements -->
           <div class="card card-primary card-outline">
             <div class="card-body">
-              <table data-toggle="table"
-                      data-url="http://bootstrap-table.wenzhixin.net.cn/examples/gh/get/response.json/wenzhixin/bootstrap-table/tree/master/docs/data/data1/"
-                      data-search="true"
-                      data-show-refresh="true"
-                      data-show-toggle="true"
-                      data-show-columns="true">
-                  <thead>
+              <table id="sap-exercices" class="display" cellspacing="0" width="100%">
+                <thead>
                   <tr>
                     <th data-field="date">Date</th>
                     <th data-field="heure">Heure</th>
@@ -593,7 +597,24 @@
                     <th data-field="a">A</th>
                     <th data-field="solde">Solde</th>
                   </tr>
-                  </thead>
+                </thead>
+                <tbody>
+                  <!-- @ foreach($sap_details['exercices'] as $exercice)
+                    <tr id="row_{{ $exercice['id'] } }">
+                      <td>{ { date('d.m.Y', strtotime($exercice['date'])) } }</td>
+                      <td>{ { // $exercice['heure'] } }</td>
+                      <td>{ { // $exercice['categorie'] } }</td>
+                      <td>{ { // $exercice['localite'] } }</td>
+                      <td>{ { // $exercice['communication'] } }</td>
+                      <td>{ { // $exercice['convoque'] } }</td>
+                      <td>{ { // $exercice['present'] } }</td>
+                      <td>{ { // $exercice['id_type_excuse'] } }</td>
+                      <td>{ { // $exercice['type_excuse'] } }</td>
+                      <td>TODO Absent</td>
+                      <td>TODO Solde</td>
+                    </tr>
+                  @ endforeach -->
+                </tbody>
               </table>
               <!-- TODO Fetch data -->
             </div>
