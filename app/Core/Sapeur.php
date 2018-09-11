@@ -273,7 +273,7 @@ class Sapeur {
                 'fonctions' => $this->getFonctions(),
                 'cours' => $this->getCours(),
                 'promotions' => $this->getPromotions(),
-                // 'exercices' => $this->getExercices() // TODO SapExe vs ExeSap, correct one is SapExe in v2
+                'exercices' => $this->getExercices() // TODO SapExe vs ExeSap, correct one is SapExe in v2
                 // TODO: Intégrer les permis
             ];
         }

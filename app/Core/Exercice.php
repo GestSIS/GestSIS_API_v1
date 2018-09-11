@@ -81,24 +81,24 @@ class Exercice {
                                CatExercice.CEX_Designation,
                                Localite.LOC_Designation,'.
                                (isset($filters['sap_id']) ?
-                               'ExeSap.EXESAP_Convoque,
-                               ExeSap.EXESAP_Present,
-                               ExeSap.EXESAP_Amende,
+                               'SapExe.SAPEXE_Convoque,
+                               SapExe.SAPEXE_Present,
+                               SapExe.SAPEXE_Amende,
                                ExcuseType.EXCTYPE_Designation,
                                ExcuseType.EXCTYPE_ID' :
-                               'NULL AS EXESAP_Convoque,
-                                NULL AS EXESAP_Present,
-                                NULL AS EXESAP_Amende,
+                               'NULL AS SAPEXE_Convoque,
+                                NULL AS SAPEXE_Present,
+                                NULL AS SAPEXE_Amende,
                                 NULL AS EXCTYPE_Designation,
                                 NULL AS EXCTYPE_ID'). '
                           FROM Exercice
                          INNER JOIN CatExercice ON Exercice.CEX_ID = CatExercice.CEX_ID
                          INNER JOIN Localite ON Exercice.LOC_ID = Localite.LOC_ID '.
                          (isset($filters['sap_id']) ?
-                         'INNER JOIN ExeSap ON Exercice.EXE_ID = ExeSap.EXE_ID
-                           LEFT OUTER JOIN ExcuseType ON ExeSap.EXCTYPE_ID = ExcuseType.EXCTYPE_ID ' : '').'
+                         'INNER JOIN SapExe ON Exercice.EXE_ID = SapExe.EXE_ID
+                           LEFT OUTER JOIN ExcuseType ON SapExe.EXCTYPE_ID = ExcuseType.EXCTYPE_ID ' : '').'
                          WHERE 1 = 1
-                         '.(isset($filters['sap_id']) ? ' AND ExeSap.SAP_ID = :sap_id' : '').'
+                         '.(isset($filters['sap_id']) ? ' AND SapExe.SAP_ID = :sap_id' : '').'
                          '.(isset($filters['annee']) ? ' AND Exercice.EXE_AnneeFiltre = :annee' : '').'
                          '.(isset($filters['loc_id']) ? ' AND Localite.LOC_ID = :loc_id' : '').'
                          '.(isset($filters['cex_id']) ? ' AND Exercice.CEX_ID = :cex_id' : '').'
@@ -133,9 +133,9 @@ class Exercice {
                 'statut' => $exercice->EXE_Statut,
                 'categorie' => $exercice->CEX_Designation,
                 'localite' => $exercice->LOC_Designation,
-                'convoque' => $exercice->EXESAP_Convoque,
-                'present' => $exercice->EXESAP_Present,
-                'amende' => $exercice->EXESAP_Amende,
+                'convoque' => $exercice->SAPEXE_Convoque,
+                'present' => $exercice->SAPEXE_Present,
+                'amende' => $exercice->SAPEXE_Amende,
                 'type_excuse' => $exercice->EXCTYPE_Designation,
                 'id_type_excuse' => $exercice->EXCTYPE_ID,
                 'presences_completees' => in_array($exercice->EXE_ID, $idExeComplets),
@@ -218,15 +218,15 @@ class Exercice {
                 SELECT Sapeur.SAP_ID,
                        Sapeur.SAP_Nom,
                        Sapeur.SAP_Prenom,
-                       ExeSap.EXESAP_Convoque,
-                       ExeSap.EXESAP_Present,
-                       ExeSap.EXESAP_Amende,
+                       SapExe.SAPEXE_Convoque,
+                       SapExe.SAPEXE_Present,
+                       SapExe.SAPEXE_Amende,
                        ExcuseType.EXCTYPE_Designation,
                        NULL AS SAP_Absent
-                  FROM ExeSap
-                 INNER JOIN Sapeur ON ExeSap.SAP_ID = Sapeur.SAP_ID
-                  LEFT OUTER JOIN ExcuseType ON ExeSap.EXCTYPE_ID = ExcuseType.EXCTYPE_ID
-       	         WHERE ExeSap.EXE_ID = ?
+                  FROM SapExe
+                 INNER JOIN Sapeur ON SapExe.SAP_ID = Sapeur.SAP_ID
+                  LEFT OUTER JOIN ExcuseType ON SapExe.EXCTYPE_ID = ExcuseType.EXCTYPE_ID
+       	         WHERE SapExe.EXE_ID = ?
                  ORDER BY Sapeur.SAP_Nom ASC, Sapeur.SAP_Prenom ASC',
                 [$id ?? $this->id]);
 
@@ -235,10 +235,10 @@ class Exercice {
                 'id' => $sapeur->SAP_ID,
                 'nom' => $sapeur->SAP_Nom,
                 'prenom' => $sapeur->SAP_Prenom,
-                'convoque' => boolval($sapeur->EXESAP_Convoque),
-                'present' => boolval($sapeur->EXESAP_Present),
+                'convoque' => boolval($sapeur->SAPEXE_Convoque),
+                'present' => boolval($sapeur->SAPEXE_Present),
                 'absent' => $sapeur->SAP_Absent,
-                'amende' => $sapeur->EXESAP_Amende,
+                'amende' => $sapeur->SAPEXE_Amende,
                 'type_excuse' => $sapeur->EXCTYPE_Designation
             ];
         }, $sapeurs);

@@ -599,21 +599,21 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- @ foreach($sap_details['exercices'] as $exercice)
-                    <tr id="row_{{ $exercice['id'] } }">
-                      <td>{ { date('d.m.Y', strtotime($exercice['date'])) } }</td>
-                      <td>{ { // $exercice['heure'] } }</td>
-                      <td>{ { // $exercice['categorie'] } }</td>
-                      <td>{ { // $exercice['localite'] } }</td>
-                      <td>{ { // $exercice['communication'] } }</td>
-                      <td>{ { // $exercice['convoque'] } }</td>
-                      <td>{ { // $exercice['present'] } }</td>
-                      <td>{ { // $exercice['id_type_excuse'] } }</td>
-                      <td>{ { // $exercice['type_excuse'] } }</td>
+                  @foreach($sap_details['exercices']['data'] as $exercice)
+                    <tr id="row_{{ $exercice['id'] }}">
+                      <td>{{ date('d.m.Y', strtotime($exercice['date'])) }}</td>
+                      <td>{{ $exercice['heure'] }}</td>
+                      <td>{{ $exercice['categorie'] }}</td>
+                      <td>{{ $exercice['localite'] }}</td>
+                      <td>{{ $exercice['communication'] }}</td>
+                      <td>{{ $exercice['convoque'] }}</td>
+                      <td>{{ $exercice['present'] }}</td>
+                      <td>{{ $exercice['id_type_excuse'] }}</td>
+                      <td>{{ $exercice['type_excuse'] }}</td>
                       <td>TODO Absent</td>
                       <td>TODO Solde</td>
                     </tr>
-                  @ endforeach -->
+                  @endforeach
                 </tbody>
               </table>
               <!-- TODO Fetch data -->
