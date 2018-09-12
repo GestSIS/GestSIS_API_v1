@@ -407,7 +407,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-right"><img src="img/b.gif"></td>
+                    <td class="text-right"><img src="{{ asset('img/b.gif') }}"></td>
                     <td><p>B</p></td>
                     <td>
                       <div class="input-group">
@@ -419,7 +419,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-right"><img src="img/b1.gif"></td>
+                    <td class="text-right"><img src="{{ asset('img/b1.gif') }}"></td>
                     <td><p>B1</p></td>
                     <td>
                       <div class="input-group">
@@ -431,7 +431,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-right"><img src="img/c.gif"></td>
+                    <td class="text-right"><img src="{{ asset('img/c.gif') }}"></td>
                     <td><p>C</p></td>
                     <td>
                       <div class="input-group">
@@ -443,7 +443,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-right"><i class="fab fa-gripfire text-danger" style="font-size:1.5em"></i><img src="img/c1.gif"></td>
+                    <td class="text-right"><i class="fab fa-gripfire text-danger" style="font-size:1.5em"></i><img src="{{ asset('img/c1.gif') }}"></td>
                     <td><p>C1</p></td>
                     <td>
                       <div class="input-group">
@@ -455,7 +455,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-right"><img src="img/d.gif"></td>
+                    <td class="text-right"><img src="{{ asset('img/d.gif') }}"></td>
                     <td><p>D</p></td>
                     <td>
                       <div class="input-group">
@@ -467,7 +467,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-right"><img src="img/d1.gif"></td>
+                    <td class="text-right"><img src="{{ asset('img/d1.gif') }}"></td>
                     <td><p>D1</p></td>
                     <td>
                       <div class="input-group">
@@ -479,7 +479,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-right"><img src="img/be.gif"></td>
+                    <td class="text-right"><img src="{{ asset('img/be.gif') }}"></td>
                     <td><p>BE</p></td>
                     <td>
                       <div class="input-group">
@@ -491,7 +491,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-right"><img src="img/ce.gif"></td>
+                    <td class="text-right"><img src="{{ asset('img/ce.gif') }}"></td>
                     <td><p>CE</p></td>
                     <td>
                       <div class="input-group">
@@ -503,7 +503,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-right"><img src="img/c1e.gif"></td>
+                    <td class="text-right"><img src="{{ asset('img/c1e.gif') }}"></td>
                     <td><p>C1E</p></td>
                     <td>
                       <div class="input-group">
@@ -515,7 +515,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-right"><img src="img/de.gif"></td>
+                    <td class="text-right"><img src="{{ asset('img/de.gif') }}"></td>
                     <td><p>DE</p></td>
                     <td>
                       <div class="input-group">
@@ -527,7 +527,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-right"><img src="img/d1e.gif"></td>
+                    <td class="text-right"><img src="{{ asset('img/d1e.gif') }}"></td>
                     <td><p>D1E</p></td>
                     <td>
                       <div class="input-group">
@@ -560,12 +560,34 @@
                 data-search="true" data-show-refresh="true" data-show-toggle="true" data-show-columns="true">
                 <thead>
                   <tr>
-                    <th data-field="date">Date</th>
-                    <th data-field="Abr">Abr</th>
-                    <th data-field="designation">Désignation</th>
-                    <th data-field="remarques">Remarques</th>
                   </tr>
                 </thead>
+              </table>
+              <table id="sap-exercices" class="display" cellspacing="0" width="100%">
+                <thead>
+                  <tr>
+                    <th data-field="medecin">Médecin</th>
+                    <th data-field="type">Type</th>
+                    <th data-field="consultation">Consultation</th>
+                    <th data-field="validite">Validité</th>
+                    <th data-field="designation">Désignation</th>
+                    <th data-field="accepter">Accepter</th>
+                    <th data-field="actif">Actif</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($sap_details['controles'] as $controle)
+                    <tr id="row_{{ $controle['id'] }}">
+                      <td>{{ $controle['medecin'] }}</td>
+                      <td>{{ $controle['type'] }}</td>
+                      <td>{{ date('d.m.Y', strtotime($controle['date_consultation'])) }}</td>
+                      <td>{{ date('d.m.Y', strtotime($controle['date_validite'])) }}</td>
+                      <td>{{ $controle['designation'] }}</td>
+                      <td>{{ $controle['accepte'] }}</td>
+                      <td>{{ $controle['encours'] }}</td>
+                    </tr>
+                  @endforeach
+                </tbody>
               </table>
               <!-- TODO Fetch data -->
             </div>

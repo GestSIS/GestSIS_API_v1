@@ -273,6 +273,7 @@ class Sapeur {
                 'fonctions' => $this->getFonctions(),
                 'cours' => $this->getCours(),
                 'promotions' => $this->getPromotions(),
+                'controles' => $this->getControlesMedicaux(),
                 'exercices' => $this->getExercices() // TODO SapExe vs ExeSap, correct one is SapExe in v2
                 // TODO: Intégrer les permis
             ];
@@ -462,6 +463,7 @@ class Sapeur {
         $controles = DB::connection('mysql_managed')->select('
                         SELECT ControleMedicaux.CMED_ID,
                                ControleMedicaux.CMED_DConsultation,
+                               ControleMedicaux.CMED_Designation,
                                ControleMedicaux.CMED_DValidite,
                                ControleMedicaux.CMED_Accepter,
                                ControleMedicaux.CMED_EnCours,
@@ -479,6 +481,7 @@ class Sapeur {
                 'id' => $controle->CMED_ID,
                 'date_consultation' => DateHelper::toIso8601($controle->CMED_DConsultation),
                 'date_validite' => DateHelper::toIso8601($controle->CMED_DValidite),
+                'designation' => $controle->CMED_Designation,
                 'accepte' => boolval($controle->CMED_Accepter),
                 'encours' => boolval($controle->CMED_EnCours),
                 'type' => $controle->CMT_Type,
