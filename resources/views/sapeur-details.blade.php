@@ -282,7 +282,7 @@
           <div class="card card-primary card-outline">
             <!-- /.card-header -->
             <div class="card-header">
-              <button class="btn btn-primary">Ajouter un cours</button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-cours">Ajouter un cours</button>
             </div>
             <div class="card-body">
               <table id="sap-cours" class="display" cellspacing="0" width="100%">
@@ -318,7 +318,7 @@
           <div class="card card-primary card-outline">
             <!-- /.card-header -->
             <div class="card-header">
-              <button class="btn btn-primary">Ajouter une promotion</button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-promotion">Ajouter une promotion</button>
             </div>
             <div class="card-body">
               <table id="sap-promotions" class="display" cellspacing="0" width="100%">
@@ -552,8 +552,8 @@
           <div class="card card-primary card-outline">
             <!-- /.card-header -->
             <div class="card-header">
-              <button class="btn btn-primary">Ajouter un contrôle</button>
-              <button class="btn btn-primary">Gérer les médecins</button> <!-- TODO add médecin management via modal -->
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-controle">Ajouter un contrôle</button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-medecin">Gérer les médecins</button>
             </div>
             <div class="card-body">
               <table data-toggle="table" data-url="http://bootstrap-table.wenzhixin.net.cn/examples/gh/get/response.json/wenzhixin/bootstrap-table/tree/master/docs/data/data1/"
@@ -646,3 +646,8 @@
     </div>
   </div>
 </section>
+
+@include('modal.cours')
+@include('modal.promotion')
+@include('modal.controle')
+@include('modal.medecin')
