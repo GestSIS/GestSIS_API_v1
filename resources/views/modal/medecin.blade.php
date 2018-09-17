@@ -13,32 +13,32 @@
                 <th>Localite</th>
                 <th>Désignation</th>
                 <th>Adresse</th>
-                <th>Actif</th>
+                <th class="text-center">Actif</th>
               </tr>
               <!-- TODO Ajout de la liste des médecins, table éditable -->
               <tr>
                 <td>Bassecourt</td>
                 <td>Dr Besançon</td>
                 <td>Rue du marais 1</td>
-                <td><input class="form-check-input" type="checkbox" value="id1"></td><!-- TODO checbox -->
+                <td class="text-center"><input type="checkbox" value="id1"></td><!-- TODO checkbox -->
               </tr>
               <tr>
                 <td>Bassecourt</td>
                 <td>Dr Besançon</td>
                 <td>Rue du marais 1</td>
-                <td><input class="form-check-input" type="checkbox" value="id1"></td><!-- TODO checbox -->
+                <td class="text-center"><input type="checkbox" value="id1"></td><!-- TODO checkbox -->
               </tr>
               <tr>
                 <td>Bassecourt</td>
                 <td>Dr Besançon</td>
                 <td>Rue du marais 1</td>
-                <td><input class="form-check-input" type="checkbox" value="id1"></td><!-- TODO checbox -->
+                <td class="text-center"><input type="checkbox" value="id1"></td><!-- TODO checkbox -->
               </tr>
               <tr>
                 <td>Bassecourt</td>
                 <td>Dr Besançon</td>
                 <td>Rue du marais 1</td>
-                <td><input class="form-check-input" type="checkbox" value="id1"></td><!-- TODO checbox -->
+                <td class="text-center"><input type="checkbox" value="id1"></td><!-- TODO checkbox -->
               </tr>
             </tbody>
           </table>

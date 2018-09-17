@@ -270,11 +270,6 @@ class Sapeur {
                 'grade' => $res[0]->GRA_Abr,
                 'photo' => config('sis.url').'/photos/sap_id_'.$res[0]->SAP_ID.'.jpg',
                 'remarques' => $res[0]->SAP_Rem,
-                'fonctions' => $this->getFonctions(),
-                'cours' => $this->getCours(),
-                'promotions' => $this->getPromotions(),
-                'controles' => $this->getControlesMedicaux(),
-                'exercices' => $this->getExercices() // TODO SapExe vs ExeSap, correct one is SapExe in v2
                 // TODO: Intégrer les permis
             ];
         }

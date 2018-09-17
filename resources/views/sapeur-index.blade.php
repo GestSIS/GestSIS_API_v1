@@ -39,20 +39,20 @@
         </div>
       </div>
       <!-- /.card-header -->
-      <div class="card card-primary card-outline">         
+      <div class="card card-primary card-outline">
         <div class="card-body p-0 select-sapeur">
           <div class="nav flex-column nav-pills" aria-orientation="vertical">
             @foreach($sapeurs_list as $sap)
-              <a class="nav-link internal-link {{ $sap['id'] === $sap_details['id'] ? 'active' : '' }}" href="{{ route('sapeur.details', array_merge($filters, ['id' =>  $sap['id']])) }}">{{ $sap['nom'] }} {{ $sap['prenom'] }}</a>
+              <a class="nav-link internal-link {{ $sap['id'] === $sap_details['sapeur']['id'] ? 'active' : '' }}" href="{{ route('sapeur.details', array_merge($filters, ['id' =>  $sap['id']])) }}">{{ $sap['nom'] }} {{ $sap['prenom'] }}</a>
             @endforeach
-          </div>            
+          </div>
         </div>
         <!-- /.card-body -->
       </div>
       <!-- /.card -->
     </div>
     <div class="col-md-9">
-      @if(!empty($sap_details))
+      @if(!empty($sap_details['sapeur']))
         @include('sapeur-details')
       @endif
     </div>

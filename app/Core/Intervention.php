@@ -61,16 +61,16 @@ class Intervention {
                                    Intervention.INT_DateFin,
                                    Intervention.INT_HeureFin,'.
                                    (isset($filters['sap_id']) ?
-                                   'IntSap.INTSAP_Quittance,
-                                   IntSap.INTSAP_Present,
-                                   IntSap.INTSAP_NbHeure,
-                                   IntSap.INTSAP_NbPiquet,
-                                   IntSap.INTSAP_NbEntr,' :
-                                   'NULL AS INTSAP_Quittance,
-                                   NULL AS INTSAP_Present,
-                                   NULL AS INTSAP_NbHeure,
-                                   NULL AS INTSAP_NbPiquet,
-                                   NULL AS INTSAP_NbEntr, '
+                                   'SapInt.SAPINT_QuittanceRTA,
+                                   SapInt.SAPINT_Present,
+                                   SapInt.SAPINT_NbHeure,
+                                   SapInt.SAPINT_NbPiquet,
+                                   SapInt.SAPINT_NbEntr,' :
+                                   'NULL AS SAPINT_QuittanceRTA,
+                                   NULL AS SAPINT_Present,
+                                   NULL AS SAPINT_NbHeure,
+                                   NULL AS SAPINT_NbPiquet,
+                                   NULL AS SAPINT_NbEntr, '
                                    ).'
                                    TypeIntervention.TINT_Designation,
                                    IntTraitement.Intr_Designation,
@@ -80,7 +80,7 @@ class Intervention {
                               FROM Intervention
                              INNER JOIN TypeIntervention ON Intervention.TINT_ID = TypeIntervention.TINT_ID
                              INNER JOIN Localite ON Intervention.LOC_ID = Localite.LOC_ID '.
-                             (isset($filters['sap_id']) ? 'INNER JOIN IntSap ON Intervention.INT_ID = IntSap.INT_ID ' : '').'
+                             (isset($filters['sap_id']) ? 'INNER JOIN SapInt ON Intervention.INT_ID = SapInt.INT_ID ' : '').'
                               LEFT OUTER JOIN IntTraitement ON Intervention.INTR_ID = IntTraitement.INTR_ID
                               LEFT OUTER JOIN StatFederal ON StatFederal.STF_ID = Intervention.STF_ID
                              WHERE 1=1
@@ -89,7 +89,7 @@ class Intervention {
                              '.(isset($filters['type_int_id']) ? ' AND Intervention.TINT_ID = :type_int_id' : '').'
                              '.(isset($filters['traitement_id']) ? ' AND Intervention.INTR_ID = :traitement_id' : '').'
                              '.(isset($filters['stat_fed_id']) ? ' AND Intervention.STF_ID = :stat_fed_id' : '').'
-                             '.(isset($filters['sap_id']) ? ' AND IntSap.SAP_ID = :sap_id' : '').'
+                             '.(isset($filters['sap_id']) ? ' AND SapInt.SAP_ID = :sap_id' : '').'
                              ORDER BY '.$orderBy.'
                              '.(!is_null($start) && !is_null($limit) ? 'LIMIT :start, :limit' : ''),
                              $params);
@@ -104,11 +104,11 @@ class Intervention {
                 'objet' => $intervention->INT_Objet,
                 'date_fin' => DateHelper::toIso8601($intervention->INT_DateFin.' '.$intervention->INT_HeureFin),
                 'heure_fin' => $intervention->INT_HeureFin,
-                'quittance' => $intervention->INTSAP_Quittance,
-                'present' => $intervention->INTSAP_Present,
-                'nb_heures' => $intervention->INTSAP_NbHeure,
-                'nb_heures_piquet' => $intervention->INTSAP_NbPiquet,
-                'nb_heures_entretien' => $intervention->INTSAP_NbEntr,
+                'quittance' => $intervention->SAPINT_QuittanceRTA,
+                'present' => $intervention->SAPINT_Present,
+                'nb_heures' => $intervention->SAPINT_NbHeure,
+                'nb_heures_piquet' => $intervention->SAPINT_NbPiquet,
+                'nb_heures_entretien' => $intervention->SAPINT_NbEntr,
                 'type' => $intervention->TINT_Designation,
                 'npa' => $intervention->LOC_Npa,
                 'localite' => $intervention->LOC_Designation,
@@ -219,14 +219,14 @@ class Intervention {
                     SELECT Sapeur.SAP_ID,
                            Sapeur.SAP_Nom,
                            Sapeur.SAP_Prenom,
-                           IntSap.INTSAP_Quittance,
-                           IntSap.INTSAP_Present,
-                           IntSap.INTSAP_NbHeure,
-                           IntSap.INTSAP_NbPiquet,
-                           IntSap.INTSAP_NbEntr
-                      FROM IntSap
-                     INNER JOIN Sapeur ON IntSap.SAP_ID = Sapeur.SAP_ID
-                     WHERE IntSap.INT_ID = ?
+                           SapInt.SAPINT_QuittanceRTA,
+                           SapInt.SAPINT_Present,
+                           SapInt.SAPINT_NbHeure,
+                           SapInt.SAPINT_NbPiquet,
+                           SapInt.SAPINT_NbEntr
+                      FROM SapInt
+                     INNER JOIN Sapeur ON SapInt.SAP_ID = Sapeur.SAP_ID
+                     WHERE SapInt.INT_ID = ?
                      ORDER BY Sapeur.SAP_NOM ASC, Sapeur.SAP_Prenom ASC',
                  [$this->id]);
 
@@ -235,11 +235,11 @@ class Intervention {
                 'id' => $sapeur->SAP_ID,
                 'nom' => $sapeur->SAP_Nom,
                 'prenom' => $sapeur->SAP_Prenom,
-                'quittance' => $sapeur->INTSAP_Quittance,
-                'present' => $sapeur->INTSAP_Present,
-                'nb_heure' => $sapeur->INTSAP_NbHeure,
-                'nb_heure_piquet' => $sapeur->INTSAP_NbPiquet,
-                'nb_heure_entretien' => $sapeur->INTSAP_NbEntr
+                'quittance' => $sapeur->SAPINT_QuittanceRTA,
+                'present' => $sapeur->SAPINT_Present,
+                'nb_heure' => $sapeur->SAPINT_NbHeure,
+                'nb_heure_piquet' => $sapeur->SAPINT_NbPiquet,
+                'nb_heure_entretien' => $sapeur->SAPINT_NbEntr
             ];
         }, $sapeurs);
     }

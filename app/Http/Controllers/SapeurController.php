@@ -26,11 +26,11 @@ class SapeurController extends Controller {
 
         if(!empty($sapId)){
             $sapeur->setID($sapId);
-            $details = $sapeur->getDetails();
+            $details = $this->details($sapeur);
         }
         else if(isset($sapeursList['data'][0])) {
             $sapeur->setID($sapeursList['data'][0]['id']);
-            $details = $sapeur->getDetails();
+            $details = $this->details($sapeur);
         }
         else{
             $details = [];
@@ -43,5 +43,18 @@ class SapeurController extends Controller {
             'sap_details' => $details,
             'civilites' => Sapeur::getCivilites()
         ]);
+    }
+
+    private function details($sapeur){
+      return [
+          'sapeur' => $sapeur->getDetails(),
+          'mutations' => $sapeur->getMutations(),
+          'fonctions' => $sapeur->getFonctions(),
+          'groupes' => $sapeur->getGroupes(),
+          'cours' => $sapeur->getCours(),
+          'promotions' => $sapeur->getPromotions(),
+          'ctrl_med' => $sapeur->getControlesMedicaux(),
+          'exercices' => $sapeur->getExercices()
+      ];
     }
 }

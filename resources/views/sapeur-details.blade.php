@@ -33,32 +33,32 @@
                   <label for="f-sap-civilite">Civilité</label>
                   <select class="form-control" id="f-sap-civilite" name="civilite_id">
                     @foreach($civilites as $civilite)
-                      <option {{ $sap_details['civilite_id'] == $civilite['id'] ? 'selected' : '' }} value="{{ $civilite['id'] }}">{{ $civilite['designation'] }}</option>
+                      <option {{ $sap_details['sapeur']['civilite_id'] == $civilite['id'] ? 'selected' : '' }} value="{{ $civilite['id'] }}">{{ $civilite['designation'] }}</option>
                     @endforeach
                   </select>
                 </div>
                 <!-- NOM -->
                 <div class="form-group">
                   <label for="f-sap-nom">Nom</label>
-                  <input type="text" class="form-control" id="f-sap-nom" name="nom" value="{{ $sap_details['nom'] }}">
+                  <input type="text" class="form-control" id="f-sap-nom" name="nom" value="{{ $sap_details['sapeur']['nom'] }}">
                 </div>
                 <!-- PRENOM -->
                 <div class="form-group">
                   <label for="f-sap-prenom">Prénom</label>
-                  <input type="text" class="form-control" id="f-sap-prenom" name="prenom" value="{{ $sap_details['prenom'] }}">
+                  <input type="text" class="form-control" id="f-sap-prenom" name="prenom" value="{{ $sap_details['sapeur']['prenom'] }}">
                 </div>
                 <!-- RUE -->
                 <div class="row">
                   <div class="col-8">
                     <div class="form-group">
                       <label for="f-sap-rue">Rue</label>
-                      <input type="text" class="form-control" id="f-sap-rue" name="rue" value="{{ $sap_details['rue'] }}">
+                      <input type="text" class="form-control" id="f-sap-rue" name="rue" value="{{ $sap_details['sapeur']['rue'] }}">
                     </div>
                   </div>
                   <div class="col-4">
                     <div class="form-group">
                       <label for="f-sap-no-rue">N°</label>
-                      <input type="text" class="form-control" id="f-sap-no-rue" name="no_rue" value="{{ $sap_details['no_rue'] }}">
+                      <input type="text" class="form-control" id="f-sap-no-rue" name="no_rue" value="{{ $sap_details['sapeur']['no_rue'] }}">
                     </div>
                   </div>
                 </div>
@@ -66,13 +66,13 @@
                 <div class="form-group">
                   <label for="f-sap-localite">NPA Localité</label>
                   <select class="required" id="f-sap-localite" name="localite_id" style="width: 100%" data-url="{{ route('api.v1.sis.localities') }}">
-                    <option value="{{ $sap_details['localite_id'] }}">{{ $sap_details['npa'].' '.$sap_details['localite'] }}</option>
+                    <option value="{{ $sap_details['sapeur']['localite_id'] }}">{{ $sap_details['sapeur']['npa'].' '.$sap_details['sapeur']['localite'] }}</option>
                   </select>
                 </div>
                 <!-- N° AVS -->
                 <div class="form-group">
                   <label for="f-sap-avs">N° AVS</label>
-                  <input type="text" class="form-control" id="f-sap-avs" name="no_avs" value="{{ $sap_details['no_avs'] }}">
+                  <input type="text" class="form-control" id="f-sap-avs" name="no_avs" value="{{ $sap_details['sapeur']['no_avs'] }}">
                 </div>
                 <!-- DATE NAISSANCE + SUFFIXE -->
                 <div class="row">
@@ -83,14 +83,14 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                         </div>
-                        <input class="form-control" type="date" id="f-sap-date-naissance" name="date_naissance" value="{{ date('Y-m-d', strtotime($sap_details['date_naissance'])) }}">
+                        <input class="form-control" type="date" id="f-sap-date-naissance" name="date_naissance" value="{{ date('Y-m-d', strtotime($sap_details['sapeur']['date_naissance'])) }}">
                       </div>
                     </div>
                   </div>
                   <div class="col-6">
                     <div class="form-group">
                       <label for="f-sap-suffixe">Suffixe</label>
-                      <input type="text" class="form-control" id="f-sap-suffixe" name="suffixe" value="{{ $sap_details['suffixe'] }}">
+                      <input type="text" class="form-control" id="f-sap-suffixe" name="suffixe" value="{{ $sap_details['sapeur']['suffixe'] }}">
                     </div>
                   </div>
                 </div>
@@ -98,7 +98,7 @@
                 <!-- REMARQUE -->
                 <div class="form-group">
                   <label for="f-sap-remarques">Remarques</label>
-                  <textarea class="form-control" rows="3" id="f-sap-remarques" name="remarques">{{ $sap_details['remarques'] }}</textarea>
+                  <textarea class="form-control" rows="3" id="f-sap-remarques" name="remarques">{{ $sap_details['sapeur']['remarques'] }}</textarea>
                 </div>
               </div>
               <!-- /.card-body -->
@@ -117,7 +117,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-envelope"></i></span>
                     </div>
-                    <input class="form-control" type="email" id="f-sap-email" name="email" value="{{ $sap_details['email'] }}">
+                    <input class="form-control" type="email" id="f-sap-email" name="email" value="{{ $sap_details['sapeur']['email'] }}">
                   </div>
                 </div>
                 <div class="row">
@@ -134,13 +134,13 @@
                   </div>
                   <div class="col-4">
                     <div class="form-group">
-                      <input type="text" class="form-control" id="f-sap-tel-prive" name="tel_prive" value="{{ $sap_details['tel_prive'] }}">
+                      <input type="text" class="form-control" id="f-sap-tel-prive" name="tel_prive" value="{{ $sap_details['sapeur']['tel_prive'] }}">
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="f-sap-tel-mobile" name="tel_mobile" value="{{ $sap_details['tel_mobile'] }}">
+                      <input type="text" class="form-control" id="f-sap-tel-mobile" name="tel_mobile" value="{{ $sap_details['sapeur']['tel_mobile'] }}">
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="f-sap-tel-prof" name="tel_prof" value="{{ $sap_details['tel_prof'] }}">
+                      <input type="text" class="form-control" id="f-sap-tel-prof" name="tel_prof" value="{{ $sap_details['sapeur']['tel_prof'] }}">
                     </div>
                   </div>
                   <!-- TODO N° Transmis pour alarm au CET -->
@@ -164,15 +164,15 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="f-sap-profession">Profession</label>
-                    <input type="text" class="form-control" id="f-sap-profession" name="profession" value="{{ $sap_details['profession'] }}">
+                    <input type="text" class="form-control" id="f-sap-profession" name="profession" value="{{ $sap_details['sapeur']['profession'] }}">
                   </div>
                   <div class="form-group">
                     <label for="f-sap-employeur">Employeur</label>
-                    <input type="text" class="form-control" id="f-sap-employeur" name="employeur" value="{{ $sap_details['employeur'] }}">
+                    <input type="text" class="form-control" id="f-sap-employeur" name="employeur" value="{{ $sap_details['sapeur']['employeur'] }}">
                   </div>
                   <div class="form-group">
                     <label for="f-sap-lieu-travail">Lieu de travail</label>
-                    <input type="text" class="form-control" id="f-sap-lieu-travail" name="lieu_travail" value="{{ $sap_details['lieu_travail'] }}">
+                    <input type="text" class="form-control" id="f-sap-lieu-travail" name="lieu_travail" value="{{ $sap_details['sapeur']['lieu_travail'] }}">
                   </div>
                   <!-- TODO Add image -->
                 </div>
@@ -248,7 +248,7 @@
           <div class="card card-primary card-outline">
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="sap-fonctions" class="display" cellspacing="0" width="100%">
+              <table id="sap-fonctions" class="table" cellspacing="0" width="100%">
                 <thead>
                   <tr>
                     <th>Date</th>
@@ -285,7 +285,7 @@
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-cours">Ajouter un cours</button>
             </div>
             <div class="card-body">
-              <table id="sap-cours" class="display" cellspacing="0" width="100%">
+              <table id="sap-cours" class="table" cellspacing="0" width="100%">
                 <thead>
                   <tr>
                     <th data-field="date">Date</th>
@@ -321,7 +321,7 @@
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-promotion">Ajouter une promotion</button>
             </div>
             <div class="card-body">
-              <table id="sap-promotions" class="display" cellspacing="0" width="100%">
+              <table id="sap-promotions" class="table" cellspacing="0" width="100%">
                 <thead>
                   <tr>
                     <th data-field="date">Date</th>
@@ -353,18 +353,21 @@
           <div class="card card-primary card-outline">
             <!-- /.card-header -->
             <div class="card-body">
-              <table data-toggle="table"
-                      data-url="http://bootstrap-table.wenzhixin.net.cn/examples/gh/get/response.json/wenzhixin/bootstrap-table/tree/master/docs/data/data1/"
-                      data-search="true"
-                      data-show-refresh="true"
-                      data-show-toggle="true"
-                      data-show-columns="true">
+              <table id="sap-groupe" class="table" cellspacing="0" width="100%">
                   <thead>
-                  <tr>
-                    <th data-field="date">Groupe</th>
-                    <th data-field="Abr">Designation</th>
-                  </tr>
+                    <tr>
+                      <th data-field="groupe">Groupe</th>
+                      <th data-field="designation">Désignation</th>
+                    </tr>
                   </thead>
+                  <tbody>
+                    @foreach($sap_details['groupes'] as $groupe)
+                      <tr id="row_{{ $groupe['id'] }}">
+                        <td>{{ $groupe['no']!=0?$groupe['no']:"" }}</td>
+                        <td>{{ $groupe['nom'] }}</td>
+                      </tr>
+                    @endforeach
+                  </tbody>
               </table>
               <!-- TODO Fetch data -->
             </div>
@@ -563,7 +566,7 @@
                   </tr>
                 </thead>
               </table>
-              <table id="sap-exercices" class="display" cellspacing="0" width="100%">
+              <table id="sap-exercices" class="table" cellspacing="0" width="100%">
                 <thead>
                   <tr>
                     <th data-field="medecin">Médecin</th>
@@ -571,20 +574,20 @@
                     <th data-field="consultation">Consultation</th>
                     <th data-field="validite">Validité</th>
                     <th data-field="designation">Désignation</th>
-                    <th data-field="accepter">Accepter</th>
-                    <th data-field="actif">Actif</th>
+                    <th class="text-center" data-field="accepter">Accepter</th>
+                    <th class="text-center" data-field="actif">Actif</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach($sap_details['controles'] as $controle)
+                  @foreach($sap_details['ctrl_med'] as $controle)
                     <tr id="row_{{ $controle['id'] }}">
                       <td>{{ $controle['medecin'] }}</td>
                       <td>{{ $controle['type'] }}</td>
                       <td>{{ date('d.m.Y', strtotime($controle['date_consultation'])) }}</td>
                       <td>{{ date('d.m.Y', strtotime($controle['date_validite'])) }}</td>
                       <td>{{ $controle['designation'] }}</td>
-                      <td>{{ $controle['accepte'] }}</td>
-                      <td>{{ $controle['encours'] }}</td>
+                      <td class="text-center"><input type="checkbox" value="actif" disabled {{ $controle['accepte']==1 ? "checked" : "" }}></td>
+                      <td class="text-center"><input type="checkbox" value="actif" disabled {{ $controle['encours']==1 ? "checked" : "" }}></td>
                     </tr>
                   @endforeach
                 </tbody>
@@ -597,6 +600,27 @@
     </div>
     <div class="tab-pane fade" id="nav-banque" role="tabpanel" aria-labelledby="nav-banque-tab">
       <!-- TODO think about data needed for iso20022 generation -->
+      <div class="row">
+        <div class="col-12">
+          <!-- general form elements -->
+          <div class="card card-primary card-outline">
+            <div class="card-header">
+              <h3 class="card-title">Informations bancaires</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <!-- IBAN -->
+              <div class="form-group">
+                <label for="f-sap-nom">IBAN</label>
+                <input type="text" class="form-control" id="f-sap-nom" name="nom" value="{{ $sap_details['sapeur']['iban'] }}">
+              </div>
+              <div class="form-group">
+                <!-- TODO Add a list when IBAN has been entered to present a list of the banks which are available -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="tab-pane fade" id="nav-exercice" role="tabpanel" aria-labelledby="nav-exercice-tab">
       <div class="row">
@@ -604,7 +628,7 @@
           <!-- general form elements -->
           <div class="card card-primary card-outline">
             <div class="card-body">
-              <table id="sap-exercices" class="display" cellspacing="0" width="100%">
+              <table id="sap-exercices" class="table" cellspacing="0" width="100%">
                 <thead>
                   <tr>
                     <th data-field="date">Date</th>
@@ -612,11 +636,11 @@
                     <th data-field="categorie">Catégorie</th>
                     <th data-field="localite">Localité</th>
                     <th data-field="communication">Communication</th>
-                    <th data-field="c">C</th>
-                    <th data-field="p">P</th>
-                    <th data-field="ex">Ex</th>
+                    <th class="text-center" data-field="c">C</th>
+                    <th class="text-center" data-field="p">P</th>
+                    <th class="text-center" data-field="ex">Ex</th>
                     <th data-field="excuse">Excuse</th>
-                    <th data-field="a">A</th>
+                    <th class="text-center" data-field="a">A</th>
                     <th data-field="solde">Solde</th>
                   </tr>
                 </thead>
@@ -628,11 +652,11 @@
                       <td>{{ $exercice['categorie'] }}</td>
                       <td>{{ $exercice['localite'] }}</td>
                       <td>{{ $exercice['communication'] }}</td>
-                      <td>{{ $exercice['convoque'] }}</td>
-                      <td>{{ $exercice['present'] }}</td>
-                      <td>{{ $exercice['id_type_excuse'] }}</td>
+                      <td class="text-center"><input type="checkbox" value="convoque" disabled {{ $exercice['convoque']?"checked":"" }}></td>
+                      <td class="text-center"><input type="checkbox" value="id1" disabled {{ $exercice['present']?"checked":"" }}></td>
+                      <td class="text-center"><input type="checkbox" value="id1" disabled {{ $exercice['id_type_excuse']?"checked":"" }}></td>
                       <td>{{ $exercice['type_excuse'] }}</td>
-                      <td>TODO Absent</td>
+                      <td class="text-center">TODO Amende <input type="checkbox" value="amende"></td>
                       <td>TODO Solde</td>
                     </tr>
                   @endforeach
