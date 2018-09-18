@@ -385,153 +385,23 @@
             <div class="card-body">
               <table class="table">
                 <tbody>
-                  <tr>
-                    <td class="text-right"><img src="{{ asset('img/a.gif') }}"></td>
-                    <td><p>A</p></td>
-                    <td>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                  @foreach($permis as $permi)
+                    <tr>
+                      <td class="text-right">{!! strtolower($permi['abr'])=='c1'?"<i class=\"fab fa-gripfire text-danger\" style=\"font-size:1.5em\"></i>":"" !!}<img src="{{ asset('img/'.strtolower($permi['abr']).'.gif') }}"></td>
+                      <td><p>{{ $permi['abr'] }}</p></td>
+                      <td>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                          </div>
+                          <input type="date" class="form-control" value="{{ array_key_exists($permi['id'],$sap_details['permis'])?date('Y-m-d', strtotime($sap_details['permis'][$permi['id']]['date'])):"" }}">
                         </div>
-                        <input type="date" class="form-control">
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-right"><img src="{{ asset('img/a1.gif') }}"></td>
-                    <td><p>A1</p></td>
-                    <td>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                        </div>
-                        <input type="date" class="form-control">
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-right"><img src="{{ asset('img/b.gif') }}"></td>
-                    <td><p>B</p></td>
-                    <td>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                        </div>
-                        <input type="date" class="form-control">
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-right"><img src="{{ asset('img/b1.gif') }}"></td>
-                    <td><p>B1</p></td>
-                    <td>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                        </div>
-                        <input type="date" class="form-control">
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-right"><img src="{{ asset('img/c.gif') }}"></td>
-                    <td><p>C</p></td>
-                    <td>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                        </div>
-                        <input type="date" class="form-control">
-                      </div>
-                    </td>
-                  </tr>
+                      </td>
+                    </tr>
+                  @endforeach
                   <tr>
                     <td class="text-right"><i class="fab fa-gripfire text-danger" style="font-size:1.5em"></i><img src="{{ asset('img/c1.gif') }}"></td>
                     <td><p>C1</p></td>
-                    <td>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                        </div>
-                        <input type="date" class="form-control">
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-right"><img src="{{ asset('img/d.gif') }}"></td>
-                    <td><p>D</p></td>
-                    <td>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                        </div>
-                        <input type="date" class="form-control">
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-right"><img src="{{ asset('img/d1.gif') }}"></td>
-                    <td><p>D1</p></td>
-                    <td>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                        </div>
-                        <input type="date" class="form-control">
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-right"><img src="{{ asset('img/be.gif') }}"></td>
-                    <td><p>BE</p></td>
-                    <td>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                        </div>
-                        <input type="date" class="form-control">
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-right"><img src="{{ asset('img/ce.gif') }}"></td>
-                    <td><p>CE</p></td>
-                    <td>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                        </div>
-                        <input type="date" class="form-control">
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-right"><img src="{{ asset('img/c1e.gif') }}"></td>
-                    <td><p>C1E</p></td>
-                    <td>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                        </div>
-                        <input type="date" class="form-control">
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-right"><img src="{{ asset('img/de.gif') }}"></td>
-                    <td><p>DE</p></td>
-                    <td>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                        </div>
-                        <input type="date" class="form-control">
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-right"><img src="{{ asset('img/d1e.gif') }}"></td>
-                    <td><p>D1E</p></td>
                     <td>
                       <div class="input-group">
                         <div class="input-group-prepend">

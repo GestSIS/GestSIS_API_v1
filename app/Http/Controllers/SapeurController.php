@@ -41,7 +41,8 @@ class SapeurController extends Controller {
             'sapeurs_list' => $sapeursList['data'],
             'filters' => $filters,
             'sap_details' => $details,
-            'civilites' => Sapeur::getCivilites()
+            'civilites' => Sapeur::getCivilites(),
+            'permis' => Sapeur::getPermisList()
         ]);
     }
 
@@ -54,7 +55,8 @@ class SapeurController extends Controller {
           'cours' => $sapeur->getCours(),
           'promotions' => $sapeur->getPromotions(),
           'ctrl_med' => $sapeur->getControlesMedicaux(),
-          'exercices' => $sapeur->getExercices()
+          'exercices' => $sapeur->getExercices(),
+          'permis' => $sapeur->getPermis()
       ];
     }
 }

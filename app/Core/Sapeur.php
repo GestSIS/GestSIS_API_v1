@@ -485,6 +485,50 @@ class Sapeur {
         }, $controles);
     }
 
+    public static function getPermisList(): array {
+        $rows = DB::connection('mysql_managed')->select('
+                    SELECT PER_ID,
+                           PER_Abr
+                      FROM Permis
+                     ORDER BY PER_ID');
+
+        return array_map(function($row) {
+            return [
+                'id' => $row->PER_ID,
+                'abr' => $row->PER_Abr
+            ];
+        }, $rows);
+    }
+
+    /**
+     * Permis de conduire
+     * @return array
+     */
+    public function getPermis(): array{
+        $permis = DB::connection('mysql_managed')->select('
+                        SELECT SapPer.SAPPER_ID,
+                               SapPer.SAPPER_Date,
+                               SapPer.PER_ID
+                          FROM SapPer
+                         WHERE SapPer.SAP_ID = ?
+                         ORDER BY SapPer.SAPPER_ID ASC',
+                        [$this->id]);
+
+        $data = array_map(function($permis) {
+            return [
+                    'id' => $permis->SAPPER_ID,
+                    'date' => DateHelper::toIso8601($permis->SAPPER_Date),
+                    'permis_id' => $permis->PER_ID
+                ];
+        }, $permis);
+
+        $result = array();
+        foreach($data as $elt){
+          $result[$elt['id']] = $elt;
+        }
+        return $result;
+    }
+
     /**
      * Exercices effectués par le sapeur, 10 premiers, ordre chronologique inversé
      * @return array
