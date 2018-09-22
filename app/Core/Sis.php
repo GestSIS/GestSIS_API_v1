@@ -80,17 +80,20 @@ class Sis {
 
     public static function getLocalities(){
       $localities = DB::connection('mysql_dba')->select('
-                        SELECT Localite.LOC_ID, LOC_NPA, LOC_Designation
+                        SELECT Localite.LOC_ID, LOC_NPA, LOC_Designation,
+                               LOS_ID, LOS_PAR_ID
                         FROM Localite
-                        INNER JOIN Localite_SIS ON Localite_SIS.loc_id = Localite.loc_id
-                        WHERE SIS_No= ?
+                        LEFT JOIN Localite_SIS ON (Localite_SIS.loc_id = Localite.loc_id
+                                                   AND SIS_No= ?)
                         ORDER BY LOS_PAR_ID;', [config('sis.id')]);
 
       return array_map(function($locality) {
           return [
               'id' => $locality->LOC_ID,
               'npa' => $locality->LOC_NPA,
-              'nom' => $locality->LOC_Designation
+              'nom' => $locality->LOC_Designation,
+              'tri' => $locality->LOS_PAR_ID,
+              'concerne_sis' => !is_null($locality->LOS_ID)
           ];
       }, $localities);
     }
