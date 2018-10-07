@@ -188,4 +188,27 @@ class BaseData {
           ];
       }, $cmts);
     }
+
+    /**
+    * Récupération des titres de mission
+    * @return array des titres de mission
+    */
+    static public function getTitresMission(){
+        $rows = DB::connection('mysql_dba')->select('
+                      SELECT TIM_ID,
+                             TIM_Designation,
+                             TIM_Tri
+                        FROM Titre_Mission
+                       WHERE TIM_Actif = 1
+                       ORDER BY TIM_Tri ASC,
+                                TIM_Designation ASC');
+
+        return array_map(function($row) {
+            return [
+                'id' => $row->TIM_ID,
+                'nom' => $row->TIM_Designation,
+                'tri' => $row->TIM_Tri
+            ];
+        }, $rows);
+      }
 }

@@ -67,5 +67,6 @@ Route::group(['prefix' => 'v1'], function(){
         Route::get('cours', 'BaseDataApiController@cours')->name('api.v1.basedata.cours');
         Route::get('districtlocality', 'BaseDataApiController@districtlocality')->name('api.v1.basedata.districtlocality');
         Route::get('cmedtype', 'BaseDataApiController@cmedtype')->name('api.v1.basedata.cmedtype');
+        Route::get('titremission', 'BaseDataApiController@titreMission')->name('api.v1.basedata.titremission');
     });
 });

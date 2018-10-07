@@ -52,4 +52,10 @@ class BaseDataApiController extends ApiController {
                 'data' => BaseData::getControlesMedicauxTypes()
         ]);
     }
+
+    public function titreMission(Request $request) {
+        return response()->json([
+            'data' => BaseData::getTitresMission()
+        ]);
+    }
 }
