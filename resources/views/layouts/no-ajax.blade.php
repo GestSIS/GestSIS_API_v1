@@ -11,7 +11,7 @@
     <link href="{{ mix('css/app.css') }}" rel='stylesheet' type='text/css'>
   </head>
   <body class="hold-transition {{ $body_class }}">
-    <div class="wrapper">
+    <div id="app" class="wrapper">
       @if(!$full_page)
         <!-- Navbar -->
         @include('navbar')

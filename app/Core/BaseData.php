@@ -137,6 +137,28 @@ class BaseData {
     }, $grades);
   }
 
+
+  /**
+   * Fonctions du sapeur, par ordre chronologique
+   * @return array
+   */
+  static public function getFonction(): array {
+      $fonctions = DB::connection('mysql_managed')->select('
+                      SELECT Fonction_.FON_ID,
+                              Fonction_.FON_Nom,
+                              Fonction_.FON_Abr
+                          FROM Fonction_
+                          ORDER BY Fonction_.FON_Tri ASC');
+
+      return array_map(function($fonction) {
+          return [
+              'id' => $fonction->FON_ID,
+              'nom' => $fonction->FON_Nom,
+              'nom_abr' => $fonction->FON_Abr
+          ];
+      }, $fonctions);
+  }
+
   /**
    * Récupération des Cours
    * @return liste des cours

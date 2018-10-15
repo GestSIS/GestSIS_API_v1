@@ -541,7 +541,10 @@
   </div>
 </section>
 
-@include('modal.cours')
+<modal-cours v-bind:cours-data='{{ json_encode($cours_list) }}' :fonction-data='{{ json_encode($fonction_list) }}' :grade-data='{{ json_encode($grade_list) }}'></modal-cours>
+{{ json_encode($grade_list) }}
+<!--@ include('modal.cours')-->
 @include('modal.promotion')
 @include('modal.controle')
 @include('modal.medecin')
+

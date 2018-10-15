@@ -7,6 +7,7 @@ use App\Exceptions\InvalidUserInputException;
 
 use App\Core\Sapeur;
 use App\Core\Sis;
+use App\Core\BaseData;
 
 /**
  * Controlleur pour la gestion des sapeurs
@@ -42,7 +43,10 @@ class SapeurController extends Controller {
             'filters' => $filters,
             'sap_details' => $details,
             'civilites' => Sapeur::getCivilites(),
-            'permis' => Sapeur::getPermisList()
+            'permis' => Sapeur::getPermisList(),
+            'cours_list' => BaseData::getCours(),
+            'grade_list' => BaseData::getGrade(),
+            'fonction_list' => BaseData::getFonction()
         ]);
     }
 
