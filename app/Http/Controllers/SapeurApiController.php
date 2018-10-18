@@ -50,4 +50,30 @@ class SapeurApiController extends ApiController {
             'interventions' => $sapeur->getInterventions()
         ]);
     }
+
+    public function store(Request $request){
+        $sapeur = new Sapeur();
+        $res = $sapeur->create($request->all());
+        if(!$res['success']){
+            throw new InvalidUserInputException(trans('global.fields_errors2'));
+        }
+
+        return response()->json([
+            'success' => true,
+            'follow' => route('sapeur.details', ['id' => $res['id']])
+        ]);
+    }
+
+    public function update(Request $request, $id) {
+        $sapeur = new Sapeur();
+
+        if(!$sapeur->update($id, $request->all())){
+            throw new InvalidUserInputException(trans('global.fields_errors2'));
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Sapeur modifié avec succès'
+        ]);
+    }
 }

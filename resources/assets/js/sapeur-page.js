@@ -9,52 +9,51 @@ var SapeurPage = (function() {
     var editor;
 
     function init(pageCode){
+        $('#nav-tab a').on('click', function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
 
-        if(pageCode === 'index' || pageCode === 'details'){
-            $('#nav-tab a').on('click', function (e) {
-                e.preventDefault()
-                $(this).tab('show')
-            });
+        $(".select-sapeur").off("click").on("click", function(e){
+            selectSapeurScrollTop = $(".select-sapeur").scrollTop();
+        });
+        $(".select-sapeur").scrollTop(selectSapeurScrollTop);
 
-            $(".select-sapeur").off("click").on("click", function(e){
-                selectSapeurScrollTop = $(".select-sapeur").scrollTop();
-            });
-            $(".select-sapeur").scrollTop(selectSapeurScrollTop);
+        // Filtres
+        $("#f-sapeur-filters input").change(function(){
+            App.getPageContent($("#f-sapeur-filters").attr("action") + '?' + $("#f-sapeur-filters").serialize(), App.g_stateAction.replace);
+        });
 
-            // Filtres
-            $("#f-sapeur-filters input").change(function(){
-                App.getPageContent($("#f-sapeur-filters").attr("action") + '?' + $("#f-sapeur-filters").serialize(), App.g_stateAction.replace);
-            });
-
-            // Autocomplete
-            $("#f-sap-localite").select2({
-                placeholder: "---",
-                allowClear: true,
-                ajax: {
-                    url: $("#f-sap-localite").data("url"),
-                    dataType: 'json',
-                    delay: 400,
-                    data: function (params) {
-                        return {
-                            query: params.term
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: data.data.map(function(el){
-                                return {
-                                    'id': el.id,
-                                    'text': el.npa + ' ' + el.nom
-                                };
-                            }),
-                            pagination: {
-                                more: false
-                            }
-                        };
-                    }
+        // Autocomplete
+        $("#f-sap-localite").select2({
+            placeholder: "---",
+            allowClear: true,
+            ajax: {
+                url: $("#f-sap-localite").data("url"),
+                dataType: 'json',
+                delay: 400,
+                data: function (params) {
+                    return {
+                        query: params.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.data.map(function(el){
+                            return {
+                                'id': el.id,
+                                'text': el.npa + ' ' + el.nom
+                            };
+                        }),
+                        pagination: {
+                            more: false
+                        }
+                    };
                 }
-            });            
-        }
+            }
+        }); 
+        
+        App.initStandardForm($("#f-sapeur"))
     }
 
     // Public functions

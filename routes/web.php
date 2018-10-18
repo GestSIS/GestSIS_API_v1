@@ -33,6 +33,7 @@ Route::group(['middleware' => 'session.auth'], function(){
     // Sapeurs
     Route::get('sapeurs', 'SapeurController@showDetails')->name('sapeur.index');
     Route::get('sapeurs/{id}', 'SapeurController@showDetails')->name('sapeur.details');
+    Route::get('sapeurs/create', 'SapeurController@showDetails')->name('sapeur.create');
 });
 
 Route::get('user/activate', 'UserController@activate')->name('user.activate');

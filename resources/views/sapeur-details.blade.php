@@ -19,7 +19,11 @@
   <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-sapeur" role="tabpanel" aria-labelledby="nav-sapeur-tab">
       <!-- form start -->
-      <form role="form">
+      <form role="form" id="f-sapeur" action="{{ $create_new ? route('api.v1.sapeur.store') : route('api.v1.sapeur.update', ['id' => $sap_details['sapeur']['id']]) }}">
+        @include('user-notification')
+        @if(!$create_new)
+          <input type="hidden" name="_method" value="PUT">
+        @endif
         <div class="row">
           <div class="col-sm-6">
             <!-- general form elements -->
@@ -31,34 +35,34 @@
               <div class="card-body">
                 <div class="form-group">
                   <label for="f-sap-civilite">Civilité</label>
-                  <select class="form-control" id="f-sap-civilite" name="civilite_id">
+                  <select class="form-control required" id="f-sap-civilite" name="civilite_id">
                     @foreach($civilites as $civilite)
-                      <option {{ $sap_details['sapeur']['civilite_id'] == $civilite['id'] ? 'selected' : '' }} value="{{ $civilite['id'] }}">{{ $civilite['designation'] }}</option>
+                      <option {{ !$create_new && $sap_details['sapeur']['civilite_id'] == $civilite['id'] ? 'selected' : '' }} value="{{ $civilite['id'] }}">{{ $civilite['designation'] }}</option>
                     @endforeach
                   </select>
                 </div>
                 <!-- NOM -->
                 <div class="form-group">
                   <label for="f-sap-nom">Nom</label>
-                  <input type="text" class="form-control" id="f-sap-nom" name="nom" value="{{ $sap_details['sapeur']['nom'] }}">
+                  <input type="text" class="form-control required" id="f-sap-nom" name="nom" value="{{ !$create_new ? $sap_details['sapeur']['nom'] : '' }}">
                 </div>
                 <!-- PRENOM -->
                 <div class="form-group">
                   <label for="f-sap-prenom">Prénom</label>
-                  <input type="text" class="form-control" id="f-sap-prenom" name="prenom" value="{{ $sap_details['sapeur']['prenom'] }}">
+                  <input type="text" class="form-control required" id="f-sap-prenom" name="prenom" value="{{ !$create_new ? $sap_details['sapeur']['prenom'] : '' }}">
                 </div>
                 <!-- RUE -->
                 <div class="row">
                   <div class="col-8">
                     <div class="form-group">
                       <label for="f-sap-rue">Rue</label>
-                      <input type="text" class="form-control" id="f-sap-rue" name="rue" value="{{ $sap_details['sapeur']['rue'] }}">
+                      <input type="text" class="form-control" id="f-sap-rue" name="rue" value="{{ !$create_new ? $sap_details['sapeur']['rue'] : '' }}">
                     </div>
                   </div>
                   <div class="col-4">
                     <div class="form-group">
                       <label for="f-sap-no-rue">N°</label>
-                      <input type="text" class="form-control" id="f-sap-no-rue" name="no_rue" value="{{ $sap_details['sapeur']['no_rue'] }}">
+                      <input type="text" class="form-control" id="f-sap-no-rue" name="no_rue" value="{{ !$create_new ? $sap_details['sapeur']['no_rue'] : '' }}">
                     </div>
                   </div>
                 </div>
@@ -66,13 +70,15 @@
                 <div class="form-group">
                   <label for="f-sap-localite">NPA Localité</label>
                   <select class="required" id="f-sap-localite" name="localite_id" style="width: 100%" data-url="{{ route('api.v1.sis.localities') }}">
-                    <option value="{{ $sap_details['sapeur']['localite_id'] }}">{{ $sap_details['sapeur']['npa'].' '.$sap_details['sapeur']['localite'] }}</option>
+                    @if(!$create_new)
+                      <option value="{{ $sap_details['sapeur']['localite_id'] }}">{{ $sap_details['sapeur']['npa'].' '.$sap_details['sapeur']['localite'] }}</option>
+                    @endif
                   </select>
                 </div>
                 <!-- N° AVS -->
                 <div class="form-group">
                   <label for="f-sap-avs">N° AVS</label>
-                  <input type="text" class="form-control" id="f-sap-avs" name="no_avs" value="{{ $sap_details['sapeur']['no_avs'] }}">
+                  <input type="text" class="form-control" id="f-sap-avs" name="no_avs" value="{{ !$create_new ? $sap_details['sapeur']['no_avs'] : '' }}">
                 </div>
                 <!-- DATE NAISSANCE + SUFFIXE -->
                 <div class="row">
@@ -83,14 +89,14 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                         </div>
-                        <input class="form-control" type="date" id="f-sap-date-naissance" name="date_naissance" value="{{ date('Y-m-d', strtotime($sap_details['sapeur']['date_naissance'])) }}">
+                        <input class="form-control" type="date" id="f-sap-date-naissance" name="date_naissance" value="{{ !$create_new ? date('Y-m-d', strtotime($sap_details['sapeur']['date_naissance'])) : '' }}">
                       </div>
                     </div>
                   </div>
                   <div class="col-6">
                     <div class="form-group">
                       <label for="f-sap-suffixe">Suffixe</label>
-                      <input type="text" class="form-control" id="f-sap-suffixe" name="suffixe" value="{{ $sap_details['sapeur']['suffixe'] }}">
+                      <input type="text" class="form-control" id="f-sap-suffixe" name="suffixe" value="{{ !$create_new ? $sap_details['sapeur']['suffixe'] : '' }}">
                     </div>
                   </div>
                 </div>
@@ -98,7 +104,7 @@
                 <!-- REMARQUE -->
                 <div class="form-group">
                   <label for="f-sap-remarques">Remarques</label>
-                  <textarea class="form-control" rows="3" id="f-sap-remarques" name="remarques">{{ $sap_details['sapeur']['remarques'] }}</textarea>
+                  <textarea class="form-control" rows="3" id="f-sap-remarques" name="remarques">{{ !$create_new ? $sap_details['sapeur']['remarques'] : '' }}</textarea>
                 </div>
               </div>
               <!-- /.card-body -->
@@ -117,7 +123,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-envelope"></i></span>
                     </div>
-                    <input class="form-control" type="email" id="f-sap-email" name="email" value="{{ $sap_details['sapeur']['email'] }}">
+                    <input class="form-control" type="email" id="f-sap-email" name="email" value="{{ !$create_new ? $sap_details['sapeur']['email'] : '' }}">
                   </div>
                 </div>
                 <div class="row">
@@ -134,13 +140,13 @@
                   </div>
                   <div class="col-4">
                     <div class="form-group">
-                      <input type="text" class="form-control" id="f-sap-tel-prive" name="tel_prive" value="{{ $sap_details['sapeur']['tel_prive'] }}">
+                      <input type="text" class="form-control" id="f-sap-tel-prive" name="tel_prive" value="{{ !$create_new ? $sap_details['sapeur']['tel_prive'] : '' }}">
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="f-sap-tel-mobile" name="tel_mobile" value="{{ $sap_details['sapeur']['tel_mobile'] }}">
+                      <input type="text" class="form-control" id="f-sap-tel-mobile" name="tel_mobile" value="{{ !$create_new ? $sap_details['sapeur']['tel_mobile'] : '' }}">
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="f-sap-tel-prof" name="tel_prof" value="{{ $sap_details['sapeur']['tel_prof'] }}">
+                      <input type="text" class="form-control" id="f-sap-tel-prof" name="tel_prof" value="{{ !$create_new ? $sap_details['sapeur']['tel_prof'] : '' }}">
                     </div>
                   </div>
                   <!-- TODO N° Transmis pour alarm au CET -->
@@ -164,15 +170,15 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="f-sap-profession">Profession</label>
-                    <input type="text" class="form-control" id="f-sap-profession" name="profession" value="{{ $sap_details['sapeur']['profession'] }}">
+                    <input type="text" class="form-control" id="f-sap-profession" name="profession" value="{{ !$create_new ? $sap_details['sapeur']['profession'] : '' }}">
                   </div>
                   <div class="form-group">
                     <label for="f-sap-employeur">Employeur</label>
-                    <input type="text" class="form-control" id="f-sap-employeur" name="employeur" value="{{ $sap_details['sapeur']['employeur'] }}">
+                    <input type="text" class="form-control" id="f-sap-employeur" name="employeur" value="{{ !$create_new ? $sap_details['sapeur']['employeur'] : '' }}">
                   </div>
                   <div class="form-group">
                     <label for="f-sap-lieu-travail">Lieu de travail</label>
-                    <input type="text" class="form-control" id="f-sap-lieu-travail" name="lieu_travail" value="{{ $sap_details['sapeur']['lieu_travail'] }}">
+                    <input type="text" class="form-control" id="f-sap-lieu-travail" name="lieu_travail" value="{{ !$create_new ? $sap_details['sapeur']['lieu_travail'] : '' }}">
                   </div>
                   <!-- TODO Add image -->
                 </div>

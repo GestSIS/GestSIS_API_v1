@@ -155,6 +155,52 @@ class User {
         return true;
     }
 
+    public function sendResetPasswordEmail(int $sisID, string $email){
+		// Max 20 tentatives erronées par jour
+		if(ActivityLog::limitIsReached('forgot-password')){
+			throw new InvalidUserInputException(trans('global.quota_exceeded'));
+		}
+
+		if(filter_var($email,FILTER_VALIDATE_EMAIL) === false){
+			throw new InvalidUserInputException(trans('account.invalid_email'));
+		}
+
+		ActivityLog::add('forgot-password', 'SIS ID : '.$sisID.', E-mail : '.$email);
+
+		$user = DB::select('
+                      SELECT Users.USER_ID
+                        FROM Users
+                       INNER JOIN Sapeur ON Users.SAP_ID = Sapeur.SAP_ID
+                       WHERE SAP_Email = ?
+                         AND SAP_Actif = 1',
+					[$email]);
+
+        if(!isset($user[0])){
+			return false;
+		}
+
+		$resetPasswordToken = Hash::make(str_random(32));
+
+		DB::insert('
+                INSERT INTO JETON_RESET_MP (
+                    JRP_VALEUR,
+                    JRP_DATE_CREATION,
+                    JRP_UTI_FK,
+                    JRP_STATUT
+                    )
+                VALUES (
+                    ?,
+                    NOW(),
+                    ?,
+                    1
+                )',
+				array($resetPasswordToken, $user[0]->UTI_PK));
+
+		Mail::to($user[0]->UTI_EMAIL)->send(new ResetPassword($resetPasswordToken, $user[0]->UTI_EMAIL));
+
+		return true;
+    }
+
     /**
      * @return mixed Détails du user connecté
      */

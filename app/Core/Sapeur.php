@@ -9,6 +9,28 @@ use DB;
  */
 class Sapeur {
     private $id;
+    private $requiredFields = [
+        'civilite_id' => 'CIV_ID',
+        'nom' => 'SAP_Nom',
+        'prenom' => 'SAP_Prenom',
+        'localite_id' => 'LOC_ID'
+    ];
+
+    private $optionalFields = [
+        'rue' => 'SAP_Rue',
+        'no_rue' => 'SAP_NoRue',
+        'no_avs' => 'SAP_NoAVS',
+        'date_naissance' => 'SAP_DNaissance',
+        'suffixe' => 'SAP_Suffixe',
+        'remarques' => 'SAP_Rem',
+        'email' => 'SAP_EMail',
+        'tel_prive' => 'SAP_TelPriv',
+        'tel_mobile' => 'SAP_TelNat',
+        'tel_prof' => 'SAP_TelProf',
+        'profession' => 'SAP_Profession',
+        'employeur' => 'SAP_Employeur',
+        'lieu_travail' => 'SAP_LieuDeTravail'
+    ];
 
     public function __construct(int $id = null){
         if(!is_null($id)){
@@ -278,13 +300,56 @@ class Sapeur {
         }
     }
 
-    public function create(): bool {
+    public function create($fields): array {
+        $insert = [];
+        
+        foreach($this->requiredFields as $key => $colName){
+            if(!isset($fields[$key]) || strlen($fields[$key]) == 0){
+                \Log::info($key);
+                return ['success' => false];
+            }
+            else{
+                $insert[$colName] = $fields[$key];
+            }
+        }
 
+        foreach($this->optionalFields as $key => $colName){
+            if(isset($fields[$key])){
+                $insert[$colName] = $fields[$key];
+            }
+        }
 
+        $id = DB::connection('mysql_managed')
+                    ->table('Sapeur')
+                    ->insertGetId($insert);
+
+        return [
+            'success' => true,
+            'id' => $id
+        ];
     }
 
-    public function update(): bool {
+    public function update($id, $fields): bool {
+        $insert = [];
+        
+        foreach($this->requiredFields as $key => $colName){
+            if(isset($fields[$key]) && strlen($fields[$key]) > 0){                
+                $insert[$colName] = $fields[$key];
+            }
+        }
 
+        foreach($this->optionalFields as $key => $colName){
+            if(isset($fields[$key])){
+                $insert[$colName] = $fields[$key];
+            }
+        }
+
+        DB::connection('mysql_managed')
+                    ->table('Sapeur')
+                    ->where('SAP_ID', '=', $id)
+                    ->update($insert);
+
+        return true;
     }
 
     public function setID($ID) {

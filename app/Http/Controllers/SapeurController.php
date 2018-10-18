@@ -42,6 +42,7 @@ class SapeurController extends Controller {
             'sapeurs_list' => $sapeursList['data'],
             'filters' => $filters,
             'sap_details' => $details,
+            'create_new' => is_null($sapId),
             'civilites' => Sapeur::getCivilites(),
             'permis' => Sapeur::getPermisList(),
             'cours_list' => BaseData::getCours(),
@@ -63,4 +64,5 @@ class SapeurController extends Controller {
           'permis' => $sapeur->getPermis()
       ];
     }
+    
 }

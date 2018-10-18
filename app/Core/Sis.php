@@ -80,9 +80,11 @@ class Sis {
 
     public static function getLocalities(array $filters){
         $query = DB::connection('mysql_dba')->table('Localite')
-                    ->select('Localite.LOC_ID', 'LOC_NPA', 'LOC_Designation')
-                    ->join('Localite_SIS', 'Localite_SIS.LOC_ID', '=', 'Localite.LOC_ID')
-                    ->where('SIS_No', config('sis.id'));
+                    ->select('Localite.LOC_ID', 'LOC_NPA', 'LOC_Designation', 'LOS_ID', 'LOS_PAR_ID')
+                    ->leftJoin('Localite_SIS', function($join) {
+                        $join->on('Localite_SIS.LOC_ID', '=', 'Localite.LOC_ID')
+                             ->where('SIS_No', '=', config('sis.id'));
+                    });
         
         if(isset($filters['query'])){
             $query->whereRaw('CONCAT(LOC_NPA, " ", LOC_Designation) LIKE ?', ['%'.$filters['query'].'%']);
@@ -95,7 +97,8 @@ class Sis {
             return [
                 'id' => $locality->LOC_ID,
                 'npa' => $locality->LOC_NPA,
-                'nom' => $locality->LOC_Designation
+                'nom' => $locality->LOC_Designation,
+                'concerne_sis' => !is_null($locality->LOS_ID)
             ];
         }, $rows);
     }

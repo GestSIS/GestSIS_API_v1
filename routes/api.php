@@ -30,6 +30,8 @@ Route::group(['prefix' => 'v1'], function(){
         // Sapeurs
         Route::get('sapeurs', 'SapeurApiController@index')->name('api.v1.sapeur.index')->middleware('role:effectif_read');
         Route::get('sapeurs/{id}', 'SapeurApiController@show')->name('api.v1.sapeur.show')->middleware('role:effectif_read');
+        Route::post('sapeurs', 'SapeurApiController@store')->name('api.v1.sapeur.store')->middleware('role:effectif_read');
+        Route::put('sapeurs/{id}', 'SapeurApiController@update')->name('api.v1.sapeur.update')->middleware('role:effectif_read');        
 
         // Exercices
         Route::get('excusestypes', 'ExerciceApiController@excusesTypes')->name('api.v1.exercice.excusesTypes')->middleware('role:exercice_read');

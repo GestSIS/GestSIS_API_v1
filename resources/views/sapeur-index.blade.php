@@ -40,6 +40,7 @@
       </div>
       <!-- /.card-header -->
       <div class="card card-primary card-outline">
+        <div class="card-header"><a href="{{ route('sapeur.create') }}" class="btn btn-success btn-block internal-link">Nouveau</a></div>
         <div class="card-body p-0 select-sapeur">
           <div class="nav flex-column nav-pills" aria-orientation="vertical">
             @foreach($sapeurs_list as $sap)
