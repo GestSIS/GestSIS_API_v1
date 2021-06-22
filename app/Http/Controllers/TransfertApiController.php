@@ -43,6 +43,4 @@ class TransfertApiController extends ApiController {
         ]);
     }
 
-
-
 }

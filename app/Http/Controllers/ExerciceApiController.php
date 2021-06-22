@@ -5,6 +5,7 @@ use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 
 use App\Core\Exercice;
+use App\Core\Auth;
 
 /**
  * API pour la gestion des exercices
@@ -21,8 +22,9 @@ class ExerciceApiController extends ApiController {
         ];
 
         $exercice = new Exercice();
-
-        $exercices = $exercice->getList($start, $limit, $order, $reverseSort, $request->only($availableFilters));
+        
+        $sisId = Auth::getSisId();
+        $exercices = $exercice->getList($start, $limit, $order, $reverseSort, $request->only($availableFilters), $sisId);
 
         return response()->json($exercices);
     }

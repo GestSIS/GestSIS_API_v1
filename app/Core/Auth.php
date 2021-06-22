@@ -11,7 +11,8 @@ class Auth {
     const TOKEN_TYPE = 'Bearer';
 
     private static $user,
-                   $apiKey;
+                   $apiKey,
+                   $sisId;
 
     public static function login(string $grantType, array $credentials): bool{
         if(ActivityLog::limitIsReached('login-fail')){
@@ -85,6 +86,7 @@ class Auth {
     public static function authenticate($jwt): bool{
         $payload = JWT::decode($jwt, base64_decode(substr(config('app.key'),7)), array('HS256'));
         Sis::retrieveSettings($payload->sis_id);
+        self::$sisId = $payload->sis_id;
 
         if(isset($payload->uid)){
             self::$user = new User($payload->uid);
@@ -97,7 +99,6 @@ class Auth {
         else{
             return false;
         }
-
     }
 
     /**
@@ -165,6 +166,10 @@ class Auth {
 
     public static function getCurrentApiKey(){
         return self::$apiKey;
+    }
+    
+    public static function getSisId(){
+        return self::$sisId;
     }
 
     public static function actingAs($authenticatable){

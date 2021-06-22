@@ -43,7 +43,7 @@ class Exercice {
      * @return array
      */
     public function getList(int $start = null, int $limit = null, string $orderCode,
-                            bool $reverseSort, array $filters): array{
+                            bool $reverseSort, array $filters, int $sisId): array{
 
         $filters = array_where($filters, function($value, $key){
             return !is_null($value);
@@ -116,7 +116,8 @@ class Exercice {
                          WHERE TAC_Code = "presences-exercice"
                            AND TRA_Reference IS NOT NULL
                            AND TRA_Complet = 1
-        ');
+                           AND SIS_ID = ?
+        ', [$sisId]);
 
         $idExeComplets = array_map(function($exe) {
             return $exe->TRA_Reference;
@@ -160,7 +161,7 @@ class Exercice {
                 $params['reverse'] = '1';
             }
 
-            $res['paging'] = ['next' => route('api.v1.exercice.index', $params)];
+           $res['paging'] = ['next' => route('api.v1.exercice.index', $params)];
         }
 
         $res['count'] = $count;

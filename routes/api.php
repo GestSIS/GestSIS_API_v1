@@ -21,6 +21,7 @@ Route::group(['prefix' => 'v1'], function(){
     Route::group(['prefix' => 'auth'], function(){
         Route::post('token', 'AuthApiController@getToken')->name('api.v1.auth.login');
         Route::post('token/refresh', 'AuthApiController@refreshToken')->name('api.v1.auth.refresh_token')->middleware('jwt.auth');
+        // Route::get('encrypt', 'AuthApiController@encryptParam')->name('api.v1.auth.encrypt_token');
     });
 
     Route::post('user/signup', 'UserApiController@signup')->name('api.v1.user.signup');
@@ -67,6 +68,5 @@ Route::group(['prefix' => 'v1'], function(){
         Route::get('cours', 'BaseDataApiController@cours')->name('api.v1.basedata.cours');
         Route::get('districtlocality', 'BaseDataApiController@districtlocality')->name('api.v1.basedata.districtlocality');
         Route::get('cmedtype', 'BaseDataApiController@cmedtype')->name('api.v1.basedata.cmedtype');
-        Route::get('titremission', 'BaseDataApiController@titreMission')->name('api.v1.basedata.titremission');
     });
 });
